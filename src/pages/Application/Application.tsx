@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { Grid2 as Grid,
   Box,
   Paper,
@@ -13,6 +16,8 @@ import { Grid2 as Grid,
   TableCell,
   TableHead,
   TableRow,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmailIcon from '@mui/icons-material/Email';
@@ -24,7 +29,9 @@ import SchoolIcon from '@mui/icons-material/School';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import LinkIcon from '@mui/icons-material/Link';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import HistoryIcon from '@mui/icons-material/History';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import BadgeIcon from '@mui/icons-material/Badge';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import { useStyles } from './Application.style';
@@ -60,7 +67,7 @@ const ReadField: React.FC<{
   label: string; value: string; multiline?: boolean; charCount?: boolean; maxChars?: number;
   classes: ReturnType<typeof useStyles>;
 }> = ({ label, value, multiline, charCount, maxChars, classes }) => (
-  <Box>
+  <Box sx={{ width: '100%' }}>
     <Typography component="label" className={classes.fieldLabel}>{label}</Typography>
     <Box className={multiline ? classes.textAreaBox : classes.fieldBox}>
       <Typography className={multiline ? classes.textAreaValue : classes.fieldValue}>{value || ' '}</Typography>
@@ -73,28 +80,97 @@ const ReadField: React.FC<{
   </Box>
 );
 
-const DateField: React.FC<{ label: string; hint?: string; classes: ReturnType<typeof useStyles> }> = ({ label, hint, classes }) => (
-  <Box>
-    <Typography component="label" className={classes.fieldLabel}>{label}</Typography>
-    <Box className={classes.dateFieldBox}>
-      <CalendarTodayIcon sx={{ fontSize: '14px', color: '#9ca3af' }} aria-hidden="true" />
+const DropdownField: React.FC<{
+  label: string;
+  value: string;
+  options: string[];
+  classes: ReturnType<typeof useStyles>;
+}> = ({ label, value, options, classes }) => {
+  const [val, setVal] = useState(value);
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Typography component="label" className={classes.fieldLabel}>{label}</Typography>
+      <Select
+        value={val}
+        onChange={(e) => setVal(e.target.value as string)}
+        className={classes.dropdownSelect}
+        IconComponent={KeyboardArrowDownIcon}
+        MenuProps={{ PaperProps: { sx: { mt: 0.5, borderRadius: '8px' } } }}
+        fullWidth
+      >
+        {options.map((opt) => (
+          <MenuItem key={opt} value={opt} sx={{ fontSize: '14px', fontFamily: '"Roboto", sans-serif' }}>
+            {opt}
+          </MenuItem>
+        ))}
+      </Select>
     </Box>
-    {hint && <Typography className={classes.fieldHint}>{hint}</Typography>}
-  </Box>
-);
+  );
+};
 
-interface YesNoProps { yesActive: boolean; noActive: boolean; classes: ReturnType<typeof useStyles>; label: string }
-const YesNo: React.FC<YesNoProps> = ({ yesActive, noActive, classes, label }) => (
-  <Box className={classes.yesNoGroup} role="group" aria-label={label}>
-    <Box component="button" className={yesActive ? classes.yesActiveBtn : classes.yesInactiveBtn} aria-pressed={yesActive} aria-label="Yes">
-      <Box component="span" className={yesActive ? classes.radioFilled : classes.radioEmpty} aria-hidden="true" />
-      Yes
+const DateField: React.FC<{ label: string; hint?: string; defaultValue?: string; classes: ReturnType<typeof useStyles> }> = ({ label, hint, defaultValue, classes }) => {
+  const [value, setValue] = useState<Dayjs | null>(defaultValue ? dayjs(defaultValue) : null);
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Typography component="label" className={classes.fieldLabel}>{label}</Typography>
+      <DatePicker
+        value={value}
+        onChange={(v) => setValue(v)}
+        slots={{ openPickerIcon: CalendarTodayIcon }}
+        slotProps={{
+          textField: { fullWidth: true, className: classes.datePickerField, placeholder: 'dd/mm/yyyy' },
+          openPickerIcon: { sx: { fontSize: '14px', color: '#9ca3af' } },
+        }}
+      />
+      {hint && <Typography className={classes.fieldHint}>{hint}</Typography>}
     </Box>
-    <Box component="button" className={noActive ? classes.noActiveBtn : classes.noInactiveBtn} aria-pressed={noActive} aria-label="No">
-      <Box component="span" className={noActive ? classes.radioFilledRed : classes.radioEmpty} aria-hidden="true" />
-      No
+  );
+};
+
+interface YesNoProps {
+  defaultValue?: 'yes' | 'no' | null;
+  classes: ReturnType<typeof useStyles>;
+  label: string;
+}
+const YesNo: React.FC<YesNoProps> = ({ defaultValue = null, classes, label }) => {
+  const [val, setVal] = useState<'yes' | 'no' | null>(defaultValue);
+  const yesActive = val === 'yes';
+  const noActive = val === 'no';
+  return (
+    <Box className={classes.yesNoGroup} role="group" aria-label={label}>
+      <Box
+        component="button"
+        type="button"
+        onClick={() => setVal(yesActive ? null : 'yes')}
+        className={`${classes.yesNoBtnBase} ${yesActive ? classes.yesActiveBtn : classes.yesInactiveBtn}`}
+        aria-pressed={yesActive}
+        aria-label="Yes"
+      >
+        <Box component="span" className={`${classes.radioDotBase} ${yesActive ? classes.radioFilled : classes.radioEmpty}`} aria-hidden="true">
+          {yesActive ? '✓' : ''}
+        </Box>
+        Yes
+      </Box>
+      <Box
+        component="button"
+        type="button"
+        onClick={() => setVal(noActive ? null : 'no')}
+        className={`${classes.yesNoBtnBase} ${noActive ? classes.noActiveBtn : classes.noInactiveBtn}`}
+        aria-pressed={noActive}
+        aria-label="No"
+      >
+        <Box component="span" className={`${classes.radioDotBase} ${noActive ? classes.radioFilledRed : classes.radioEmpty}`} aria-hidden="true">
+          {noActive ? '✓' : ''}
+        </Box>
+        No
+      </Box>
     </Box>
-  </Box>
+  );
+};
+
+// Required asterisk suffix for labels
+const Req: React.FC<{ classes: ReturnType<typeof useStyles> }> = ({ classes }) => (
+  <span className={classes.requiredStar}>*</span>
 );
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -112,6 +188,7 @@ export const Application: React.FC = () => {
   const [tab, setTab] = useState(0);
 
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <Box component="section" aria-label="Application detail" sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
 
       {/* ─── Sticky tab header ────────────────────────────────────── */}
@@ -122,64 +199,89 @@ export const Application: React.FC = () => {
           className={classes.tabs}
           aria-label="Application sections"
         >
-          <Tab icon={<BadgeIcon sx={{ fontSize: '16px' }} />} iconPosition="start" label="Application" id="tab-app" aria-controls="tabpanel-app" />
-          <Tab icon={<AssessmentIcon sx={{ fontSize: '16px' }} />} iconPosition="start" label="Preview CV"  id="tab-cv"  aria-controls="tabpanel-cv" />
-          <Tab icon={<AssessmentIcon sx={{ fontSize: '16px' }} />} iconPosition="start" label="Journal"     id="tab-jnl" aria-controls="tabpanel-jnl" />
+          <Tab icon={<BadgeIcon />} iconPosition="start" label="Application" id="tab-app" aria-controls="tabpanel-app" />
+          <Tab icon={<AssessmentIcon />} iconPosition="start" label="Preview CV"  id="tab-cv"  aria-controls="tabpanel-cv" />
+          <Tab icon={<AssessmentIcon />} iconPosition="start" label="Journal"     id="tab-jnl" aria-controls="tabpanel-jnl" />
         </Tabs>
+      </Box>
+
+      {/* ─── Candidate identity strip (Figma spec) ──────────────── */}
+      <Box className={classes.candidateStrip}>
+        <Avatar className={classes.candidateStripAvatar} aria-label="Lena Müller">LM</Avatar>
+        <Box className={classes.candidateStripBody}>
+          <Box className={classes.candidateStripTitleRow}>
+            <Typography component="h1" className={classes.candidateStripName}>Lena Müller</Typography>
+            <span className={classes.candidateStripStatus}>
+              <span className={classes.candidateStripStatusDot} aria-hidden="true" />
+              Fresh
+            </span>
+          </Box>
+          <Box className={classes.candidateStripMeta}>
+            <Box className={classes.candidateStripMetaItem}>
+              <WorkIcon aria-hidden="true" />
+              <span>Senior Software Engineer</span>
+            </Box>
+            <Box className={classes.candidateStripMetaItem}>
+              <LocationOnIcon aria-hidden="true" />
+              <span>London, UK</span>
+            </Box>
+            <Box className={classes.candidateStripMetaItem}>
+              <CalendarTodayIcon aria-hidden="true" />
+              <span>Applied 15 March 2024</span>
+            </Box>
+            <Box className={`${classes.candidateStripMetaItem} ${classes.candidateStripMetaItemMono}`}>
+              <LocalOfferIcon aria-hidden="true" />
+              <span>APP-2026-0041</span>
+            </Box>
+          </Box>
+        </Box>
       </Box>
 
       <Box className={classes.pageContent}>
 
       {/* ─── Candidate header ─────────────────────────────────────── */}
-      <Paper className={classes.headerCard}>
-        <Stack direction="row" gap="16px">
-          <Box sx={{ flex: 1 }}>
-            <Stack direction="row" alignItems="center" gap="12px" sx={{ mb: '10px' }}>
-              <Avatar className={classes.candidateAvatar} sx={{ backgroundColor: '#3b82f6' }} aria-label="Lena Müller">LM</Avatar>
-              <Box>
-                <Stack direction="row" alignItems="center" gap="8px">
-                  <Typography component="h1" className={classes.candidateName}>Lena Müller</Typography>
-                  <StatusBadge status="Fresh" />
-                </Stack>
-                <Typography className={classes.candidateRole}>Senior Software Engineer</Typography>
+      <Paper elevation={0} className={classes.headerCard}>
+        <Box className={classes.headerLeft}>
+          <Box className={classes.headerFieldGrid}>
+            <Box className={classes.headerField}>
+              <Typography component="label" className={classes.headerFieldLabel}>Full Name</Typography>
+              <Typography className={classes.headerFieldValue}>Lena Müller</Typography>
+            </Box>
+            <Box className={classes.headerField}>
+              <Typography component="label" className={classes.headerFieldLabel}>AMRIS Reference</Typography>
+              <Typography className={classes.headerFieldValueMono}>APP-2026-0041</Typography>
+            </Box>
+          </Box>
+
+          <Box className={classes.headerFieldFull}>
+            <Typography component="label" className={classes.headerFieldLabel}>Address</Typography>
+            <Box className={classes.headerFieldValueRow}>
+              <LocationOnIcon aria-hidden="true" />
+              <span>Keizersgracht 123, 1015 CJ Amsterdam, Netherlands</span>
+            </Box>
+          </Box>
+
+          <Box className={classes.headerFieldGrid}>
+            <Box className={classes.headerField}>
+              <Typography component="label" className={classes.headerFieldLabel}>Email</Typography>
+              <Box className={`${classes.headerFieldValueRow} ${classes.headerFieldValueEmail}`}>
+                <EmailIcon aria-hidden="true" />
+                <span>lena.muller@email.com</span>
               </Box>
-            </Stack>
-
-            <Grid container spacing={1.5}>
-              <Grid size={{ xs: 12, sm: 6 }}>
-                <Typography className={classes.metaLabel}>Full Name</Typography>
-                <Typography className={classes.metaValue}>Lena Müller</Typography>
-              </Grid>
-              <Grid size={{ xs: 12, sm: 6 }}>
-                <Typography className={classes.metaLabel}>APP Reference</Typography>
-                <Typography className={classes.metaValueBlue}>APP-2026-0041</Typography>
-              </Grid>
-              <Grid size={{ xs: 12, sm: 6 }}>
-                <Box className={classes.metaIconRow}>
-                  <LocationOnIcon sx={{ fontSize: '12px' }} aria-hidden="true" />
-                  <Typography sx={{ fontSize: '12px' }}>Kaasengracht 123, 1015 CJ Amsterdam, Netherlands</Typography>
-                </Box>
-              </Grid>
-              <Grid size={{ xs: 12, sm: 6 }}>
-                <Stack direction="row" gap="16px">
-                  <Box className={classes.metaIconRow}>
-                    <EmailIcon sx={{ fontSize: '12px', color: '#3b82f6' }} aria-hidden="true" />
-                    <Typography sx={{ fontSize: '12px', color: '#3b82f6' }}>lena.muller@email.com</Typography>
-                  </Box>
-                  <Box className={classes.metaIconRow}>
-                    <PhoneIcon sx={{ fontSize: '12px' }} aria-hidden="true" />
-                    <Typography sx={{ fontSize: '12px' }}>+1 1234 5678</Typography>
-                  </Box>
-                </Stack>
-              </Grid>
-            </Grid>
+            </Box>
+            <Box className={classes.headerField}>
+              <Typography component="label" className={classes.headerFieldLabel}>Mobile Telephone</Typography>
+              <Box className={classes.headerFieldValueRow}>
+                <PhoneIcon aria-hidden="true" />
+                <span>+31 6 1234 5678</span>
+              </Box>
+            </Box>
           </Box>
+        </Box>
 
-          {/* Map placeholder */}
-          <Box className={classes.mapPlaceholder} aria-label="Candidate location map">
-            <Typography className={classes.mapPlaceholderText}>📍 Map View</Typography>
-          </Box>
-        </Stack>
+        <Box className={classes.mapPlaceholder} aria-label="Candidate location map">
+          <Typography className={classes.mapPlaceholderText}>📍 Map View</Typography>
+        </Box>
       </Paper>
 
 
@@ -188,277 +290,340 @@ export const Application: React.FC = () => {
       {tab === 0 && (
         <Box role="tabpanel" id="tabpanel-app" aria-labelledby="tab-app">
 
-          {/* Application Form heading */}
-          <Box sx={{ mb: '18px' }}>
-            <Typography component="h2" className={classes.appFormTitle}>Application Form</Typography>
-            <Typography className={classes.appFormSubtitle}>Review and update submitted application responses</Typography>
-          </Box>
+          {/* ─── Application Form (single card, dividers between sub-sections) ── */}
+          <Paper elevation={0} className={classes.appFormCard}>
 
-          {/* Declarations */}
-          <Paper className={classes.sectionCard}>
-            <Box className={classes.sectionHeaderRow}>
-              <Box className={classes.sectionIconBox} sx={{ backgroundColor: '#059669' }}>
-                <WorkIcon sx={{ fontSize: '13px', color: '#ffffff' }} />
-              </Box>
-              <Typography component="h2" className={classes.sectionTitle}>Declarations</Typography>
+            {/* Header */}
+            <Box className={classes.appFormHeader}>
+              <Typography component="h2" className={classes.appFormTitle}>Application Form</Typography>
+              <Typography className={classes.appFormSubtitle}>Review and update submitted application responses</Typography>
             </Box>
-            <Grid container spacing={2.5}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Typography className={classes.questionLabel}>Are you eligible to undertake employment in the UK if offered a position? *</Typography>
-                <YesNo yesActive noActive={false} classes={classes} label="Eligible to work in UK" />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Typography className={classes.questionLabel}>Are you an existing employee of HIE? *</Typography>
-                <YesNo yesActive={false} noActive classes={classes} label="Existing employee of HIE" />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <Typography className={classes.questionLabel}>
-                  Have you ever been convicted of any criminal offences which are not yet spent under the Rehabilitation of Offenders Act 1974, or have any impending charges against you? *
-                </Typography>
-                <YesNo yesActive noActive={false} classes={classes} label="Criminal convictions" />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Typography className={classes.questionLabel}>Do you hold a full current driving licence? *</Typography>
-                <YesNo yesActive noActive={false} classes={classes} label="Driving licence" />
-              </Grid>
-            </Grid>
+
+            {/* Body */}
+            <Box className={classes.appFormBody}>
+
+              {/* Declarations */}
+              <Box className={classes.formSection}>
+                <Box className={classes.sectionHeaderRow}>
+                  <Box className={classes.sectionIconBox}><WorkIcon /></Box>
+                  <Typography component="h3" className={classes.sectionTitle}>Declarations</Typography>
+                </Box>
+                <Box className={classes.formGrid}>
+                  <Box className={classes.formCol6}>
+                    <Typography component="label" className={classes.questionLabel}>
+                      Are you eligible to undertake employment in the UK if offered a position?<Req classes={classes} />
+                    </Typography>
+                    <YesNo defaultValue="yes" classes={classes} label="Eligible to work in UK" />
+                  </Box>
+                  <Box className={classes.formCol6}>
+                    <Typography component="label" className={classes.questionLabel}>
+                      Are you an existing employee of HIE?<Req classes={classes} />
+                    </Typography>
+                    <YesNo defaultValue="no" classes={classes} label="Existing employee of HIE" />
+                  </Box>
+                  <Box className={classes.formCol12}>
+                    <Typography component="label" className={classes.questionLabel}>
+                      Have you ever been convicted of any criminal offences which are not yet spent under the Rehabilitation of Offenders Act 1974, or have any impending charges against you?<Req classes={classes} />
+                    </Typography>
+                    <YesNo defaultValue="no" classes={classes} label="Criminal convictions" />
+                  </Box>
+                  <Box className={classes.formCol6}>
+                    <Typography component="label" className={classes.questionLabel}>
+                      Do you hold a full current driving licence?<Req classes={classes} />
+                    </Typography>
+                    <YesNo defaultValue="yes" classes={classes} label="Driving licence" />
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box className={classes.formDivider} />
+
+              {/* Source & Interview Requirements */}
+              <Box className={classes.formSection}>
+                <Box className={classes.sectionHeaderRow}>
+                  <Box className={classes.sectionIconBox}><LinkIcon /></Box>
+                  <Typography component="h3" className={classes.sectionTitle}>Source &amp; Interview Requirements</Typography>
+                </Box>
+                <Box className={classes.formGrid}>
+                  <Box className={classes.formCol6}>
+                    <DropdownField
+                      label="Source of Interest *"
+                      value="Indeed Job Post — Easy Apply"
+                      options={['Indeed Job Post — Easy Apply', 'LinkedIn', 'Company Website', 'Referral', 'Other']}
+                      classes={classes}
+                    />
+                  </Box>
+                  <Box className={classes.formCol6}>
+                    <ReadField label="If you were invited for interview, would you have any special requirements?" value="None" classes={classes} />
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box className={classes.formDivider} />
+
+              {/* Education */}
+              <Box className={classes.formSection}>
+                <Box className={classes.sectionHeaderRow}>
+                  <Box className={classes.sectionIconBox}><SchoolIcon /></Box>
+                  <Typography component="h3" className={classes.sectionTitle}>Education</Typography>
+                </Box>
+                <Box className={classes.formGrid}>
+                  <Box className={classes.formCol12}>
+                    <ReadField label="Name of school, university, college or other institution *" value="TU Delft" classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol12}>
+                    <ReadField label="Subjects / Level & Result obtained *" value="MSc Computer Science — Distinction" multiline classes={classes} />
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box className={classes.formDivider} />
+
+              {/* Reasons for Applying */}
+              <Box className={classes.formSection}>
+                <Box className={classes.sectionHeaderRow}>
+                  <Box className={classes.sectionIconBox}><PersonIcon /></Box>
+                  <Typography component="h3" className={classes.sectionTitle}>Reasons for Applying</Typography>
+                </Box>
+                <ReadField
+                  label="What are your reasons for applying for the post? *"
+                  value="I am passionate about building scalable systems and the Senior Software Engineer role at HIE aligns perfectly with my experience in distributed architecture and cloud-native development."
+                  multiline
+                  charCount
+                  classes={classes}
+                />
+              </Box>
+
+              <Box className={classes.formDivider} />
+
+              {/* Present Employer */}
+              <Box className={classes.formSection}>
+                <Box className={classes.sectionHeaderRow}>
+                  <Box className={classes.sectionIconBox}><WorkIcon /></Box>
+                  <Typography component="h3" className={classes.sectionTitle}>Present Employer</Typography>
+                </Box>
+                <Box className={classes.formGrid}>
+                  <Box className={classes.formCol6}>
+                    <DateField label="Present Employer (Date From) *" classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol6}>
+                    <DateField label="Present Employer (Date To)" hint="Leave blank if current employer" classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol12}>
+                    <ReadField label="Present Employer Name / Address *" value="TechFlow B.V., Herengracht 456, Amsterdam" multiline classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol12}>
+                    <ReadField label="Present Employer Position Held and Nature of Work *" value="Senior Backend Engineer — Led microservices migration and API gateway redesign" multiline classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol6}>
+                    <ReadField label="Present Employer Salary" value="€72,000 per annum" classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol6}>
+                    <DropdownField
+                      label="Current Employer Category"
+                      value="Select category..."
+                      options={['Select category...', 'Technology', 'Finance', 'Healthcare', 'Retail', 'Education', 'Other']}
+                      classes={classes}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box className={classes.formDivider} />
+
+              {/* Previous Employer 1 */}
+              <Box className={classes.formSection}>
+                <Box className={classes.sectionHeaderRow}>
+                  <Box className={classes.sectionIconBox}><HistoryIcon /></Box>
+                  <Typography component="h3" className={classes.sectionTitle}>Previous Employer 1</Typography>
+                </Box>
+                <Box className={classes.formGrid}>
+                  <Box className={classes.formCol6}>
+                    <DateField label="Previous Employer (Date From)" classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol6}>
+                    <DateField label="Previous Employer (Date To)" classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol12}>
+                    <ReadField label="Previous Employer Name / Address" value="DataPulse GmbH, Friedrichstraße 89, Berlin" multiline classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol12}>
+                    <ReadField label="Position Held and Nature of Work" value="Software Engineer — Built real-time analytics pipelines" multiline classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol6}>
+                    <ReadField label="Salary" value="€58,000 per annum" classes={classes} />
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box className={classes.formDivider} />
+
+              {/* Previous Employer 2 */}
+              <Box className={classes.formSection}>
+                <Box className={classes.sectionHeaderRow}>
+                  <Box className={classes.sectionIconBox}><HistoryIcon /></Box>
+                  <Typography component="h3" className={classes.sectionTitle}>Previous Employer 2</Typography>
+                </Box>
+                <Box className={classes.formGrid}>
+                  <Box className={classes.formCol6}>
+                    <DateField label="Previous Employer (Date From)" classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol6}>
+                    <DateField label="Previous Employer (Date To)" classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol12}>
+                    <ReadField label="Previous Employer Name / Address" value="StartUp Labs, Singel 12, Amsterdam" multiline classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol12}>
+                    <ReadField label="Position Held and Nature of Work" value="Junior Developer — Full-stack web development" multiline classes={classes} />
+                  </Box>
+                  <Box className={classes.formCol6}>
+                    <ReadField label="Salary" value="€42,000 per annum" classes={classes} />
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box className={classes.formDivider} />
+
+              {/* Personal Statement */}
+              <Box className={classes.formSection}>
+                <Box className={classes.sectionHeaderRow}>
+                  <Box className={classes.sectionIconBox}><PersonIcon /></Box>
+                  <Typography component="h3" className={classes.sectionTitle}>Personal Statement</Typography>
+                </Box>
+                <ReadField
+                  label="Personal Statement *"
+                  value="With over 7 years of experience in software engineering, I have developed a strong foundation in designing and implementing scalable backend systems. My expertise spans across cloud infrastructure, microservices architecture, and API design. I thrive in collaborative environments and am eager to contribute to HIE's mission of delivering world-class digital solutions."
+                  multiline
+                  charCount
+                  maxChars={500}
+                  classes={classes}
+                />
+              </Box>
+            </Box>
           </Paper>
 
-          {/* Source & Interview Requirements */}
-          <Paper className={classes.sectionCard}>
-            <Box className={classes.sectionHeaderRow}>
-              <Box className={classes.sectionIconBox}>
-                <LinkIcon sx={{ fontSize: '13px', color: '#ffffff' }} />
-              </Box>
-              <Typography component="h2" className={classes.sectionTitle}>Source &amp; Interview Requirements</Typography>
+          {/* ─── Application Summary (Figma spec) ──────────────────────────── */}
+          <Paper elevation={0} className={classes.summaryCard}>
+            <Box className={classes.summaryHeader}>
+              <Typography component="h2" className={classes.summaryTitle}>Application Summary</Typography>
+              <Typography className={classes.summarySubtitle}>Current state of this application</Typography>
             </Box>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <ReadField label="Source of Interest *" value="Indeed Job Post — Easy Apply" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <ReadField label="If you were invited for interview, would you have any special requirements?" value="None" classes={classes} />
-              </Grid>
-            </Grid>
+            <Box className={classes.summaryBody}>
+              <Box className={classes.summaryCol}>
+                <Typography component="label" className={classes.summaryLabel}>Current Status</Typography>
+                <span className={classes.statusPillFresh}>Fresh</span>
+              </Box>
+              <Box className={classes.summaryCol}>
+                <Typography component="label" className={classes.summaryLabel}>Created Date</Typography>
+                <Box className={classes.summaryDateRow}>
+                  <CalendarTodayIcon aria-hidden="true" />
+                  <span>2026-04-22</span>
+                </Box>
+              </Box>
+              <Box className={classes.summaryCol}>
+                <Typography component="label" className={classes.summaryLabel}>Last Updated</Typography>
+                <Box className={classes.summaryDateRow}>
+                  <CalendarTodayIcon aria-hidden="true" />
+                  <span>2026-04-25</span>
+                </Box>
+              </Box>
+            </Box>
           </Paper>
 
-          {/* Education */}
-          <Paper className={classes.sectionCard}>
-            <Box className={classes.sectionHeaderRow}>
-              <Box className={classes.sectionIconBox}>
-                <SchoolIcon sx={{ fontSize: '13px', color: '#ffffff' }} />
-              </Box>
-              <Typography component="h2" className={classes.sectionTitle}>Education</Typography>
+          {/* ─── Source of Application (Figma spec) ────────────────────────── */}
+          <Paper elevation={0} className={classes.sourceCard}>
+            <Box className={classes.sourceHeader}>
+              <Typography component="h2" className={classes.sourceTitle}>Source of Application</Typography>
             </Box>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12 }}>
-                <ReadField label="Name of school, university, college or other institution *" value="TU Delft" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <ReadField label="Subjects / Level &amp; Result obtained *" value="MSc Computer Science — Distinction" classes={classes} />
-              </Grid>
-            </Grid>
-          </Paper>
-
-          {/* Reasons for Applying */}
-          <Paper className={classes.sectionCard}>
-            <Box className={classes.sectionHeaderRow}>
-              <Box className={classes.sectionIconBox}>
-                <PersonIcon sx={{ fontSize: '13px', color: '#ffffff' }} />
-              </Box>
-              <Typography component="h2" className={classes.sectionTitle}>Reasons for Applying</Typography>
-            </Box>
-            <ReadField
-              label="What are your reasons for applying for the post? *"
-              value="I am passionate about building scalable systems and the Senior Software Engineer role at HIE aligns perfectly with my experience in distributed architecture and cloud-native development."
-              multiline
-              charCount
-              classes={classes}
-            />
-          </Paper>
-
-          {/* Present Employer */}
-          <Paper className={classes.sectionCard}>
-            <Box className={classes.sectionHeaderRow}>
-              <Box className={classes.sectionIconBox}>
-                <WorkIcon sx={{ fontSize: '13px', color: '#ffffff' }} />
-              </Box>
-              <Typography component="h2" className={classes.sectionTitle}>Present Employer</Typography>
-            </Box>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <DateField label="Present Employer (Date From) *" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <DateField label="Present Employer (Date To)" hint="Leave blank if current employer" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <ReadField label="Present Employer Name / Address *" value="TechFlow B.V., Herengracht 456, Amsterdam" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <ReadField label="Present Employer Position Held and Nature of Work *" value="Senior Backend Engineer — Led microservices migration and API gateway redesign" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <ReadField label="Present Employer Salary" value="€72,000 per annum" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <ReadField label="Current Employer Category" value="Select category..." classes={classes} />
-              </Grid>
-            </Grid>
-          </Paper>
-
-          {/* Previous Employer 1 */}
-          <Paper className={classes.sectionCard}>
-            <Box className={classes.sectionHeaderRow}>
-              <Box className={classes.sectionIconBox}>
-                <HistoryIcon sx={{ fontSize: '13px', color: '#ffffff' }} />
-              </Box>
-              <Typography component="h2" className={classes.sectionTitle}>Previous Employer 1</Typography>
-            </Box>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <DateField label="Previous Employer (Date From)" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <DateField label="Previous Employer (Date To)" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <ReadField label="Previous Employer Name / Address" value="DataPulse GmbH, Friedrichstraße 89, Berlin" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <ReadField label="Position Held and Nature of Work" value="Software Engineer — Built real-time analytics pipelines" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <ReadField label="Salary" value="€58,000 per annum" classes={classes} />
-              </Grid>
-            </Grid>
-          </Paper>
-
-          {/* Previous Employer 2 */}
-          <Paper className={classes.sectionCard}>
-            <Box className={classes.sectionHeaderRow}>
-              <Box className={classes.sectionIconBox}>
-                <HistoryIcon sx={{ fontSize: '13px', color: '#ffffff' }} />
-              </Box>
-              <Typography component="h2" className={classes.sectionTitle}>Previous Employer 2</Typography>
-            </Box>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <DateField label="Previous Employer (Date From)" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <DateField label="Previous Employer (Date To)" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <ReadField label="Previous Employer Name / Address" value="StartUp Labs, Singel 12, Amsterdam" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <ReadField label="Position Held and Nature of Work" value="Junior Developer — Full-stack web development" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <ReadField label="Salary" value="€42,000 per annum" classes={classes} />
-              </Grid>
-            </Grid>
-          </Paper>
-
-          {/* Personal Statement */}
-          <Paper className={classes.sectionCard}>
-            <Box className={classes.sectionHeaderRow}>
-              <Box className={classes.sectionIconBox}>
-                <PersonIcon sx={{ fontSize: '13px', color: '#ffffff' }} />
-              </Box>
-              <Typography component="h2" className={classes.sectionTitle}>Personal Statement</Typography>
-            </Box>
-            <ReadField
-              label="Personal Statement *"
-              value="With over 7 years of experience in software engineering, I have developed a strong foundation in designing and implementing scalable backend systems. My expertise spans across cloud infrastructure, microservices architecture, and API design. I thrive in collaborative environments and am eager to contribute to HIE's mission of delivering world-class digital solutions."
-              multiline
-              charCount
-              maxChars={500}
-              classes={classes}
-            />
-          </Paper>
-
-          {/* Application summary */}
-          <Paper className={classes.sectionCard}>
-            <Typography component="h2" className={classes.sectionTitle} sx={{ mb: '12px' }}>Application Summary</Typography>
-            <Typography className={classes.appFormSubtitle} sx={{ mb: '14px' }}>Update the state of this application</Typography>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 3 }}>
-                <Typography className={classes.fieldLabel}>Current Status</Typography>
-                <StatusBadge status="Fresh" />
-              </Grid>
-              <Grid size={{ xs: 12, md: 3 }}>
-                <ReadField label="Created Date" value="2026-04-22" classes={classes} />
-              </Grid>
-              <Grid size={{ xs: 12, md: 3 }}>
-                <ReadField label="Last Updated" value="2026-04-25" classes={classes} />
-              </Grid>
-            </Grid>
-            <Box sx={{ mt: '14px' }}>
-              <Typography className={classes.fieldLabel}>Source of Application</Typography>
+            <Box className={classes.sourceBody}>
               <Box className={classes.sourceRow}>
                 <Box className={classes.sourceIcon} aria-hidden="true">
-                  <Typography className={classes.sourceIconText}>in</Typography>
+                  <LinkIcon />
                 </Box>
-                <Typography className={classes.sourceText}>Indeed Job Post — Easy Apply</Typography>
+                <Typography component="span" className={classes.sourceText}>
+                  LinkedIn Job Post — Direct Apply
+                </Typography>
               </Box>
             </Box>
           </Paper>
 
-          {/* Interview list */}
-          <Paper className={classes.sectionCard}>
-            <Box className={classes.subSectionHeader}>
-              <Typography component="h2" className={classes.sectionTitle}>Interview List</Typography>
-              <Button size="small" className={classes.addBtn} startIcon={<AddIcon sx={{ fontSize: '12px' }} />}
-                aria-label="Add new interview">
+          {/* ─── Interview List (Figma spec) ───────────────────────────────── */}
+          <Paper elevation={0} className={classes.tableCard}>
+            <Box className={classes.tableCardHeader}>
+              <Box className={classes.tableCardTitleBlock}>
+                <Typography component="h2" className={classes.tableCardTitle}>Interview List</Typography>
+                <Typography className={classes.tableCardSubtitle}>{interviews.length} interviews scheduled</Typography>
+              </Box>
+              <Button
+                className={classes.addBtn}
+                startIcon={<AddIcon />}
+                aria-label="Add new interview"
+              >
                 Add Interview
               </Button>
             </Box>
-            <Table size="small" aria-label="Interview list">
+            <Table className={classes.appTable} aria-label="Interview list">
               <TableHead>
                 <TableRow>
-                  <TableCell>Location</TableCell>
-                  <TableCell>Date &amp; Time</TableCell>
-                  <TableCell>Confirmed</TableCell>
+                  <TableCell>LOCATION</TableCell>
+                  <TableCell>DATE &amp; TIME</TableCell>
+                  <TableCell align="center">CONFIRMED</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {interviews.map((row, i) => (
                   <TableRow key={i} className={classes.tableRow}>
                     <TableCell>
-                      <Stack direction="row" alignItems="center" gap="6px" sx={{ fontSize: '13px' }}>
+                      <Box className={classes.tableCellRow}>
                         {row.isVideo
-                          ? <VideoCallIcon sx={{ fontSize: '13px', color: '#64748b' }} aria-hidden="true" />
-                          : <LocationOnIcon sx={{ fontSize: '13px', color: '#64748b' }} aria-hidden="true" />}
-                        {row.location}
-                      </Stack>
+                          ? <VideoCallIcon aria-hidden="true" />
+                          : <LocationOnIcon aria-hidden="true" />}
+                        <span>{row.location}</span>
+                      </Box>
                     </TableCell>
-                    <TableCell sx={{ color: '#64748b' }}>{row.datetime}</TableCell>
-                    <TableCell><StatusBadge status={row.confirmed ? 'Yes' : 'Pending'} /></TableCell>
+                    <TableCell>
+                      <Box className={classes.tableCellRow}>
+                        <CalendarTodayIcon aria-hidden="true" />
+                        <span>{row.datetime}</span>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">
+                      <span className={`${classes.statusPillBase} ${row.confirmed ? classes.statusPillYes : classes.statusPillPending}`}>
+                        {row.confirmed ? '✓' : '⏱'} {row.confirmed ? 'Yes' : 'Pending'}
+                      </span>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </Paper>
 
-          {/* Offer list */}
-          <Paper className={classes.sectionCard}>
-            <Typography component="h2" className={classes.sectionTitle} sx={{ mb: '12px' }}>Offer List</Typography>
-            <Table size="small" aria-label="Offer list">
+          {/* ─── Offer List (Figma spec) ───────────────────────────────────── */}
+          <Paper elevation={0} className={classes.tableCard}>
+            <Box className={classes.tableCardHeader}>
+              <Box className={classes.tableCardTitleBlock}>
+                <Typography component="h2" className={classes.tableCardTitle}>Offer List</Typography>
+                <Typography className={classes.tableCardSubtitle}>1 offer made</Typography>
+              </Box>
+            </Box>
+            <Table className={classes.appTable} aria-label="Offer list">
               <TableHead>
                 <TableRow>
-                  {['Created Date', 'Start Date', 'Salary & Benefits', 'Confirmed'].map((h) => (
-                    <TableCell key={h}>{h}</TableCell>
-                  ))}
+                  <TableCell>CREATED DATE</TableCell>
+                  <TableCell>START DATE</TableCell>
+                  <TableCell>SALARY &amp; BENEFITS</TableCell>
+                  <TableCell align="center">ACCEPTED</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow className={classes.tableRow}>
-                  <TableCell>2026-04-03</TableCell>
+                  <TableCell>2026-04-20</TableCell>
                   <TableCell>2026-06-01</TableCell>
-                  <TableCell>€85,000 / year + 25 days holiday</TableCell>
-                  <TableCell><StatusBadge status="Pending" /></TableCell>
+                  <TableCell>€85,000 + pension + 25 days holiday</TableCell>
+                  <TableCell align="center">
+                    <span className={`${classes.statusPillBase} ${classes.statusPillPending}`}>⏱ Pending</span>
+                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -479,5 +644,6 @@ export const Application: React.FC = () => {
 
       </Box> {/* pageContent */}
     </Box>
+    </LocalizationProvider>
   );
 };
