@@ -43,6 +43,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'column',
     padding: '16px 6px',
     flex: 1,
+    [theme.breakpoints.down('md')]: {
+      marginTop: '43px',
+    },
   },
 
   // Section header button (Actions / Navigation rows)

@@ -28,7 +28,7 @@ import LiveApplicationsIcon from "../../assets/LiveApplications.svg";
 import InterviewsPendingIcon from "../../assets/InterviewsPending.svg";
 import AddIcon from "@mui/icons-material/Add";
 import PersonIcon from "@mui/icons-material/Person";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import LocationOnIcon from "../../assets/location.svg";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CloseIcon from "@mui/icons-material/Close";
@@ -51,12 +51,48 @@ interface StatCard {
 }
 
 const statCards: StatCard[] = [
-  { value: 24,  label: "Live Jobs",               iconSrc: LiveJobsIcon,               iconBg: "#d1fae5", borderColor: "#6ee7b7" },
-  { value: 7,   label: "Awaiting Authorization",  iconSrc: AwaitingAuthorizationIcon,  iconBg: "#fef3c7", borderColor: "#fcd34d" },
-  { value: 5,   label: "Awaiting Advertisement",  iconSrc: AwaitingAdvertisementIcon,  iconBg: "#ffedd5", borderColor: "#fdba74" },
-  { value: 38,  label: "Candidates to Review",    iconSrc: CandidatestoReviewIcon,     iconBg: "#e0f2fe", borderColor: "#7dd3fc" },
-  { value: 112, label: "Live Applications",       iconSrc: LiveApplicationsIcon,       iconBg: "#ede9fe", borderColor: "#c4b5fd" },
-  { value: 14,  label: "Interviews Pending",      iconSrc: InterviewsPendingIcon,      iconBg: "#ffe4e6", borderColor: "#fda4af" },
+  {
+    value: 24,
+    label: "Live Jobs",
+    iconSrc: LiveJobsIcon,
+    iconBg: "#ECFDF5",
+    borderColor: "#A7F3D0",
+  },
+  {
+    value: 7,
+    label: "Awaiting Authorization",
+    iconSrc: AwaitingAuthorizationIcon,
+    iconBg: "#FFFBEB",
+    borderColor: "#FDE68A",
+  },
+  {
+    value: 5,
+    label: "Awaiting Advertisement",
+    iconSrc: AwaitingAdvertisementIcon,
+    iconBg: "#FFF7ED",
+    borderColor: "#FED7AA",
+  },
+  {
+    value: 38,
+    label: "Candidates to Review",
+    iconSrc: CandidatestoReviewIcon,
+    iconBg: "#F0F9FF",
+    borderColor: "#BAE6FD",
+  },
+  {
+    value: 112,
+    label: "Live Applications",
+    iconSrc: LiveApplicationsIcon,
+    iconBg: "#F5F3FF",
+    borderColor: "#DDD6FE",
+  },
+  {
+    value: 14,
+    label: "Interviews Pending",
+    iconSrc: InterviewsPendingIcon,
+    iconBg: "#FFF1F2",
+    borderColor: "#FECDD3",
+  },
 ];
 
 const candidateStatusData = [
@@ -72,53 +108,151 @@ const groupAppData = [
 
 const vacancies: VacancyData[] = [
   {
-    id: 1, title: "Senior Software Engineer", location: "London, UK",     status: "Live",            total: 24, fresh: 8, interview: 5,
-    contractType: "Permanent", grade: "Grade 7", department: "IT Department",
-    jobDescription: "Lead the design and development of scalable software systems, mentor junior engineers, and collaborate with product and design teams to deliver high-quality solutions.",
-    fullJobDescription: "As a Senior Software Engineer you will be responsible for architecting, implementing and maintaining complex distributed systems. You will work closely with product managers, UX designers and stakeholders to translate business requirements into technical solutions. Responsibilities include code reviews, technical documentation, and contributing to the engineering roadmap.",
-    costCentre: "CC-1042", reportingTo: "Engineering Manager", replacementFor: "N/A", hours: "37 hours/week", startDate: "01 Apr 2024",
+    id: 1,
+    title: "Senior Software Engineer",
+    location: "London, UK",
+    status: "Live",
+    total: 24,
+    fresh: 8,
+    interview: 5,
+    contractType: "Permanent",
+    grade: "Grade 7",
+    department: "IT Department",
+    jobDescription:
+      "Lead the design and development of scalable software systems, mentor junior engineers, and collaborate with product and design teams to deliver high-quality solutions.",
+    fullJobDescription:
+      "As a Senior Software Engineer you will be responsible for architecting, implementing and maintaining complex distributed systems. You will work closely with product managers, UX designers and stakeholders to translate business requirements into technical solutions. Responsibilities include code reviews, technical documentation, and contributing to the engineering roadmap.",
+    costCentre: "CC-1042",
+    reportingTo: "Engineering Manager",
+    replacementFor: "N/A",
+    hours: "37 hours/week",
+    startDate: "01 Apr 2024",
   },
   {
-    id: 2, title: "Product Manager", location: "Manchester, UK",          status: "Awaiting Auth",   total: 12, fresh: 4, interview: 2,
-    contractType: "Permanent", grade: "Grade 6", department: "Communities and Place",
-    jobDescription: "Define product vision, manage roadmap priorities and work cross-functionally to deliver customer-centric features on time.",
-    fullJobDescription: "The Product Manager will own the product lifecycle from discovery to delivery. You will gather requirements from stakeholders, write user stories, prioritise the backlog and coordinate with engineering and design to ship features that solve real user problems. Experience with agile methodologies and data-driven decision making is essential.",
-    costCentre: "CC-2011", reportingTo: "Head of Product", replacementFor: "J. Harris", hours: "37 hours/week", startDate: "15 Apr 2024",
+    id: 2,
+    title: "Product Manager",
+    location: "Manchester, UK",
+    status: "Awaiting Auth",
+    total: 12,
+    fresh: 4,
+    interview: 2,
+    contractType: "Permanent",
+    grade: "Grade 6",
+    department: "Communities and Place",
+    jobDescription:
+      "Define product vision, manage roadmap priorities and work cross-functionally to deliver customer-centric features on time.",
+    fullJobDescription:
+      "The Product Manager will own the product lifecycle from discovery to delivery. You will gather requirements from stakeholders, write user stories, prioritise the backlog and coordinate with engineering and design to ship features that solve real user problems. Experience with agile methodologies and data-driven decision making is essential.",
+    costCentre: "CC-2011",
+    reportingTo: "Head of Product",
+    replacementFor: "J. Harris",
+    hours: "37 hours/week",
+    startDate: "15 Apr 2024",
   },
   {
-    id: 3, title: "UX Designer", location: "Remote",                      status: "Live",            total: 18, fresh: 6, interview: 4,
-    contractType: "Fixed Term", grade: "Grade 5", department: "People and Culture",
-    jobDescription: "Create intuitive user experiences through research, wireframing and prototyping, ensuring designs meet accessibility standards.",
-    fullJobDescription: "We are looking for a talented UX Designer to join our growing design team. You will conduct user research, create wireframes and interactive prototypes, and work with developers to ensure pixel-perfect implementation. You will champion accessibility and inclusive design across all digital products.",
-    costCentre: "CC-3055", reportingTo: "Design Lead", replacementFor: "N/A", hours: "35 hours/week", startDate: "01 May 2024",
+    id: 3,
+    title: "UX Designer",
+    location: "Remote",
+    status: "Live",
+    total: 18,
+    fresh: 6,
+    interview: 4,
+    contractType: "Fixed Term",
+    grade: "Grade 5",
+    department: "People and Culture",
+    jobDescription:
+      "Create intuitive user experiences through research, wireframing and prototyping, ensuring designs meet accessibility standards.",
+    fullJobDescription:
+      "We are looking for a talented UX Designer to join our growing design team. You will conduct user research, create wireframes and interactive prototypes, and work with developers to ensure pixel-perfect implementation. You will champion accessibility and inclusive design across all digital products.",
+    costCentre: "CC-3055",
+    reportingTo: "Design Lead",
+    replacementFor: "N/A",
+    hours: "35 hours/week",
+    startDate: "01 May 2024",
   },
   {
-    id: 4, title: "Data Analyst", location: "Birmingham, UK",             status: "Awaiting Advert", total: 9,  fresh: 3, interview: 1,
-    contractType: "Permanent", grade: "Grade 5", department: "Finance and Corporate Services",
-    jobDescription: "Analyse large datasets, build dashboards and provide actionable insights to support strategic decision-making.",
-    fullJobDescription: "The Data Analyst will work within our Business Intelligence team to gather, clean and analyse complex datasets. You will build and maintain Power BI dashboards, produce regular management reports and collaborate with business units to identify opportunities for data-driven improvement.",
-    costCentre: "CC-4021", reportingTo: "Head of Analytics", replacementFor: "N/A", hours: "37 hours/week", startDate: "01 Jun 2024",
+    id: 4,
+    title: "Data Analyst",
+    location: "Birmingham, UK",
+    status: "Awaiting Advert",
+    total: 9,
+    fresh: 3,
+    interview: 1,
+    contractType: "Permanent",
+    grade: "Grade 5",
+    department: "Finance and Corporate Services",
+    jobDescription:
+      "Analyse large datasets, build dashboards and provide actionable insights to support strategic decision-making.",
+    fullJobDescription:
+      "The Data Analyst will work within our Business Intelligence team to gather, clean and analyse complex datasets. You will build and maintain Power BI dashboards, produce regular management reports and collaborate with business units to identify opportunities for data-driven improvement.",
+    costCentre: "CC-4021",
+    reportingTo: "Head of Analytics",
+    replacementFor: "N/A",
+    hours: "37 hours/week",
+    startDate: "01 Jun 2024",
   },
   {
-    id: 5, title: "DevOps Engineer", location: "Edinburgh, UK",           status: "Live",            total: 15, fresh: 5, interview: 3,
-    contractType: "Permanent", grade: "Grade 6", department: "IT Department",
-    jobDescription: "Manage CI/CD pipelines, cloud infrastructure and ensure system reliability through monitoring and automation.",
-    fullJobDescription: "As a DevOps Engineer you will design and maintain our cloud infrastructure on AWS, implement CI/CD pipelines using GitHub Actions, and drive a culture of automation and reliability. You will work closely with development teams to improve deployment frequency and reduce mean time to recovery.",
-    costCentre: "CC-1042", reportingTo: "Infrastructure Lead", replacementFor: "M. Scott", hours: "37 hours/week", startDate: "15 Mar 2024",
+    id: 5,
+    title: "DevOps Engineer",
+    location: "Edinburgh, UK",
+    status: "Live",
+    total: 15,
+    fresh: 5,
+    interview: 3,
+    contractType: "Permanent",
+    grade: "Grade 6",
+    department: "IT Department",
+    jobDescription:
+      "Manage CI/CD pipelines, cloud infrastructure and ensure system reliability through monitoring and automation.",
+    fullJobDescription:
+      "As a DevOps Engineer you will design and maintain our cloud infrastructure on AWS, implement CI/CD pipelines using GitHub Actions, and drive a culture of automation and reliability. You will work closely with development teams to improve deployment frequency and reduce mean time to recovery.",
+    costCentre: "CC-1042",
+    reportingTo: "Infrastructure Lead",
+    replacementFor: "M. Scott",
+    hours: "37 hours/week",
+    startDate: "15 Mar 2024",
   },
   {
-    id: 6, title: "Marketing Specialist", location: "Bristol, UK",        status: "Draft",           total: 6,  fresh: 2, interview: 0,
-    contractType: "Fixed Term", grade: "Grade 4", department: "Communities and Place",
-    jobDescription: "Plan and execute multi-channel marketing campaigns to drive brand awareness and lead generation.",
-    fullJobDescription: "The Marketing Specialist will develop and deliver integrated marketing campaigns across digital and traditional channels. Responsibilities include content creation, social media management, email marketing, and performance reporting. You will work with the wider communications team to ensure brand consistency.",
-    costCentre: "CC-2033", reportingTo: "Marketing Manager", replacementFor: "N/A", hours: "35 hours/week", startDate: "01 Jul 2024",
+    id: 6,
+    title: "Marketing Specialist",
+    location: "Bristol, UK",
+    status: "Draft",
+    total: 6,
+    fresh: 2,
+    interview: 0,
+    contractType: "Fixed Term",
+    grade: "Grade 4",
+    department: "Communities and Place",
+    jobDescription:
+      "Plan and execute multi-channel marketing campaigns to drive brand awareness and lead generation.",
+    fullJobDescription:
+      "The Marketing Specialist will develop and deliver integrated marketing campaigns across digital and traditional channels. Responsibilities include content creation, social media management, email marketing, and performance reporting. You will work with the wider communications team to ensure brand consistency.",
+    costCentre: "CC-2033",
+    reportingTo: "Marketing Manager",
+    replacementFor: "N/A",
+    hours: "35 hours/week",
+    startDate: "01 Jul 2024",
   },
   {
-    id: 7, title: "Finance Analyst", location: "Leeds, UK",               status: "Live",            total: 11, fresh: 4, interview: 2,
-    contractType: "Permanent", grade: "Grade 5", department: "Finance and Corporate Services",
-    jobDescription: "Prepare financial reports, support budget planning and provide analysis to guide business performance.",
-    fullJobDescription: "The Finance Analyst will support the Finance Business Partnering team by producing monthly management accounts, variance analysis and forecasts. You will liaise with budget holders, assist with year-end processes and contribute to the continuous improvement of financial reporting processes.",
-    costCentre: "CC-4011", reportingTo: "Finance Business Partner", replacementFor: "N/A", hours: "37 hours/week", startDate: "01 May 2024",
+    id: 7,
+    title: "Finance Analyst",
+    location: "Leeds, UK",
+    status: "Live",
+    total: 11,
+    fresh: 4,
+    interview: 2,
+    contractType: "Permanent",
+    grade: "Grade 5",
+    department: "Finance and Corporate Services",
+    jobDescription:
+      "Prepare financial reports, support budget planning and provide analysis to guide business performance.",
+    fullJobDescription:
+      "The Finance Analyst will support the Finance Business Partnering team by producing monthly management accounts, variance analysis and forecasts. You will liaise with budget holders, assist with year-end processes and contribute to the continuous improvement of financial reporting processes.",
+    costCentre: "CC-4011",
+    reportingTo: "Finance Business Partner",
+    replacementFor: "N/A",
+    hours: "37 hours/week",
+    startDate: "01 May 2024",
   },
 ];
 
@@ -236,21 +370,20 @@ type BadgeVariant =
   | "Shortlisted"
   | "Rejected";
 
-const badgeStyles: Record<BadgeVariant, { bg: string; color: string }> = {
-  Live: { bg: "#dcfce7", color: "#166534" },
-  "Awaiting Auth": { bg: "#fef3c7", color: "#92400e" },
-  "Awaiting Advert": { bg: "#fef3c7", color: "#92400e" },
-  Draft: { bg: "#f1f5f9", color: "#475569" },
-  Fresh: { bg: "#dcfce7", color: "#166534" },
-  "Interview Confirmed": { bg: "#dbeafe", color: "#1e40af" },
-  Shortlisted: { bg: "#ede9fe", color: "#5b21b6" },
-  Rejected: { bg: "#fee2e2", color: "#991b1b" },
+const badgeStyles: Record<BadgeVariant, { bg: string; color: string; border: string }> = {
+  Live:                 { bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
+  "Awaiting Auth":      { bg: "#fffbeb", color: "#92400e", border: "#fde68a" },
+  "Awaiting Advert":    { bg: "#fff7ed", color: "#c2410c", border: "#fed7aa" },
+  Draft:                { bg: "#f8fafc", color: "#475569", border: "#cbd5e1" },
+  Fresh:                { bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
+  "Interview Confirmed":{ bg: "#eff6ff", color: "#1e40af", border: "#bfdbfe" },
+  Shortlisted:          { bg: "#f5f3ff", color: "#5b21b6", border: "#ddd6fe" },
+  Rejected:             { bg: "#fff1f2", color: "#991b1b", border: "#fecdd3" },
 };
 
 const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
   const style = badgeStyles[status as BadgeVariant] ?? {
-    bg: "#f1f5f9",
-    color: "#475569",
+    bg: "#f8fafc", color: "#475569", border: "#cbd5e1",
   };
   return (
     <Box
@@ -258,12 +391,13 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
         display: "inline-block",
         backgroundColor: style.bg,
         color: style.color,
-        borderRadius: "5px",
-        px: "8px",
-        py: "2px",
-        fontSize: "11px",
-        fontWeight: 700,
-        lineHeight: 1.6,
+        border: `1px solid ${style.border}`,
+        borderRadius: "999px",
+        px: "12px",
+        py: "3px",
+        fontSize: "12px",
+        fontWeight: 500,
+        lineHeight: 1.5,
         whiteSpace: "nowrap",
       }}
       role="status"
@@ -300,7 +434,9 @@ export const Dashboard: React.FC = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [successOpen, setSuccessOpen] = useState(false);
   const [quickViewOpen, setQuickViewOpen] = useState(false);
-  const [quickViewVacancy, setQuickViewVacancy] = useState<VacancyData | null>(null);
+  const [quickViewVacancy, setQuickViewVacancy] = useState<VacancyData | null>(
+    null,
+  );
 
   return (
     <Box
@@ -560,7 +696,7 @@ export const Dashboard: React.FC = () => {
               7 total vacancies
             </Typography>
           </Box>
-          <TableContainer>
+          <TableContainer sx={{ overflowX: 'auto' }}>
             <Table size="small" aria-label="Vacancies table">
               <TableHead>
                 <TableRow>
@@ -603,10 +739,7 @@ export const Dashboard: React.FC = () => {
                     <TableCell sx={{ fontWeight: 600 }}>{row.title}</TableCell>
                     <TableCell>
                       <Box className={classes.cellLocation}>
-                        <LocationOnIcon
-                          sx={{ fontSize: "11px" }}
-                          aria-hidden="true"
-                        />
+                        <img src={LocationOnIcon} alt="" style={{ width: '11px', height: 'auto' }} />
                         {row.location}
                       </Box>
                     </TableCell>
@@ -637,7 +770,11 @@ export const Dashboard: React.FC = () => {
                             <RemoveRedEyeIcon sx={{ fontSize: "12px" }} />
                           }
                           aria-label={`Quick view ${row.title}`}
-                          onClick={(e) => { e.stopPropagation(); setQuickViewVacancy(row); setQuickViewOpen(true); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setQuickViewVacancy(row);
+                            setQuickViewOpen(true);
+                          }}
                         >
                           Quick View
                         </Button>
@@ -664,7 +801,7 @@ export const Dashboard: React.FC = () => {
               8 total applications
             </Typography>
           </Box>
-          <TableContainer>
+          <TableContainer sx={{ overflowX: 'auto' }}>
             <Table size="small" aria-label="Applications table">
               <TableHead>
                 <TableRow>
@@ -724,10 +861,7 @@ export const Dashboard: React.FC = () => {
                     <TableCell>{row.vacancy}</TableCell>
                     <TableCell>
                       <Box className={classes.cellLocation}>
-                        <LocationOnIcon
-                          sx={{ fontSize: "11px" }}
-                          aria-hidden="true"
-                        />
+                        <img src={LocationOnIcon} alt="" style={{ width: '11px', height: 'auto' }} />
                         {row.location}
                       </Box>
                     </TableCell>
@@ -772,7 +906,10 @@ export const Dashboard: React.FC = () => {
         open={quickViewOpen}
         onClose={() => setQuickViewOpen(false)}
         vacancy={quickViewVacancy}
-        onFullView={(id) => { setQuickViewOpen(false); navigate(`/vacancy/${id}`); }}
+        onFullView={(id) => {
+          setQuickViewOpen(false);
+          navigate(`/vacancy/${id}`);
+        }}
       />
 
       {/* ─── New Vacancy wizard ───────────────────────────────────── */}

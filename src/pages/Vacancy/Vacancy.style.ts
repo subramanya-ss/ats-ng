@@ -14,6 +14,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
     overflowY: 'auto' as const,
     padding: '20px 24px 32px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px 12px 24px',
+    },
   },
 
   // ─── Tabs ────────────────────────────────────────────────────────────────────
@@ -50,7 +53,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: '44px',
     height: '44px',
     borderRadius: '10px',
-    backgroundColor: theme.palette.navy[800],
+    background: 'linear-gradient(135deg, #0F1F3D, #1E3A6E)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -87,6 +90,20 @@ export const useStyles = makeStyles((theme: Theme) => ({
     fontSize: '12px',
   },
 
+  // ─── Section divider ──────────────────────────────────────────────────────────
+  formDivider: {
+    width: '100%',
+    borderTop: '1px solid #F1F5F9',
+    marginTop: '32px',
+    marginBottom: '32px',
+  },
+
+  vacancyActions: {
+    gap: '12px',
+    display: 'flex',
+    flexWrap: 'wrap' as const,
+  },
+
   // ─── Single form card ─────────────────────────────────────────────────────────
   formCard: {
     border: `1px solid ${theme.palette.slate[200]} !important`,
@@ -109,7 +126,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   formSubtitle: {
     fontSize: '12px !important',
-    color: '#0891b2 !important',
+    color: '#94A3B8 !important',
     marginTop: '3px !important',
   },
   openBtn: {
@@ -138,14 +155,18 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: '16px',
   },
   sectionIconBox: {
-    width: '34px',
-    height: '34px',
-    borderRadius: '50%',
-    backgroundColor: '#0891b2',
+    width: '28px',
+    height: '28px',
+    borderRadius: '8px',
+    backgroundColor: '#F0FDFA',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 0,
+    '& .MuiSvgIcon-root': {
+      fontSize: '14px',
+      color: '#34D399',
+    },
   },
   sectionTitle: {
     fontWeight: '700 !important',
@@ -156,7 +177,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   sectionSubtitle: {
     fontSize: '12px !important',
-    color: '#0891b2 !important',
+    color: '#94A3B8 !important',
     lineHeight: '1.3 !important',
   },
 
@@ -184,8 +205,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'space-between',
   },
   fieldValue: {
-    fontSize: '13px',
-    color: theme.palette.navy[800],
+    fontSize: '12px !important',
+    color: '#334155',
     fontWeight: 500,
     lineHeight: 1.5,
     flex: 1,
@@ -210,7 +231,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     minHeight: '148px',
   },
   textAreaValue: {
-    fontSize: '13px',
+    fontSize: '12px !important',
     color: theme.palette.slate[700],
     lineHeight: 1.65,
   },

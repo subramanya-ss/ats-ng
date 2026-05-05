@@ -16,6 +16,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexShrink: 0,
     flexWrap: 'wrap' as const,
     gap: '12px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '12px 16px',
+    },
   },
   pageTitle: {
     fontWeight: '700 !important',
@@ -203,6 +206,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     fontSize: '10px !important',
     fontWeight: '700 !important',
     flexShrink: 0,
+    backgroundColor: '#e6e9ec !important',
+    color: '#0F1F3D !important',
   },
   candidateName: {
     fontSize: '13px !important',
@@ -235,5 +240,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
     overflowY: 'auto',
     padding: '24px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
+  },
+  tableScroll: {
+    overflowX: 'auto' as const,
+    width: '100%',
   },
 }));
