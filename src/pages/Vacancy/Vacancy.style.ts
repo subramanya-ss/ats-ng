@@ -163,11 +163,15 @@ export const useStyles = makeStyles((theme: Theme) => ({
   // ─── Form fields ─────────────────────────────────────────────────────────────
   fieldLabel: {
     display: 'block',
-    fontSize: '11px',
-    fontWeight: 500,
-    color: theme.palette.slate[500],
-    marginBottom: '5px',
-    lineHeight: 1.4,
+    fontFamily: '"Roboto", sans-serif !important',
+    fontWeight: '500 !important' as any,
+    fontSize: '12px !important',
+    lineHeight: '16px !important',
+    color: '#475569 !important',
+    paddingBottom: '6px',
+    marginBottom: 0,
+    textTransform: 'none' as const,
+    letterSpacing: '0 !important',
   },
   fieldBox: {
     border: `1px solid ${theme.palette.slate[200]}`,

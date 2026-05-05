@@ -19,22 +19,47 @@ import { Grid2 as Grid,
   Select,
   MenuItem,
 } from '@mui/material';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
-import WorkIcon from '@mui/icons-material/Work';
-import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
-import SchoolIcon from '@mui/icons-material/School';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
-import LinkIcon from '@mui/icons-material/Link';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import HistoryIcon from '@mui/icons-material/History';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import BadgeIcon from '@mui/icons-material/Badge';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import { useStyles } from './Application.style';
+
+// ─── SVG asset imports ────────────────────────────────────────────────────────
+import IconApplication from '../../assets/Application.svg';
+import IconPreview from '../../assets/preview.svg';
+import IconJournal from '../../assets/Journal.svg';
+import IconCalender from '../../assets/Calender.svg';
+import IconDeclarations from '../../assets/Declarations.svg';
+import IconEducation from '../../assets/Education.svg';
+import IconEmail from '../../assets/Email.svg';
+import IconHash from '../../assets/Hash.svg';
+import IconLink from '../../assets/Link.svg';
+import IconLocation from '../../assets/Location.svg';
+import IconNo from '../../assets/No.svg';
+import IconPerson from '../../assets/Person.svg';
+import IconPhone from '../../assets/Phone.svg';
+import IconPreEmp from '../../assets/Pre_Emp.svg';
+import IconPrevEmp from '../../assets/Prev_Emp.svg';
+import IconReasons from '../../assets/Reasons.svg';
+import IconRole from '../../assets/Role.svg';
+import IconSource from '../../assets/Source.svg';
+import IconYes from '../../assets/Yes.svg';
+import IconTic from '../../assets/Tic.svg';
+import IconPending from '../../assets/Pending.svg';
+
+// Lightweight wrapper so SVG assets behave like icons (sized, inline, hidden from a11y by default)
+const Icon: React.FC<{ src: string; size?: number; width?: number; height?: number; alt?: string; className?: string; style?: React.CSSProperties }> =
+  ({ src, size, width, height, alt = '', className, style }) => (
+    <img
+      src={src}
+      alt={alt}
+      aria-hidden={alt ? undefined : true}
+      width={width ?? size ?? 14}
+      height={height ?? size ?? 14}
+      className={className}
+      style={{ display: 'inline-block', verticalAlign: 'middle', flexShrink: 0, ...style }}
+    />
+  );
 
 // ─── Status badge ─────────────────────────────────────────────────────────────
 
@@ -63,12 +88,24 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
 
 // ─── Field helpers ────────────────────────────────────────────────────────────
 
+// Renders a label, splitting trailing " *" into a red asterisk
+const FieldLabel: React.FC<{ label: string; className: string }> = ({ label, className }) => {
+  const isRequired = label.endsWith(' *');
+  const base = isRequired ? label.slice(0, -2) : label;
+  return (
+    <Typography component="label" className={className}>
+      {base}
+      {isRequired && <span style={{ color: '#F87171', marginLeft: '2px' }}>*</span>}
+    </Typography>
+  );
+};
+
 const ReadField: React.FC<{
   label: string; value: string; multiline?: boolean; charCount?: boolean; maxChars?: number;
   classes: ReturnType<typeof useStyles>;
 }> = ({ label, value, multiline, charCount, maxChars, classes }) => (
   <Box sx={{ width: '100%' }}>
-    <Typography component="label" className={classes.fieldLabel}>{label}</Typography>
+    <FieldLabel label={label} className={classes.fieldLabel} />
     <Box className={multiline ? classes.textAreaBox : classes.fieldBox}>
       <Typography className={multiline ? classes.textAreaValue : classes.fieldValue}>{value || ' '}</Typography>
     </Box>
@@ -89,7 +126,7 @@ const DropdownField: React.FC<{
   const [val, setVal] = useState(value);
   return (
     <Box sx={{ width: '100%' }}>
-      <Typography component="label" className={classes.fieldLabel}>{label}</Typography>
+      <FieldLabel label={label} className={classes.fieldLabel} />
       <Select
         value={val}
         onChange={(e) => setVal(e.target.value as string)}
@@ -112,14 +149,13 @@ const DateField: React.FC<{ label: string; hint?: string; defaultValue?: string;
   const [value, setValue] = useState<Dayjs | null>(defaultValue ? dayjs(defaultValue) : null);
   return (
     <Box sx={{ width: '100%' }}>
-      <Typography component="label" className={classes.fieldLabel}>{label}</Typography>
+      <FieldLabel label={label} className={classes.fieldLabel} />
       <DatePicker
         value={value}
         onChange={(v) => setValue(v)}
-        slots={{ openPickerIcon: CalendarTodayIcon }}
+        slots={{ openPickerIcon: () => <Icon src={IconCalender} width={14} height={14} style={{ filter: 'brightness(0.55) saturate(0.6)' }} /> }}
         slotProps={{
           textField: { fullWidth: true, className: classes.datePickerField, placeholder: 'dd/mm/yyyy' },
-          openPickerIcon: { sx: { fontSize: '14px', color: '#9ca3af' } },
         }}
       />
       {hint && <Typography className={classes.fieldHint}>{hint}</Typography>}
@@ -146,9 +182,9 @@ const YesNo: React.FC<YesNoProps> = ({ defaultValue = null, classes, label }) =>
         aria-pressed={yesActive}
         aria-label="Yes"
       >
-        <Box component="span" className={`${classes.radioDotBase} ${yesActive ? classes.radioFilled : classes.radioEmpty}`} aria-hidden="true">
-          {yesActive ? '✓' : ''}
-        </Box>
+        {yesActive
+          ? <Icon src={IconYes} width={14} height={14} />
+          : <Box component="span" className={`${classes.radioDotBase} ${classes.radioEmpty}`} aria-hidden="true" />}
         Yes
       </Box>
       <Box
@@ -159,9 +195,9 @@ const YesNo: React.FC<YesNoProps> = ({ defaultValue = null, classes, label }) =>
         aria-pressed={noActive}
         aria-label="No"
       >
-        <Box component="span" className={`${classes.radioDotBase} ${noActive ? classes.radioFilledRed : classes.radioEmpty}`} aria-hidden="true">
-          {noActive ? '✓' : ''}
-        </Box>
+        {noActive
+          ? <Icon src={IconNo} width={14} height={14} />
+          : <Box component="span" className={`${classes.radioDotBase} ${classes.radioEmpty}`} aria-hidden="true" />}
         No
       </Box>
     </Box>
@@ -199,9 +235,9 @@ export const Application: React.FC = () => {
           className={classes.tabs}
           aria-label="Application sections"
         >
-          <Tab icon={<BadgeIcon />} iconPosition="start" label="Application" id="tab-app" aria-controls="tabpanel-app" />
-          <Tab icon={<AssessmentIcon />} iconPosition="start" label="Preview CV"  id="tab-cv"  aria-controls="tabpanel-cv" />
-          <Tab icon={<AssessmentIcon />} iconPosition="start" label="Journal"     id="tab-jnl" aria-controls="tabpanel-jnl" />
+          <Tab icon={<Icon src={IconApplication} size={14} />} iconPosition="start" label="Application" id="tab-app" aria-controls="tabpanel-app" />
+          <Tab icon={<Icon src={IconPreview} size={14} />} iconPosition="start" label="Preview CV"  id="tab-cv"  aria-controls="tabpanel-cv" />
+          <Tab icon={<Icon src={IconJournal} size={14} />} iconPosition="start" label="Journal"     id="tab-jnl" aria-controls="tabpanel-jnl" />
         </Tabs>
       </Box>
 
@@ -218,19 +254,19 @@ export const Application: React.FC = () => {
           </Box>
           <Box className={classes.candidateStripMeta}>
             <Box className={classes.candidateStripMetaItem}>
-              <WorkIcon aria-hidden="true" />
+              <Icon src={IconRole} width={13} height={12} />
               <span>Senior Software Engineer</span>
             </Box>
             <Box className={classes.candidateStripMetaItem}>
-              <LocationOnIcon aria-hidden="true" />
+              <Icon src={IconLocation} width={13} height={12} />
               <span>London, UK</span>
             </Box>
             <Box className={classes.candidateStripMetaItem}>
-              <CalendarTodayIcon aria-hidden="true" />
+              <Icon src={IconCalender} width={13} height={12} />
               <span>Applied 15 March 2024</span>
             </Box>
             <Box className={`${classes.candidateStripMetaItem} ${classes.candidateStripMetaItemMono}`}>
-              <LocalOfferIcon aria-hidden="true" />
+              <Icon src={IconHash} width={13} height={12} />
               <span>APP-2026-0041</span>
             </Box>
           </Box>
@@ -256,7 +292,7 @@ export const Application: React.FC = () => {
           <Box className={classes.headerFieldFull}>
             <Typography component="label" className={classes.headerFieldLabel}>Address</Typography>
             <Box className={classes.headerFieldValueRow}>
-              <LocationOnIcon aria-hidden="true" />
+              <Icon src={IconLocation} width={13} height={12} />
               <span>Keizersgracht 123, 1015 CJ Amsterdam, Netherlands</span>
             </Box>
           </Box>
@@ -265,14 +301,14 @@ export const Application: React.FC = () => {
             <Box className={classes.headerField}>
               <Typography component="label" className={classes.headerFieldLabel}>Email</Typography>
               <Box className={`${classes.headerFieldValueRow} ${classes.headerFieldValueEmail}`}>
-                <EmailIcon aria-hidden="true" />
+                <Icon src={IconEmail} width={13} height={12} />
                 <span>lena.muller@email.com</span>
               </Box>
             </Box>
             <Box className={classes.headerField}>
               <Typography component="label" className={classes.headerFieldLabel}>Mobile Telephone</Typography>
               <Box className={classes.headerFieldValueRow}>
-                <PhoneIcon aria-hidden="true" />
+                <Icon src={IconPhone} width={13} height={12} />
                 <span>+31 6 1234 5678</span>
               </Box>
             </Box>
@@ -305,7 +341,7 @@ export const Application: React.FC = () => {
               {/* Declarations */}
               <Box className={classes.formSection}>
                 <Box className={classes.sectionHeaderRow}>
-                  <Box className={classes.sectionIconBox}><WorkIcon /></Box>
+                  <Box className={classes.sectionIconBox}><Icon src={IconDeclarations} width={15} height={14} /></Box>
                   <Typography component="h3" className={classes.sectionTitle}>Declarations</Typography>
                 </Box>
                 <Box className={classes.formGrid}>
@@ -341,7 +377,7 @@ export const Application: React.FC = () => {
               {/* Source & Interview Requirements */}
               <Box className={classes.formSection}>
                 <Box className={classes.sectionHeaderRow}>
-                  <Box className={classes.sectionIconBox}><LinkIcon /></Box>
+                  <Box className={classes.sectionIconBox}><Icon src={IconSource} width={15} height={14} /></Box>
                   <Typography component="h3" className={classes.sectionTitle}>Source &amp; Interview Requirements</Typography>
                 </Box>
                 <Box className={classes.formGrid}>
@@ -364,7 +400,7 @@ export const Application: React.FC = () => {
               {/* Education */}
               <Box className={classes.formSection}>
                 <Box className={classes.sectionHeaderRow}>
-                  <Box className={classes.sectionIconBox}><SchoolIcon /></Box>
+                  <Box className={classes.sectionIconBox}><Icon src={IconEducation} width={15} height={14} /></Box>
                   <Typography component="h3" className={classes.sectionTitle}>Education</Typography>
                 </Box>
                 <Box className={classes.formGrid}>
@@ -382,7 +418,7 @@ export const Application: React.FC = () => {
               {/* Reasons for Applying */}
               <Box className={classes.formSection}>
                 <Box className={classes.sectionHeaderRow}>
-                  <Box className={classes.sectionIconBox}><PersonIcon /></Box>
+                  <Box className={classes.sectionIconBox}><Icon src={IconReasons} width={15} height={14} /></Box>
                   <Typography component="h3" className={classes.sectionTitle}>Reasons for Applying</Typography>
                 </Box>
                 <ReadField
@@ -399,7 +435,7 @@ export const Application: React.FC = () => {
               {/* Present Employer */}
               <Box className={classes.formSection}>
                 <Box className={classes.sectionHeaderRow}>
-                  <Box className={classes.sectionIconBox}><WorkIcon /></Box>
+                  <Box className={classes.sectionIconBox}><Icon src={IconPreEmp} width={15} height={14} /></Box>
                   <Typography component="h3" className={classes.sectionTitle}>Present Employer</Typography>
                 </Box>
                 <Box className={classes.formGrid}>
@@ -434,7 +470,7 @@ export const Application: React.FC = () => {
               {/* Previous Employer 1 */}
               <Box className={classes.formSection}>
                 <Box className={classes.sectionHeaderRow}>
-                  <Box className={classes.sectionIconBox}><HistoryIcon /></Box>
+                  <Box className={classes.sectionIconBox}><Icon src={IconPrevEmp} width={15} height={14} /></Box>
                   <Typography component="h3" className={classes.sectionTitle}>Previous Employer 1</Typography>
                 </Box>
                 <Box className={classes.formGrid}>
@@ -461,7 +497,7 @@ export const Application: React.FC = () => {
               {/* Previous Employer 2 */}
               <Box className={classes.formSection}>
                 <Box className={classes.sectionHeaderRow}>
-                  <Box className={classes.sectionIconBox}><HistoryIcon /></Box>
+                  <Box className={classes.sectionIconBox}><Icon src={IconPrevEmp} width={15} height={14} /></Box>
                   <Typography component="h3" className={classes.sectionTitle}>Previous Employer 2</Typography>
                 </Box>
                 <Box className={classes.formGrid}>
@@ -488,7 +524,7 @@ export const Application: React.FC = () => {
               {/* Personal Statement */}
               <Box className={classes.formSection}>
                 <Box className={classes.sectionHeaderRow}>
-                  <Box className={classes.sectionIconBox}><PersonIcon /></Box>
+                  <Box className={classes.sectionIconBox}><Icon src={IconPerson} width={15} height={14} /></Box>
                   <Typography component="h3" className={classes.sectionTitle}>Personal Statement</Typography>
                 </Box>
                 <ReadField
@@ -517,14 +553,14 @@ export const Application: React.FC = () => {
               <Box className={classes.summaryCol}>
                 <Typography component="label" className={classes.summaryLabel}>Created Date</Typography>
                 <Box className={classes.summaryDateRow}>
-                  <CalendarTodayIcon aria-hidden="true" />
+                  <Icon src={IconCalender} width={13} height={12} />
                   <span>2026-04-22</span>
                 </Box>
               </Box>
               <Box className={classes.summaryCol}>
                 <Typography component="label" className={classes.summaryLabel}>Last Updated</Typography>
                 <Box className={classes.summaryDateRow}>
-                  <CalendarTodayIcon aria-hidden="true" />
+                  <Icon src={IconCalender} width={13} height={12} />
                   <span>2026-04-25</span>
                 </Box>
               </Box>
@@ -539,7 +575,7 @@ export const Application: React.FC = () => {
             <Box className={classes.sourceBody}>
               <Box className={classes.sourceRow}>
                 <Box className={classes.sourceIcon} aria-hidden="true">
-                  <LinkIcon />
+                  <Icon src={IconLink} width={15} height={14} />
                 </Box>
                 <Typography component="span" className={classes.sourceText}>
                   LinkedIn Job Post — Direct Apply
@@ -577,20 +613,21 @@ export const Application: React.FC = () => {
                     <TableCell>
                       <Box className={classes.tableCellRow}>
                         {row.isVideo
-                          ? <VideoCallIcon aria-hidden="true" />
-                          : <LocationOnIcon aria-hidden="true" />}
+                          ? <VideoCallIcon aria-hidden="true" sx={{ fontSize: '14px', color: '#94A3B8' }} />
+                          : <Icon src={IconLocation} width={13} height={12} />}
                         <span>{row.location}</span>
                       </Box>
                     </TableCell>
                     <TableCell>
                       <Box className={classes.tableCellRow}>
-                        <CalendarTodayIcon aria-hidden="true" />
+                        <Icon src={IconCalender} width={13} height={12} />
                         <span>{row.datetime}</span>
                       </Box>
                     </TableCell>
                     <TableCell align="center">
                       <span className={`${classes.statusPillBase} ${row.confirmed ? classes.statusPillYes : classes.statusPillPending}`}>
-                        {row.confirmed ? '✓' : '⏱'} {row.confirmed ? 'Yes' : 'Pending'}
+                        <Icon src={row.confirmed ? IconTic : IconPending} width={12} height={11} />
+                        {row.confirmed ? 'Yes' : 'Pending'}
                       </span>
                     </TableCell>
                   </TableRow>
@@ -622,7 +659,10 @@ export const Application: React.FC = () => {
                   <TableCell>2026-06-01</TableCell>
                   <TableCell>€85,000 + pension + 25 days holiday</TableCell>
                   <TableCell align="center">
-                    <span className={`${classes.statusPillBase} ${classes.statusPillPending}`}>⏱ Pending</span>
+                    <span className={`${classes.statusPillBase} ${classes.statusPillPending}`}>
+                      <Icon src={IconPending} width={12} height={11} />
+                      Pending
+                    </span>
                   </TableCell>
                 </TableRow>
               </TableBody>

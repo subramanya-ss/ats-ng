@@ -24,6 +24,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import PeopleIcon from '@mui/icons-material/People';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import { useStyles } from './Vacancy.style';
+import { YesNo } from '../../components/YesNo';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -126,7 +127,7 @@ const FieldRow: React.FC<{
     <Box>
       <Typography component="label" className={classes.fieldLabel}>
         {baseLabel}
-        {isRequired && <Box component="span" sx={{ color: '#0891b2', ml: '2px' }}>*</Box>}
+        {isRequired && <Box component="span" sx={{ color: '#F87171', ml: '2px' }}>*</Box>}
       </Typography>
       {field.multiline ? (
         <Box className={field.tall ? classes.textAreaBoxTall : classes.textAreaBox}>
@@ -244,24 +245,11 @@ export const Vacancy: React.FC = () => {
                         <Typography component="label" className={classes.fieldLabel}>
                           Permanently Open Vacancy
                         </Typography>
-                        <Box className={classes.toggleGroup} role="group" aria-label="Permanently Open Vacancy">
-                          <Box
-                            component="button"
-                            className={`${classes.toggleBtn} ${!permanentlyOpen ? classes.toggleYesActive : classes.toggleYesInactive}`}
-                            onClick={() => setPermanentlyOpen(false)}
-                            aria-pressed={!permanentlyOpen}
-                          >
-                            ✓ Yes
-                          </Box>
-                          <Box
-                            component="button"
-                            className={`${classes.toggleBtn} ${permanentlyOpen ? classes.toggleNoActive : classes.toggleNoInactive}`}
-                            onClick={() => setPermanentlyOpen(true)}
-                            aria-pressed={permanentlyOpen}
-                          >
-                            ✗ No
-                          </Box>
-                        </Box>
+                        <YesNo
+                          label="Permanently Open Vacancy"
+                          value={permanentlyOpen ? 'no' : 'yes'}
+                          onChange={(v) => setPermanentlyOpen(v === 'no')}
+                        />
                       </Grid>
                     )}
                   </Grid>
@@ -287,10 +275,7 @@ export const Vacancy: React.FC = () => {
                     <Typography component="label" className={classes.fieldLabel}>
                       Post Requires a Disclosure Scotland Check
                     </Typography>
-                    <Box className={classes.toggleGroup} role="group" aria-label="Disclosure Scotland Check">
-                      <Box component="button" className={`${classes.toggleBtn} ${classes.toggleYesInactive}`}>✓ Yes</Box>
-                      <Box component="button" className={`${classes.toggleBtn} ${classes.toggleNoActive}`}>✗ No</Box>
-                    </Box>
+                    <YesNo label="Disclosure Scotland Check" defaultValue="no" />
                   </Grid>
                   <Grid size={{ xs: 12, md: 4 }}>
                     <FieldRow field={{ label: 'Allow Applications From', value: 'Indeed', col: 4, hasDropdown: true }} classes={classes} />
