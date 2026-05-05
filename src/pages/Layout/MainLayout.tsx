@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Box, Collapse, Drawer, Stack, Typography } from "@mui/material";
+import { Box, Collapse, Drawer, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import DashboardIconSrc from "../../assets/homedashboard.svg";
 import ListDashboardIconSrc from "../../assets/listdashboard.svg";
 import BoltIcon from "../../assets/actions.svg";
@@ -25,6 +25,9 @@ export const MainLayout: React.FC = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [actionsOpen, setActionsOpen] = useState(true);
   const [navOpen, setNavOpen] = useState(true);
 
@@ -242,13 +245,16 @@ export const MainLayout: React.FC = () => {
 
   return (
     <Box className={classes.root}>
-      <TopBar />
+      <TopBar onMenuToggle={() => setMobileOpen((v) => !v)} />
 
       <Box className={classes.body}>
         <Drawer
-          variant="permanent"
+          variant={isMobile ? 'temporary' : 'permanent'}
+          open={isMobile ? mobileOpen : true}
+          onClose={() => setMobileOpen(false)}
           className={classes.drawer}
           aria-label="Main navigation"
+          ModalProps={{ keepMounted: true }}
         >
           {sidebar}
         </Drawer>

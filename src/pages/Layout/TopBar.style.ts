@@ -1,7 +1,7 @@
 import { makeStyles } from '@mui/styles';
 import type { Theme } from '@mui/material/styles';
 
-export const useTopBarStyles = makeStyles((_theme: Theme) => ({
+export const useTopBarStyles = makeStyles((theme: Theme) => ({
   topBar: {
     display: 'flex',
     alignItems: 'center',
@@ -15,6 +15,19 @@ export const useTopBarStyles = makeStyles((_theme: Theme) => ({
     zIndex: 1201,
     padding: '6px 16px',
     flexShrink: 0,
+    [theme.breakpoints.down('md')]: {
+      gap: '8px',
+      padding: '6px 12px',
+    },
+  },
+
+  // Hamburger — visible only on mobile
+  hamburger: {
+    display: 'none !important' as 'none',
+    [theme.breakpoints.down('md')]: {
+      display: 'flex !important' as 'flex',
+    },
+    flexShrink: 0,
   },
 
   // Brand (logo) — left section, 224px to align with sidebar width
@@ -24,6 +37,9 @@ export const useTopBarStyles = makeStyles((_theme: Theme) => ({
     gap: '12px',
     width: '224px',
     flexShrink: 0,
+    [theme.breakpoints.down('md')]: {
+      width: 'auto',
+    },
   },
   brandLogo: {
     width: '32px',
@@ -37,39 +53,44 @@ export const useTopBarStyles = makeStyles((_theme: Theme) => ({
   },
   brandText: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column' as const,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   brandTitle: {
-    fontWeight: 700,
-    fontSize: '14px',
-    color: '#0f1f3d',
+    fontWeight: '700 !important',
+    fontSize: '14px !important',
+    color: '#0F1F3D',
     letterSpacing: '0.35px',
-    lineHeight: '14px',
+    lineHeight: '14px !important',
   },
   brandSubtitle: {
-    fontSize: '9px',
+    fontSize: '9px !important',
     color: '#9ca3af',
     letterSpacing: '0.9px',
-    lineHeight: '13.5px',
     marginTop: '2px',
   },
 
-  // Divider
+  // Divider — hidden on mobile
   divider: {
     width: '1px',
     height: '24px',
     backgroundColor: '#e5e7eb',
     flexShrink: 0,
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
   },
 
-  // Search bar
+  // Search bar — hidden on mobile
   searchBar: {
     display: 'flex',
     alignItems: 'center',
     backgroundColor: '#f9fafb',
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
-    padding: '9px 13px',
+    padding: '6px 12px',
     gap: '8px',
     width: '448px',
     maxWidth: '448px',
@@ -78,6 +99,9 @@ export const useTopBarStyles = makeStyles((_theme: Theme) => ({
     '&:focus-within': {
       outline: '2px solid #0f1f3d',
       outlineOffset: '-1px',
+    },
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
     },
   },
   searchIcon: {
@@ -124,6 +148,16 @@ export const useTopBarStyles = makeStyles((_theme: Theme) => ({
     cursor: 'pointer',
     '&:hover': { backgroundColor: '#f3f4f6' },
   },
+
+  // Help button wrapper — hidden on mobile
+  helpBtn: {
+    display: 'flex',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  },
+
+  // Language button — hidden on mobile
   langBtn: {
     display: 'flex',
     alignItems: 'center',
@@ -133,6 +167,9 @@ export const useTopBarStyles = makeStyles((_theme: Theme) => ({
     borderRadius: '8px',
     cursor: 'pointer',
     '&:hover': { backgroundColor: '#f3f4f6' },
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
   },
   langFlag: {
     fontSize: '16px',
@@ -162,6 +199,9 @@ export const useTopBarStyles = makeStyles((_theme: Theme) => ({
     backgroundColor: '#e5e7eb',
     margin: '0 4px',
     flexShrink: 0,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   userBtn: {
     display: 'flex',
@@ -172,6 +212,16 @@ export const useTopBarStyles = makeStyles((_theme: Theme) => ({
     borderRadius: '8px',
     cursor: 'pointer',
     '&:hover': { backgroundColor: '#f3f4f6' },
+    [theme.breakpoints.down('sm')]: {
+      padding: '4px',
+      gap: '0',
+    },
+  },
+  // User name + role — hidden on mobile
+  userBtnText: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   userAvatar: {
     width: '28px !important',
@@ -181,19 +231,21 @@ export const useTopBarStyles = makeStyles((_theme: Theme) => ({
     fontWeight: '700 !important',
   },
   userName: {
-    fontSize: '12px',
-    fontWeight: 600,
+    fontSize: '12px !important',
+    fontWeight: '600 !important',
     color: '#0f1f3d',
     lineHeight: '12px',
   },
   userRole: {
-    fontSize: '10px',
+    fontSize: '10px !important',
     color: '#9ca3af',
-    lineHeight: '15px',
     marginTop: '2px',
   },
   chevron: {
     fontSize: '12px !important',
     color: '#9ca3af',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none !important' as 'none',
+    },
   },
 }));

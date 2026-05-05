@@ -73,27 +73,44 @@ const SectionHeader: React.FC<{ icon: React.ReactNode; title: string; errorText?
   </Box>
 );
 
-const UploadZone: React.FC<{ label: string; subtitle: string }> = ({ label, subtitle }) => (
-  <Box>
-    <Typography sx={{ fontSize: '12px', fontWeight: 600, color: '#374151', mb: '8px' }}>{label}</Typography>
-    <Box sx={{
-      border: '1.5px dashed #d1d5db', borderRadius: '8px',
-      padding: '16px 20px', backgroundColor: '#fafafa',
-      display: 'flex', alignItems: 'center', gap: '14px',
-      cursor: 'pointer',
-      '&:hover': { backgroundColor: '#f1f5f9', borderColor: '#9ca3af' },
-      transition: 'all 0.15s',
-    }}>
-      <CloudUploadIcon sx={{ fontSize: '24px', color: '#9ca3af', flexShrink: 0 }} />
-      <Box>
-        <Typography sx={{ fontSize: '13px', fontWeight: 500, color: '#374151', lineHeight: 1.3 }}>
-          Click to attach file
-        </Typography>
-        <Typography sx={{ fontSize: '12px', color: '#9ca3af', mt: '2px' }}>{subtitle}</Typography>
+const UploadZone: React.FC<{ label: string; subtitle: string }> = ({ label, subtitle }) => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const [fileName, setFileName] = React.useState<string | null>(null);
+
+  const handleClick = () => inputRef.current?.click();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) setFileName(file.name);
+  };
+
+  return (
+    <Box>
+      <Typography sx={{ fontSize: '12px', fontWeight: 600, color: '#374151', mb: '8px' }}>{label}</Typography>
+      <input ref={inputRef} type="file" style={{ display: 'none' }} onChange={handleChange} />
+      <Box
+        onClick={handleClick}
+        sx={{
+          border: `1.5px dashed ${fileName ? '#16a34a' : '#d1d5db'}`,
+          borderRadius: '8px',
+          padding: '16px 20px', backgroundColor: '#fafafa',
+          display: 'flex', alignItems: 'center', gap: '14px',
+          cursor: 'pointer',
+          '&:hover': { backgroundColor: '#f1f5f9', borderColor: '#9ca3af' },
+          transition: 'all 0.15s',
+        }}
+      >
+        <CloudUploadIcon sx={{ fontSize: '24px', color: fileName ? '#16a34a' : '#9ca3af', flexShrink: 0 }} />
+        <Box sx={{ minWidth: 0 }}>
+          <Typography sx={{ fontSize: '13px', fontWeight: 500, color: '#374151', lineHeight: 1.3 }}>
+            {fileName ?? 'Click to attach file'}
+          </Typography>
+          <Typography sx={{ fontSize: '12px', color: '#9ca3af', mt: '2px' }}>{subtitle}</Typography>
+        </Box>
       </Box>
     </Box>
-  </Box>
-);
+  );
+};
 
 // ─── Component ────────────────────────────────────────────────────────────────
 

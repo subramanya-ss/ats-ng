@@ -4,11 +4,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutlineOutlined';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import MenuIcon from '@mui/icons-material/Menu';
 import { Box } from '@mui/material';
 import logoSrc from '../../assets/logo.png';
 import { useTopBarStyles } from './TopBar.style';
 
-export const TopBar: React.FC = () => {
+interface Props {
+  onMenuToggle?: () => void;
+}
+
+export const TopBar: React.FC<Props> = ({ onMenuToggle }) => {
   const classes = useTopBarStyles();
 
   return (
@@ -22,6 +27,16 @@ export const TopBar: React.FC = () => {
         Skip to main content
       </Box>
 
+      {/* Hamburger — mobile only */}
+      <IconButton
+        size="small"
+        onClick={onMenuToggle}
+        aria-label="Open navigation menu"
+        className={classes.hamburger}
+      >
+        <MenuIcon sx={{ fontSize: '20px', color: '#374151' }} />
+      </IconButton>
+
       {/* Brand */}
       <Box className={classes.brand}>
         <Box className={classes.brandLogo}>
@@ -33,10 +48,10 @@ export const TopBar: React.FC = () => {
         </Box>
       </Box>
 
-      {/* Divider */}
+      {/* Divider — hidden on mobile */}
       <Box className={classes.divider} />
 
-      {/* Search */}
+      {/* Search — hidden on mobile */}
       <Box className={classes.searchBar} role="search">
         <SearchIcon className={classes.searchIcon} aria-hidden="true" />
         <Box
@@ -53,12 +68,14 @@ export const TopBar: React.FC = () => {
 
       {/* Right actions */}
       <Box className={classes.actions}>
-        {/* Help */}
-        <IconButton size="small" className={classes.iconBtn} aria-label="Help">
-          <HelpOutlineIcon sx={{ fontSize: '18px', color: '#6b7280' }} />
-        </IconButton>
+        {/* Help — hidden on mobile */}
+        <Box className={classes.helpBtn}>
+          <IconButton size="small" className={classes.iconBtn} aria-label="Help">
+            <HelpOutlineIcon sx={{ fontSize: '18px', color: '#6b7280' }} />
+          </IconButton>
+        </Box>
 
-        {/* Language */}
+        {/* Language — hidden on mobile */}
         <Box className={classes.langBtn} role="button" tabIndex={0} aria-label="Language: English">
           <Box component="span" className={classes.langFlag} aria-hidden="true">🇬🇧</Box>
           <Typography className={classes.langText}>en</Typography>
@@ -78,7 +95,7 @@ export const TopBar: React.FC = () => {
         {/* User */}
         <Stack direction="row" alignItems="center" className={classes.userBtn} role="button" tabIndex={0} aria-label="User menu">
           <Avatar className={classes.userAvatar} aria-hidden="true">AU</Avatar>
-          <Box>
+          <Box className={classes.userBtnText}>
             <Typography className={classes.userName}>Admin User</Typography>
             <Typography className={classes.userRole}>Administrator</Typography>
           </Box>
