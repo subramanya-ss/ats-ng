@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Box, Collapse, Drawer, Stack, Typography } from "@mui/material";
 import DashboardIconSrc from "../../assets/homedashboard.svg";
-import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
 import ListDashboardIconSrc from "../../assets/listdashboard.svg";
 import BoltIcon from "../../assets/actions.svg";
 import MapIcon from "../../assets/navigation.svg";
+import EditCandidateSrc from "../../assets/editcandidate.svg";
+import AddCandidateSrc from "../../assets/addcandidate.svg";
+import DeleteAppSrc from "../../assets/deleteapp.svg";
+import EmailCvSrc from "../../assets/emailcv.svg";
+import AddJournalSrc from "../../assets/addjournal.svg";
+import ViewVacancySrc from "../../assets/viewvacancy.svg";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
-import WorkIcon from "@mui/icons-material/Work";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EmailIcon from "@mui/icons-material/Email";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -33,44 +36,28 @@ export const MainLayout: React.FC = () => {
   const ListDashboardIcon = () => (
     <img src={ListDashboardIconSrc} alt="dashboard" />
   );
+
+  const ViewVacancyIcon = (_props: { className?: string }) => (
+    <img src={ViewVacancySrc} alt="" style={{ width: '14px', height: '14px', flexShrink: 0 }} />
+  );
   // ── Contextual action items per route ────────────────────────────
+  const svgIcon = (src: string) => (
+    <img src={src} alt="" style={{ height: '14px', width: 'auto', flexShrink: 0 }} />
+  );
+
   const actionItems =
     isVacancy || isApplication
       ? [
-          {
-            label: "Edit Candidate",
-            icon: <EditIcon className={classes.navIcon} />,
-          },
-          {
-            label: "Superuser Override",
-            icon: <BookmarkIcon className={classes.navIcon} />,
-          },
-          {
-            label: "Delete Application",
-            icon: <DeleteIcon className={classes.navIcon} />,
-          },
-          {
-            label: "Email Candidate CV",
-            icon: <EmailIcon className={classes.navIcon} />,
-          },
-          {
-            label: "Add Candidate for Vacancy",
-            icon: <AddIcon className={classes.navIcon} />,
-          },
-          {
-            label: "Add Journal Entry",
-            icon: <AddIcon className={classes.navIcon} />,
-          },
+          { label: "Edit Candidate",           icon: svgIcon(EditCandidateSrc) },
+          { label: "Superuser Override",        icon: <BookmarkIcon className={classes.navIcon} /> },
+          { label: "Delete Application",        icon: svgIcon(DeleteAppSrc) },
+          { label: "Email Candidate CV",        icon: svgIcon(EmailCvSrc) },
+          { label: "Add Candidate for Vacancy", icon: svgIcon(AddCandidateSrc) },
+          { label: "Add Journal Entry",         icon: svgIcon(AddJournalSrc) },
         ]
       : [
-          {
-            label: "Add Dashboard",
-            icon: <AddIcon className={classes.navIcon} />,
-          },
-          {
-            label: "Edit Design",
-            icon: <EditIcon className={classes.navIcon} />,
-          },
+          { label: "Add Dashboard", icon: <AddIcon className={classes.navIcon} /> },
+          { label: "Edit Design",   icon: <EditIcon className={classes.navIcon} /> },
         ];
 
   // ── Contextual nav items per route ───────────────────────────────
@@ -85,7 +72,7 @@ export const MainLayout: React.FC = () => {
         {
           label: "View Vacancy",
           path: "/vacancy/1",
-          icon: WorkIcon,
+          icon: ViewVacancyIcon,
           active: true,
         },
       ]

@@ -13,6 +13,12 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import SettingsIcon from '@mui/icons-material/Settings';
+import VacancyDetailsSrc from '../../assets/VacancyDetails.svg';
+import JobDescriptionSrc from '../../assets/JobDescription.svg';
+import EmploymentDetailsSrc from '../../assets/EmploymentDetails.svg';
+import CompensationSrc from '../../assets/Compensation.svg';
+import RequirementsSrc from '../../assets/Requirements.svg';
+import SettingAlertsSrc from '../../assets/settingalerts.svg';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -29,13 +35,13 @@ interface Props {
 
 // ─── Nav config ───────────────────────────────────────────────────────────────
 
-const navItems: Array<{ Icon: React.ElementType; label: string }> = [
-  { Icon: ListAltIcon,        label: 'Vacancy Details' },
-  { Icon: ArticleIcon,        label: 'Job Description' },
-  { Icon: BusinessCenterIcon, label: 'Employment Details' },
-  { Icon: MonetizationOnIcon, label: 'Compensation' },
-  { Icon: ManageAccountsIcon, label: 'Requirements' },
-  { Icon: SettingsIcon,       label: 'Settings & Alerts' },
+const navItems: Array<{ src?: string; Icon?: React.ElementType; label: string }> = [
+  { src: VacancyDetailsSrc,    label: 'Vacancy Details' },
+  { src: JobDescriptionSrc,    label: 'Job Description' },
+  { src: EmploymentDetailsSrc, label: 'Employment Details' },
+  { src: CompensationSrc,      label: 'Compensation' },
+  { src: RequirementsSrc,      label: 'Requirements' },
+  { src: SettingAlertsSrc,     label: 'Settings & Alerts' },
 ];
 
 // ─── Small helpers ────────────────────────────────────────────────────────────
@@ -197,37 +203,51 @@ export const NewVacancyDialog: React.FC<Props> = ({ open, onClose, onSuccess, de
             flexShrink: 0, py: '12px', px: '10px',
             borderRight: '1px solid #f3f4f6',
           }}>
-            {navItems.map(({ Icon, label }, i) => (
-              <Box
-                key={label}
-                component="button"
-                onClick={() => setActiveNav(i)}
-                sx={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  width: '100%', padding: '11px 14px',
-                  mb: '4px',
-                  cursor: 'pointer', fontFamily: 'inherit',
-                  border: 'none', textAlign: 'left',
-                  borderRadius: '8px',
-                  backgroundColor: i === activeNav ? '#1a2332' : 'transparent',
-                  color: i === activeNav ? '#ffffff' : '#6b7280',
-                  '&:hover': {
-                    backgroundColor: i === activeNav ? '#1a2332' : '#f1f5f9',
-                    color: i === activeNav ? '#ffffff' : '#374151',
-                  },
-                  transition: 'background-color 0.12s',
-                }}
-              >
-                <Icon sx={{ fontSize: '17px', color: 'inherit', flexShrink: 0 }} />
-                <Typography sx={{
-                  fontSize: '13px',
-                  fontWeight: i === activeNav ? 600 : 500,
-                  color: 'inherit', lineHeight: 1.3,
-                }}>
-                  {label}
-                </Typography>
-              </Box>
-            ))}
+            {navItems.map(({ src, label }, i) => {
+              const isActive = i === activeNav;
+              return (
+                <Box
+                  key={label}
+                  component="button"
+                  onClick={() => setActiveNav(i)}
+                  sx={{
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    width: '100%', padding: '11px 14px',
+                    mb: '4px',
+                    cursor: 'pointer', fontFamily: 'inherit',
+                    border: 'none', textAlign: 'left',
+                    borderRadius: '8px',
+                    backgroundColor: isActive ? '#1a2332' : 'transparent',
+                    color: isActive ? '#ffffff' : '#6b7280',
+                    '&:hover': {
+                      backgroundColor: isActive ? '#1a2332' : '#f1f5f9',
+                      color: isActive ? '#ffffff' : '#374151',
+                    },
+                    transition: 'background-color 0.12s',
+                  }}
+                >
+                  {src && (
+                    <img
+                      src={src}
+                      alt=""
+                      style={{
+                        width: '16px', height: 'auto', flexShrink: 0,
+                        filter: isActive
+                          ? 'brightness(0) invert(1)'
+                          : 'brightness(0) opacity(0.45)',
+                      }}
+                    />
+                  )}
+                  <Typography sx={{
+                    fontSize: '13px',
+                    fontWeight: isActive ? 600 : 500,
+                    color: 'inherit', lineHeight: 1.3,
+                  }}>
+                    {label}
+                  </Typography>
+                </Box>
+              );
+            })}
           </Box>
 
           {/* Right scrollable content */}

@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexShrink: 0,
     '& .MuiDrawer-paper': {
       width: '224px',
-      backgroundColor: '#06132b',
+      backgroundColor: '#06142b',
       color: '#ffffff',
       border: 'none',
       overflowX: 'hidden',
@@ -41,7 +41,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   nav: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '16px 12px',
+    padding: '16px 6px',
     flex: 1,
   },
 
@@ -70,9 +70,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexShrink: 0,
   },
   sectionLabel: {
-    fontSize: '14px',
-    fontWeight: 500,
-    color: 'rgba(255,255,255,0.7)',
+    fontSize: '14px !important',
+    fontWeight: '500 !important',
+    color: '#ffffff',
     lineHeight: '20px',
   },
   sectionChevron: {
@@ -82,7 +82,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
 
   // Sub-items wrapper (indented)
   subItems: {
-    paddingLeft: '16px',
+    paddingLeft: '14px',
     paddingTop: '4px',
     display: 'flex',
     flexDirection: 'column',
@@ -109,14 +109,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexShrink: 0,
   },
   navText: {
-    fontSize: '14px',
-    fontWeight: 400,
-    color: 'rgba(255,255,255,0.5)',
+    fontSize: '12px !important',
+    fontWeight: '400 !important',
+    color: '#94A3B8 !important',
     lineHeight: '20px',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
   },
-
-
   navItemActive: {
     backgroundColor: 'rgba(255,255,255,0.15)',
     '&:hover': { backgroundColor: 'rgba(255,255,255,0.18)' },

@@ -199,7 +199,7 @@ export const VacancyQuickView: React.FC<Props> = ({ open, onClose, vacancy, onFu
           />
           <ActionBtn
             icon={<ArchiveIcon sx={{ fontSize: '22px', color: '#374151' }} />}
-            label="Archive" bg="#ffffff" color="#374151" border="1px solid #e5e7eb"
+            label="Archive"
           />
           <ActionBtn
             icon={<DeleteOutlineIcon sx={{ fontSize: '22px', color: '#ef4444' }} />}
@@ -245,11 +245,11 @@ export const VacancyQuickView: React.FC<Props> = ({ open, onClose, vacancy, onFu
 
         {/* Employment Details */}
         <SectionHeader icon={<ManageAccountsOutlinedIcon sx={{ fontSize: '15px', color: '#6b7280' }} />} title="Employment Details" />
-        <FieldRow label="Cost Centre"    value={vacancy.costCentre} />
-        <FieldRow label="Reporting To"   value={vacancy.reportingTo} />
+        <FieldRow label="Cost Centre"     value={vacancy.costCentre} />
+        <FieldRow label="Reporting To"    value={vacancy.reportingTo} />
         <FieldRow label="Replacement For" value={vacancy.replacementFor} />
-        <FieldRow label="Hours"          value={vacancy.hours} />
-        <FieldRow label="Start Date"     value={vacancy.startDate} />
+        <FieldRow label="Hours"           value={vacancy.hours} />
+        <FieldRow label="Start Date"      value={vacancy.startDate} />
 
       </Box>
     </Drawer>
