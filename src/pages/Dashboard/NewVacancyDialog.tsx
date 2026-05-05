@@ -254,7 +254,7 @@ export const NewVacancyDialog: React.FC<Props> = ({ open, onClose, onSuccess, de
                 </Select>
               </Grid>
               <Grid size={6}>
-                <FieldLabel>Location <span style={{ color: '#ef4444' }}>*</span></FieldLabel>
+                <FieldLabel>Location <span style={{ color: '#F87171' }}>*</span></FieldLabel>
                 <TextField
                   fullWidth size="small" placeholder="e.g. Inverness"
                   error
@@ -424,7 +424,7 @@ export const NewVacancyDialog: React.FC<Props> = ({ open, onClose, onSuccess, de
               </Select>
             </Grid>
             <Grid size={6}>
-              <FieldLabel>Recruitment Team Owner <span style={{ color: '#ef4444' }}>*</span></FieldLabel>
+              <FieldLabel>Recruitment Team Owner <span style={{ color: '#F87171' }}>*</span></FieldLabel>
               <Select fullWidth size="small" value="" displayEmpty onChange={() => {}}>
                 <MenuItem value=""><em style={{ color: '#9ca3af', fontStyle: 'normal' }}>Select team owner...</em></MenuItem>
                 <MenuItem value="team-a">Recruitment Team A</MenuItem>
