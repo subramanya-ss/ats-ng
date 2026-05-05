@@ -13,9 +13,7 @@ export const useTopBarStyles = makeStyles((_theme: Theme) => ({
     position: 'sticky',
     top: 0,
     zIndex: 1201,
-    paddingLeft: '20px',
-    paddingRight: '20px',
-    paddingBottom: '1px',
+    padding: '6px 16px',
     flexShrink: 0,
   },
 

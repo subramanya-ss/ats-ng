@@ -13,18 +13,21 @@ export const useStyles = makeStyles((theme: Theme) => ({
   pageContent: {
     flex: 1,
     overflowY: 'auto' as const,
-    padding: '24px',
+    padding: '20px 24px 32px',
   },
 
   // ─── Tabs ────────────────────────────────────────────────────────────────────
   tabs: {
+    minHeight: '44px',
     '& .MuiTab-root': {
       fontSize: '13px',
       fontWeight: 500,
       textTransform: 'none' as const,
       color: '#6b7280',
       minWidth: 0,
-      padding: '12px 16px',
+      minHeight: '44px',
+      padding: '0 18px',
+      gap: '6px',
     },
     '& .Mui-selected': {
       color: `${theme.palette.navy[800]} !important`,
@@ -32,18 +35,20 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
     '& .MuiTabs-indicator': {
       backgroundColor: theme.palette.navy[800],
+      height: '2px',
     },
   },
 
   // ─── Vacancy header card ──────────────────────────────────────────────────────
   vacancyHeader: {
-    padding: '14px 18px',
-    marginBottom: '16px',
+    padding: '16px 20px',
+    marginBottom: '20px',
     border: `1px solid ${theme.palette.slate[200]} !important`,
+    borderRadius: '8px !important',
   },
   vacancyIconBox: {
-    width: '42px',
-    height: '42px',
+    width: '44px',
+    height: '44px',
     borderRadius: '10px',
     backgroundColor: theme.palette.navy[800],
     display: 'flex',
@@ -60,39 +65,44 @@ export const useStyles = makeStyles((theme: Theme) => ({
   vacancyLiveBadge: {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '4px',
+    gap: '5px',
     backgroundColor: '#dcfce7',
     color: '#16a34a',
     borderRadius: '20px',
-    padding: '2px 10px',
-    fontSize: '11px',
-    fontWeight: 700,
+    padding: '3px 10px',
+    fontSize: '12px',
+    fontWeight: 600,
   },
   vacancyLiveDot: {
-    width: '5px',
-    height: '5px',
+    width: '6px',
+    height: '6px',
     borderRadius: '50%',
     backgroundColor: '#16a34a',
   },
   vacancyMeta: {
     display: 'flex',
     alignItems: 'center',
-    gap: '4px',
+    gap: '5px',
     color: theme.palette.slate[500],
     fontSize: '12px',
   },
 
-  // ─── Vacancy Form header ──────────────────────────────────────────────────────
+  // ─── Single form card ─────────────────────────────────────────────────────────
+  formCard: {
+    border: `1px solid ${theme.palette.slate[200]} !important`,
+    borderRadius: '8px !important',
+    overflow: 'hidden',
+  },
+
+  // ─── Form card header row ─────────────────────────────────────────────────────
   formHeader: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '14px 20px',
-    marginBottom: '14px',
-    border: `1px solid ${theme.palette.slate[200]} !important`,
+    padding: '16px 24px',
   },
   formTitle: {
-    fontSize: '14px !important',
+    fontSize: '15px !important',
     fontWeight: '700 !important',
     color: `${theme.palette.navy[800]} !important`,
     lineHeight: '1.2 !important',
@@ -100,32 +110,36 @@ export const useStyles = makeStyles((theme: Theme) => ({
   formSubtitle: {
     fontSize: '12px !important',
     color: '#0891b2 !important',
-    marginTop: '2px !important',
+    marginTop: '3px !important',
   },
   openBtn: {
     backgroundColor: `${theme.palette.success.main} !important`,
     color: '#ffffff !important',
     fontSize: '12px !important',
-    padding: '6px 18px !important',
-    borderRadius: '6px !important',
+    fontWeight: '600 !important',
+    padding: '6px 22px !important',
+    borderRadius: '20px !important',
+    textTransform: 'none !important' as 'none',
     '&:hover': { backgroundColor: `${theme.palette.success.dark} !important` },
   },
 
-  // ─── Section cards ────────────────────────────────────────────────────────────
-  sectionCard: {
-    padding: '18px 22px',
-    marginBottom: '14px',
-    border: `1px solid ${theme.palette.slate[200]} !important`,
+  // ─── Section block (inside the single form card) ──────────────────────────────
+  sectionBlock: {
+    padding: '32px 24px 16px',
+    '&:last-child': {
+      paddingBottom: '32px',
+    },
   },
+
   sectionHeaderRow: {
     display: 'flex',
     alignItems: 'center',
-    gap: '10px',
+    gap: '12px',
     marginBottom: '16px',
   },
   sectionIconBox: {
-    width: '32px',
-    height: '32px',
+    width: '34px',
+    height: '34px',
     borderRadius: '50%',
     backgroundColor: '#0891b2',
     display: 'flex',
@@ -135,12 +149,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   sectionTitle: {
     fontWeight: '700 !important',
-    fontSize: '13px !important',
+    fontSize: '14px !important',
     color: `${theme.palette.navy[800]} !important`,
     lineHeight: '1.2 !important',
+    marginBottom: '2px !important',
   },
   sectionSubtitle: {
-    fontSize: '11px !important',
+    fontSize: '12px !important',
     color: '#0891b2 !important',
     lineHeight: '1.3 !important',
   },
@@ -148,19 +163,18 @@ export const useStyles = makeStyles((theme: Theme) => ({
   // ─── Form fields ─────────────────────────────────────────────────────────────
   fieldLabel: {
     display: 'block',
-    fontSize: '10px',
-    fontWeight: 600,
-    letterSpacing: '0.06em',
-    textTransform: 'uppercase' as const,
-    color: theme.palette.slate[400],
-    marginBottom: '4px',
+    fontSize: '11px',
+    fontWeight: 500,
+    color: theme.palette.slate[500],
+    marginBottom: '5px',
+    lineHeight: 1.4,
   },
   fieldBox: {
     border: `1px solid ${theme.palette.slate[200]}`,
-    borderRadius: '7px',
-    padding: '7px 11px',
+    borderRadius: '6px',
+    padding: '8px 12px',
     backgroundColor: theme.palette.bg.paper,
-    minHeight: '34px',
+    minHeight: '36px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -179,15 +193,22 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   textAreaBox: {
     border: `1px solid ${theme.palette.slate[200]}`,
-    borderRadius: '7px',
-    padding: '9px 11px',
+    borderRadius: '6px',
+    padding: '10px 12px',
     backgroundColor: theme.palette.bg.paper,
-    minHeight: '72px',
+    minHeight: '80px',
+  },
+  textAreaBoxTall: {
+    border: `1px solid ${theme.palette.slate[200]}`,
+    borderRadius: '6px',
+    padding: '10px 12px',
+    backgroundColor: theme.palette.bg.paper,
+    minHeight: '148px',
   },
   textAreaValue: {
     fontSize: '13px',
     color: theme.palette.slate[700],
-    lineHeight: 1.6,
+    lineHeight: 1.65,
   },
 
   // ─── Yes / No toggle ─────────────────────────────────────────────────────────
@@ -196,9 +217,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
     border: `1px solid ${theme.palette.slate[200]}`,
     borderRadius: '8px',
     overflow: 'hidden',
+    marginTop: '2px',
   },
   toggleBtn: {
-    padding: '5px 16px',
+    padding: '6px 18px',
     fontSize: '12px',
     fontWeight: 600,
     cursor: 'pointer',
@@ -230,7 +252,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   // ─── Empty tab state ─────────────────────────────────────────────────────────
   emptyTab: {
     textAlign: 'center' as const,
-    padding: '48px 0',
+    padding: '60px 0',
     color: theme.palette.slate[400],
   },
 }));
