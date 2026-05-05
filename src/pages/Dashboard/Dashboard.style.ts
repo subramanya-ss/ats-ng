@@ -57,6 +57,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     gap: '16px',
     minHeight: '91px',
+    borderRadius: '16px !important',
     transition: 'box-shadow 0.15s ease',
     '&:hover': { boxShadow: '0 4px 12px rgba(0,0,0,0.08)' },
     '@media (prefers-reduced-motion: reduce)': { transition: 'none' },

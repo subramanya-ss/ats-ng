@@ -116,9 +116,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     whiteSpace: 'nowrap' as const,
   },
 
-  // Active nav item (56px, highlighted)
+
   navItemActive: {
-    height: '56px',
     backgroundColor: 'rgba(255,255,255,0.15)',
     '&:hover': { backgroundColor: 'rgba(255,255,255,0.18)' },
   },
