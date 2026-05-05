@@ -407,7 +407,6 @@ export const Vacancy: React.FC = () => {
               <Button
                 variant="outlined"
                 size="small"
-                className={classes.duplicateBtn}
                 startIcon={
                   <ContentCopyOutlinedIcon sx={{ fontSize: "14px" }} />
                 }
@@ -417,7 +416,6 @@ export const Vacancy: React.FC = () => {
               <Button
                 variant="outlined"
                 size="small"
-                className={classes.shareBtn}
                 startIcon={<IosShareIcon sx={{ fontSize: "14px" }} />}
               >
                 Share
@@ -425,7 +423,6 @@ export const Vacancy: React.FC = () => {
               <Button
                 variant="contained"
                 size="small"
-                className={classes.actionsBtn}
                 startIcon={<ViewHeadlineIcon sx={{ fontSize: "14px" }} />}
                 endIcon={<KeyboardArrowDownIcon sx={{ fontSize: "14px" }} />}
               >
