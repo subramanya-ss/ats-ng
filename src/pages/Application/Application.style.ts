@@ -8,11 +8,17 @@ export const useStyles = makeStyles((theme: Theme) => ({
     borderBottom: '1px solid #f3f4f6',
     padding: '0 24px',
     flexShrink: 0,
+    [theme.breakpoints.down('sm')]: {
+      padding: '0 12px',
+    },
   },
   pageContent: {
     flex: 1,
     overflowY: 'auto' as const,
     padding: '24px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '12px',
+    },
   },
 
   // ─── Application form outer card (Figma spec) ────────────────────────────────
@@ -31,6 +37,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   appFormBody: {
     padding: '20px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '14px',
+    },
   },
   appFormTitle: {
     fontFamily: '"Roboto", sans-serif !important',
@@ -93,6 +102,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
+    [theme.breakpoints.down('sm')]: {
+      flex: '1 1 calc(50% - 12px)',
+    },
   },
   summaryLabel: {
     fontFamily: '"Roboto", sans-serif !important',
@@ -208,6 +220,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'flex-start',
     flex: '1 1 calc(50% - 8px)',
     minWidth: 0,
+    [theme.breakpoints.down('sm')]: {
+      flex: '1 1 100%',
+    },
   },
   headerFieldFull: {
     display: 'flex',
@@ -330,10 +345,18 @@ export const useStyles = makeStyles((theme: Theme) => ({
     padding: '16px 24px 17px',
     backgroundColor: '#FFFFFF',
     borderBottom: '1px solid #f3f4f6',
+    [theme.breakpoints.down('sm')]: {
+      padding: '12px 16px',
+      gap: '12px',
+    },
   },
   candidateStripAvatar: {
-    width: '56px !important',
-    height: '56px !important',
+    width: '44px !important',
+    height: '44px !important',
+    [theme.breakpoints.up('sm')]: {
+      width: '56px !important',
+      height: '56px !important',
+    },
     borderRadius: '12px !important',
     background: 'linear-gradient(135deg, #0F1F3D 0%, #1E3A6E 100%) !important',
     color: '#FFFFFF !important',
@@ -394,6 +417,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexWrap: 'wrap' as const,
     alignItems: 'center',
     gap: '16px',
+    [theme.breakpoints.down('sm')]: {
+      gap: '8px',
+    },
   },
   candidateStripMetaItem: {
     display: 'flex',
@@ -475,6 +501,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
+    [theme.breakpoints.down('sm')]: {
+      flex: '1 1 100%',
+    },
   },
   formCol12: {
     flex: '1 1 100%',

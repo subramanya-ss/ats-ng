@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer, Box, Typography, IconButton, Divider } from "@mui/material";
+import { Drawer, Box, Typography, IconButton, Divider, useMediaQuery, useTheme } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import CloseIcon from "@mui/icons-material/Close";
@@ -136,6 +136,9 @@ const svgIcon = (src: string, size = "17px") => (
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export const VacancyQuickView: React.FC<Props> = ({ open, onClose, vacancy, onFullView }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   if (!vacancy) return null;
 
   const statusStyles: Record<string, { bg: string; color: string }> = {
@@ -155,16 +158,19 @@ export const VacancyQuickView: React.FC<Props> = ({ open, onClose, vacancy, onFu
       slotProps={{ paper: { sx: { width: "441px", maxWidth: "95vw", top: 0, height: "100vh", borderRadius: 0, display: "flex", flexDirection: "column" } } }}
     >
       {/* ── Header ──────────────────────────────────────────────────── */}
-      <Box sx={{ px: "20px", py: "16px", borderBottom: "1px solid #f3f4f6", flexShrink: 0 }}>
-        <Box sx={{ display: "flex", alignItems: "flex-start", gap: "14px" }}>
-          <Box sx={{ width: 56, height: 56, borderRadius: "12px", backgroundColor: "#1a2332", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            <img src={RoleIcon} width="25px" height="25px" alt="" />
+      <Box sx={{ px: isMobile ? "14px" : "20px", py: isMobile ? "12px" : "16px", borderBottom: "1px solid #f3f4f6", flexShrink: 0 }}>
+        <Box sx={{ display: "flex", alignItems: "flex-start", gap: isMobile ? "10px" : "14px" }}>
+          {/* Icon box — smaller on mobile */}
+          <Box sx={{ width: isMobile ? 40 : 56, height: isMobile ? 40 : 56, borderRadius: "12px", backgroundColor: "#1a2332", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <img src={RoleIcon} width={isMobile ? "18px" : "25px"} height={isMobile ? "18px" : "25px"} alt="" />
           </Box>
+
+          {/* Title + badges */}
           <Box sx={{ flex: 1, minWidth: 0, pt: "2px" }}>
-            <Typography sx={{ fontWeight: 700, fontSize: "18px", color: "#1a2332", lineHeight: 1.2, mb: "8px" }}>
+            <Typography sx={{ fontWeight: 700, fontSize: isMobile ? "15px" : "18px", color: "#1a2332", lineHeight: 1.3, mb: "6px" }}>
               {vacancy.title}
             </Typography>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
               <Box sx={{ display: "inline-flex", alignItems: "center", gap: "5px", backgroundColor: s.bg, color: s.color, borderRadius: "20px", px: "10px", py: "3px", fontSize: "12px", fontWeight: 600 }}>
                 <Box sx={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: s.color }} />
                 {vacancy.status}
@@ -175,15 +181,28 @@ export const VacancyQuickView: React.FC<Props> = ({ open, onClose, vacancy, onFu
               </Box>
             </Box>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0, pt: "2px" }}>
-            <Box
-              component="button"
-              onClick={() => onFullView(vacancy.id)}
-              sx={{ display: "inline-flex", alignItems: "center", gap: "5px", fontSize: "13px", fontWeight: 500, color: "#374151", border: "1px solid #d1d5db", borderRadius: "8px", padding: "6px 12px", cursor: "pointer", fontFamily: "inherit", backgroundColor: "#ffffff", "&:hover": { backgroundColor: "#f9fafb" } }}
-            >
-              <OpenInNewIcon sx={{ fontSize: "14px" }} />
-              Full View
-            </Box>
+
+          {/* Controls — icon-only Full View on mobile */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: "4px", flexShrink: 0, pt: "2px" }}>
+            {isMobile ? (
+              <IconButton
+                size="small"
+                onClick={() => onFullView(vacancy.id)}
+                sx={{ color: "#374151", border: "1px solid #d1d5db", borderRadius: "8px", p: "5px", "&:hover": { backgroundColor: "#f9fafb" } }}
+                aria-label="Full View"
+              >
+                <OpenInNewIcon sx={{ fontSize: "16px" }} />
+              </IconButton>
+            ) : (
+              <Box
+                component="button"
+                onClick={() => onFullView(vacancy.id)}
+                sx={{ display: "inline-flex", alignItems: "center", gap: "5px", fontSize: "13px", fontWeight: 500, color: "#374151", border: "1px solid #d1d5db", borderRadius: "8px", padding: "6px 12px", cursor: "pointer", fontFamily: "inherit", backgroundColor: "#ffffff", "&:hover": { backgroundColor: "#f9fafb" } }}
+              >
+                <OpenInNewIcon sx={{ fontSize: "14px" }} />
+                Full View
+              </Box>
+            )}
             <IconButton size="small" onClick={onClose} sx={{ color: "#9ca3af", "&:hover": { backgroundColor: "#f9fafb" } }}>
               <CloseIcon sx={{ fontSize: "20px" }} />
             </IconButton>
@@ -192,7 +211,7 @@ export const VacancyQuickView: React.FC<Props> = ({ open, onClose, vacancy, onFu
       </Box>
 
       {/* ── Actions ─────────────────────────────────────────────────── */}
-      <Box sx={{ px: "20px", pt: "14px", pb: "12px", borderBottom: "1px solid #f3f4f6", flexShrink: 0 }}>
+      <Box sx={{ px: isMobile ? "14px" : "20px", pt: "14px", pb: "12px", borderBottom: "1px solid #f3f4f6", flexShrink: 0 }}>
         <Typography sx={{ fontSize: "11px", fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.07em", mb: "10px" }}>
           Actions
         </Typography>
@@ -223,7 +242,7 @@ export const VacancyQuickView: React.FC<Props> = ({ open, onClose, vacancy, onFu
       </Box>
 
       {/* ── Scrollable detail sections ───────────────────────────────── */}
-      <Box sx={{ flex: 1, overflowY: "auto", px: "20px", pb: "32px" }}>
+      <Box sx={{ flex: 1, overflowY: "auto", px: isMobile ? "14px" : "20px", pb: "32px" }}>
 
         {/* Vacancy Details */}
         <SectionHeader icon={svgIcon(VacancyDetailsSrc)} title="Vacancy Details" />
