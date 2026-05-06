@@ -29,16 +29,16 @@ import InterviewsPendingIcon from "../../assets/InterviewsPending.svg";
 import AddIcon from "@mui/icons-material/Add";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnIcon from "../../assets/location.svg";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CloseIcon from "@mui/icons-material/Close";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import CheckIcon from "@mui/icons-material/Check";
 import { useStyles } from "./Dashboard.style";
 import { NewVacancyDialog } from "./NewVacancyDialog";
 import { VacancyQuickView } from "./VacancyQuickView";
 import type { VacancyData } from "./VacancyQuickView";
+import VacancyIcon from "../../assets/vacancy.svg";
+import EyeIcon from "../../assets/eye.svg";
 
 // ─── Static data ─────────────────────────────────────────────────────────────
 
@@ -767,7 +767,7 @@ export const Dashboard: React.FC = () => {
                           size="small"
                           className={classes.quickViewBtn}
                           startIcon={
-                            <RemoveRedEyeIcon sx={{ fontSize: "12px" }} />
+                            <img src={EyeIcon}  width={'17px'} height={'17px'}/>
                           }
                           aria-label={`Quick view ${row.title}`}
                           onClick={(e) => {
@@ -885,7 +885,7 @@ export const Dashboard: React.FC = () => {
                           size="small"
                           className={classes.quickViewBtn}
                           startIcon={
-                            <RemoveRedEyeIcon sx={{ fontSize: "12px" }} />
+                            <img src={EyeIcon}  width={'17px'} height={'17px'}/>
                           }
                           aria-label={`Quick view ${row.name}`}
                         >
@@ -1034,6 +1034,7 @@ export const Dashboard: React.FC = () => {
             display: "flex",
             alignItems: "flex-start",
             justifyContent: "space-between",
+            border:'1px solid #F3F4f6',
           }}
         >
           <Box>
@@ -1075,7 +1076,6 @@ export const Dashboard: React.FC = () => {
           sx={{
             px: "24px",
             pb: "24px",
-            pt: 0,
             maxHeight: "420px",
             overflowY: "auto",
           }}
@@ -1122,9 +1122,7 @@ export const Dashboard: React.FC = () => {
                     flexShrink: 0,
                   }}
                 >
-                  <AccountBalanceIcon
-                    sx={{ fontSize: "16px", color: "#334155" }}
-                  />
+                 <img src={VacancyIcon} alt="" width={15} height={15} />
                 </Box>
                 <Typography
                   sx={{

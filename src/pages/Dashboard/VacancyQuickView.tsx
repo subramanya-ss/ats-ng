@@ -1,6 +1,5 @@
 import React from "react";
 import { Drawer, Box, Typography, IconButton, Divider } from "@mui/material";
-import WorkIcon from "@mui/icons-material/Work";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import CloseIcon from "@mui/icons-material/Close";
@@ -8,9 +7,12 @@ import CampaignIcon from "@mui/icons-material/Campaign";
 import PauseCircleOutlinedIcon from "@mui/icons-material/PauseCircleOutlined";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+import VacancyDetailsSrc from "../../assets/VacancyDetails.svg";
+import JobDescriptionSrc from "../../assets/JobDescription.svg";
+import EmploymentDetailsSrc from "../../assets/EmploymentDetails.svg";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
+import RoleIcon from '../../assets/sen_role.svg'
 
 // ─── Shared type (imported by Dashboard.tsx) ──────────────────────────────────
 
@@ -221,7 +223,8 @@ export const VacancyQuickView: React.FC<Props> = ({
               flexShrink: 0,
             }}
           >
-            <WorkIcon sx={{ fontSize: "24px", color: "#ffffff" }} />
+            {/* <WorkIcon sx={{ fontSize: "24px", color: "#ffffff" }} /> */}
+        <img src={RoleIcon} width={'25px'} height={'25px'}/>
           </Box>
 
           {/* Title + meta */}
@@ -470,7 +473,16 @@ export const VacancyQuickView: React.FC<Props> = ({
       <Box sx={{ flex: 1, overflowY: "auto", px: "20px", pb: "32px" }}>
         {/* Vacancy Details */}
         <SectionHeader
-          icon={<WorkOutlineIcon sx={{ fontSize: "15px", color: "#6b7280" }} />}
+           icon={
+            <img
+              src={VacancyDetailsSrc}
+              style={{
+                width: "17px",
+                height: "17px",
+                filter: "brightness(100%) invert(1)",
+              }}
+            />
+          }
           title="Vacancy Details"
         />
         <FieldRow label="Status" value={vacancy.status} />
@@ -482,9 +494,16 @@ export const VacancyQuickView: React.FC<Props> = ({
 
         {/* Job Description */}
         <SectionHeader
-          icon={
-            <ArticleOutlinedIcon sx={{ fontSize: "15px", color: "#6b7280" }} />
-          }
+         icon={
+          <img
+            src={JobDescriptionSrc}
+            style={{
+              width: "17px",
+              height: "17px",
+              filter: "brightness(5) invert(1)",
+            }}
+          />
+        }
           title="Job Description"
         />
         <FieldRow
@@ -500,11 +519,16 @@ export const VacancyQuickView: React.FC<Props> = ({
 
         {/* Employment Details */}
         <SectionHeader
-          icon={
-            <ManageAccountsOutlinedIcon
-              sx={{ fontSize: "15px", color: "#6b7280" }}
-            />
-          }
+         icon={
+          <img
+            src={EmploymentDetailsSrc}
+            style={{
+              width: "24px",
+              height: "24px",
+              filter: "brightness(5) invert(1)",
+            }}
+          />
+        }
           title="Employment Details"
         />
         <FieldRow label="Cost Centre" value={vacancy.costCentre} />
