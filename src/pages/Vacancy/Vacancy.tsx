@@ -34,7 +34,7 @@ import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import WorkIconBig from "../../assets/VacancyHeader.svg";
 import WorkIcon from "@mui/icons-material/Work";
 import WorkIconIn from "../../assets/Permanent.svg";
-import LocationOnIcon from "../../assets/location.svg";
+import LocationOnIcon from "../../assets/Location.svg";
 import CategoryIcon from "../../assets/Technology.svg";
 import CalendarTodayIcon from "../../assets/Closes.svg";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
@@ -288,17 +288,44 @@ export const Vacancy: React.FC = () => {
   const [actionsAnchor, setActionsAnchor] = useState<HTMLElement | null>(null);
 
   const actionMenuItems = [
-    { icon: <EditOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Edit Vacancy' },
-    { icon: <NearMeOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Send Vacancy' },
-    { icon: <MenuBookOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Add Journal Entry' },
-    { icon: <AdminPanelSettingsOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Superuser override' },
-    { icon: <EventOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Interview Slots' },
-    { icon: <QrCodeIcon sx={{ fontSize: '14px' }} />, label: 'View job Codes' },
-    { icon: <HowToRegOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Action Candidates' },
-    { icon: <DeleteOutlineIcon sx={{ fontSize: '14px' }} />, label: 'Remove' },
-    { icon: <PauseCircleOutlineIcon sx={{ fontSize: '14px' }} />, label: 'Suspend' },
-    { icon: <CampaignOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Advertise' },
-    { icon: <ArchiveOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Archive' },
+    {
+      icon: <EditOutlinedIcon sx={{ fontSize: "14px" }} />,
+      label: "Edit Vacancy",
+    },
+    {
+      icon: <NearMeOutlinedIcon sx={{ fontSize: "14px" }} />,
+      label: "Send Vacancy",
+    },
+    {
+      icon: <MenuBookOutlinedIcon sx={{ fontSize: "14px" }} />,
+      label: "Add Journal Entry",
+    },
+    {
+      icon: <AdminPanelSettingsOutlinedIcon sx={{ fontSize: "14px" }} />,
+      label: "Superuser override",
+    },
+    {
+      icon: <EventOutlinedIcon sx={{ fontSize: "14px" }} />,
+      label: "Interview Slots",
+    },
+    { icon: <QrCodeIcon sx={{ fontSize: "14px" }} />, label: "View job Codes" },
+    {
+      icon: <HowToRegOutlinedIcon sx={{ fontSize: "14px" }} />,
+      label: "Action Candidates",
+    },
+    { icon: <DeleteOutlineIcon sx={{ fontSize: "14px" }} />, label: "Remove" },
+    {
+      icon: <PauseCircleOutlineIcon sx={{ fontSize: "14px" }} />,
+      label: "Suspend",
+    },
+    {
+      icon: <CampaignOutlinedIcon sx={{ fontSize: "14px" }} />,
+      label: "Advertise",
+    },
+    {
+      icon: <ArchiveOutlinedIcon sx={{ fontSize: "14px" }} />,
+      label: "Archive",
+    },
   ];
 
   return (
@@ -309,15 +336,32 @@ export const Vacancy: React.FC = () => {
     >
       {/* ─── Breadcrumb bar ──────────────────────────────────────── */}
       <Box className={classes.breadcrumbBar}>
-        <IconButton size="small" onClick={() => navigate('/dashboard')} className={classes.breadcrumbBack} aria-label="Go back">
-          <ArrowBackIcon sx={{ fontSize: '16px' }} />
+        <IconButton
+          size="small"
+          onClick={() => navigate("/dashboard")}
+          className={classes.breadcrumbBack}
+          aria-label="Go back"
+        >
+          <ArrowBackIcon sx={{ fontSize: "16px" }} />
         </IconButton>
         <Box className={classes.breadcrumbPath}>
-          <Typography className={classes.breadcrumbLink} onClick={() => navigate('/dashboard')}>Dashboard</Typography>
+          <Typography
+            className={classes.breadcrumbLink}
+            onClick={() => navigate("/dashboard")}
+          >
+            Dashboard
+          </Typography>
           <ChevronRightIcon className={classes.breadcrumbSep} />
-          <Typography className={classes.breadcrumbLink} onClick={() => navigate('/dashboard')}>Vacancies</Typography>
+          <Typography
+            className={classes.breadcrumbLink}
+            onClick={() => navigate("/dashboard")}
+          >
+            Vacancies
+          </Typography>
           <ChevronRightIcon className={classes.breadcrumbSep} />
-          <Typography className={classes.breadcrumbCurrent}>Senior Software Engineer</Typography>
+          <Typography className={classes.breadcrumbCurrent}>
+            Senior Software Engineer
+          </Typography>
         </Box>
       </Box>
 
@@ -499,12 +543,25 @@ export const Vacancy: React.FC = () => {
                       alignItems: "center",
                       gap: "8px",
                       minHeight: 0,
-                      borderBottom: i < actionMenuItems.length - 1 ? "1px solid #f3f4f6" : "none",
+                      borderBottom:
+                        i < actionMenuItems.length - 1
+                          ? "1px solid #f3f4f6"
+                          : "none",
                       "&:hover": { backgroundColor: "#f8fafc" },
                     }}
                   >
-                    <Box sx={{ color: "#9ca3af", display: "flex", flexShrink: 0 }}>{item.icon}</Box>
-                    <Typography sx={{ fontSize: "12px", fontWeight: 500, color: "#374151" }}>
+                    <Box
+                      sx={{ color: "#9ca3af", display: "flex", flexShrink: 0 }}
+                    >
+                      {item.icon}
+                    </Box>
+                    <Typography
+                      sx={{
+                        fontSize: "12px",
+                        fontWeight: 500,
+                        color: "#374151",
+                      }}
+                    >
                       {item.label}
                     </Typography>
                   </MenuItem>
