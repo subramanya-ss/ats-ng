@@ -1,0 +1,45 @@
+# --- SYSTEM FILES ---
+.DS_Store
+Thumbs.db
+core
+*.log
+
+# --- DEPENDENCIES ---
+# Always ignore node_modules
+node_modules/
+
+# --- PRODUCTION OUTPUT ---
+# Vite builds to 'dist' by default
+dist/
+dist-ssr/
+*.local
+
+# --- TYPESCRIPT / IDE ---
+# Ignore the TS build cache
+*.tsbuildinfo
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# --- ENVIRONMENT SECRETS ---
+# NEVER commit your secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# --- TEST RESULTS ---
+coverage/
+__snapshots__/
+
+# --- PACKAGE MANAGER LOCKS (Optional) ---
+# Most teams KEEP these files. Only uncomment if you have a specific reason.
+# yarn.lock
+# package-lock.json
+# pnpm-lock.yaml
