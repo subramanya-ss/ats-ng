@@ -11,6 +11,8 @@ import {
   Stack,
   Divider,
   IconButton,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -18,6 +20,17 @@ import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ViewHeadlineIcon from "@mui/icons-material/ViewHeadline";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
+import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
+import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
+import QrCodeIcon from "@mui/icons-material/QrCode";
+import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
+import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
+import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import WorkIconBig from "../../assets/VacancyHeader.svg";
 import WorkIcon from "@mui/icons-material/Work";
 import WorkIconIn from "../../assets/Permanent.svg";
@@ -272,6 +285,21 @@ export const Vacancy: React.FC = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState(0);
   const [permanentlyOpen, setPermanentlyOpen] = useState(true);
+  const [actionsAnchor, setActionsAnchor] = useState<HTMLElement | null>(null);
+
+  const actionMenuItems = [
+    { icon: <EditOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Edit Vacancy' },
+    { icon: <NearMeOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Send Vacancy' },
+    { icon: <MenuBookOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Add Journal Entry' },
+    { icon: <AdminPanelSettingsOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Superuser override' },
+    { icon: <EventOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Interview Slots' },
+    { icon: <QrCodeIcon sx={{ fontSize: '14px' }} />, label: 'View job Codes' },
+    { icon: <HowToRegOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Action Candidates' },
+    { icon: <DeleteOutlineIcon sx={{ fontSize: '14px' }} />, label: 'Remove' },
+    { icon: <PauseCircleOutlineIcon sx={{ fontSize: '14px' }} />, label: 'Suspend' },
+    { icon: <CampaignOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Advertise' },
+    { icon: <ArchiveOutlinedIcon sx={{ fontSize: '14px' }} />, label: 'Archive' },
+  ];
 
   return (
     <Box
@@ -280,18 +308,18 @@ export const Vacancy: React.FC = () => {
       sx={{ display: "flex", flexDirection: "column", height: "100%" }}
     >
       {/* ─── Breadcrumb bar ──────────────────────────────────────── */}
-      {/* <Box className={classes.breadcrumbBar}>
+      <Box className={classes.breadcrumbBar}>
         <IconButton size="small" onClick={() => navigate('/dashboard')} className={classes.breadcrumbBack} aria-label="Go back">
           <ArrowBackIcon sx={{ fontSize: '16px' }} />
         </IconButton>
         <Box className={classes.breadcrumbPath}>
           <Typography className={classes.breadcrumbLink} onClick={() => navigate('/dashboard')}>Dashboard</Typography>
           <ChevronRightIcon className={classes.breadcrumbSep} />
-          <Typography className={classes.breadcrumbLink}>Vacancies</Typography>
+          <Typography className={classes.breadcrumbLink} onClick={() => navigate('/dashboard')}>Vacancies</Typography>
           <ChevronRightIcon className={classes.breadcrumbSep} />
           <Typography className={classes.breadcrumbCurrent}>Senior Software Engineer</Typography>
         </Box>
-      </Box> */}
+      </Box>
 
       {/* ─── Sticky tabs bar ──────────────────────────────────────── */}
       <Box className={classes.pageHeader}>
@@ -424,10 +452,64 @@ export const Vacancy: React.FC = () => {
                 variant="contained"
                 size="small"
                 startIcon={<ViewHeadlineIcon sx={{ fontSize: "14px" }} />}
-                endIcon={<KeyboardArrowDownIcon sx={{ fontSize: "14px" }} />}
+                endIcon={
+                  <KeyboardArrowDownIcon
+                    sx={{
+                      fontSize: "14px",
+                      transition: "transform 0.15s",
+                      transform: actionsAnchor ? "rotate(180deg)" : "none",
+                    }}
+                  />
+                }
+                onClick={(e) => setActionsAnchor(e.currentTarget)}
+                aria-haspopup="true"
+                aria-expanded={Boolean(actionsAnchor)}
               >
                 Actions
               </Button>
+
+              {/* Actions dropdown menu */}
+              <Menu
+                anchorEl={actionsAnchor}
+                open={Boolean(actionsAnchor)}
+                onClose={() => setActionsAnchor(null)}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
+                slotProps={{
+                  paper: {
+                    sx: {
+                      mt: "6px",
+                      minWidth: "190px",
+                      borderRadius: "10px",
+                      boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+                      border: "1px solid #f1f5f9",
+                      overflow: "hidden",
+                    },
+                  },
+                }}
+              >
+                {actionMenuItems.map((item, i) => (
+                  <MenuItem
+                    key={item.label}
+                    onClick={() => setActionsAnchor(null)}
+                    sx={{
+                      px: "12px",
+                      py: "7px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      minHeight: 0,
+                      borderBottom: i < actionMenuItems.length - 1 ? "1px solid #f3f4f6" : "none",
+                      "&:hover": { backgroundColor: "#f8fafc" },
+                    }}
+                  >
+                    <Box sx={{ color: "#9ca3af", display: "flex", flexShrink: 0 }}>{item.icon}</Box>
+                    <Typography sx={{ fontSize: "12px", fontWeight: 500, color: "#374151" }}>
+                      {item.label}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
             </Box>
           </Stack>
         </Paper>

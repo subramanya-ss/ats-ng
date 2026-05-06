@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Box, Collapse, Drawer, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Collapse,
+  Drawer,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import DashboardIconSrc from "../../assets/homedashboard.svg";
 import ListDashboardIconSrc from "../../assets/listdashboard.svg";
 import BoltIcon from "../../assets/actions.svg";
@@ -26,7 +34,7 @@ export const MainLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [mobileOpen, setMobileOpen] = useState(false);
   const [actionsOpen, setActionsOpen] = useState(true);
   const [navOpen, setNavOpen] = useState(true);
@@ -42,26 +50,46 @@ export const MainLayout: React.FC = () => {
   );
 
   const ViewVacancyIcon = (_props: { className?: string }) => (
-    <img src={ViewVacancySrc} alt="" style={{ width: '14px', height: '14px', flexShrink: 0 }} />
+    <img
+      src={ViewVacancySrc}
+      alt=""
+      style={{ width: "14px", height: "14px", flexShrink: 0 }}
+    />
   );
   // ── Contextual action items per route ────────────────────────────
   const svgIcon = (src: string) => (
-    <img src={src} alt="" style={{ height: '14px', width: 'auto', flexShrink: 0 }} />
+    <img
+      src={src}
+      alt=""
+      style={{ height: "14px", width: "auto", flexShrink: 0 }}
+    />
   );
 
   const actionItems =
     isVacancy || isApplication
       ? [
-          { label: "Edit Candidate",           icon: svgIcon(EditCandidateSrc) },
-          { label: "Superuser Override",        icon: <BookmarkIcon className={classes.navIcon} /> },
-          { label: "Delete Application",        icon: svgIcon(DeleteAppSrc) },
-          { label: "Email Candidate CV",        icon: svgIcon(EmailCvSrc) },
-          { label: "Add Candidate for Vacancy", icon: svgIcon(AddCandidateSrc) },
-          { label: "Add Journal Entry",         icon: svgIcon(AddJournalSrc) },
+          { label: "Edit Candidate", icon: svgIcon(EditCandidateSrc) },
+          {
+            label: "Superuser Override",
+            icon: <BookmarkIcon className={classes.navIcon} />,
+          },
+          { label: "Delete Application", icon: svgIcon(DeleteAppSrc) },
+          { label: "Email Candidate CV", icon: svgIcon(EmailCvSrc) },
+          {
+            label: "Add Candidate for Vacancy",
+            icon: svgIcon(AddCandidateSrc),
+          },
+          { label: "Add Journal Entry", icon: svgIcon(AddJournalSrc) },
         ]
       : [
-          { label: "Add Dashboard", icon: <AddIcon className={classes.navIcon} /> },
-          { label: "Edit Design",   icon: <EditIcon className={classes.navIcon} /> },
+          {
+            label: "Add Dashboard",
+            icon: <AddIcon className={classes.navIcon} />,
+          },
+          {
+            label: "Edit Design",
+            icon: <EditIcon className={classes.navIcon} />,
+          },
         ];
 
   // ── Contextual nav items per route ───────────────────────────────
@@ -114,7 +142,7 @@ export const MainLayout: React.FC = () => {
     <Box className={classes.drawerContent}>
       <Box component="nav" className={classes.nav}>
         {/* ── Actions section ──────────────────────────────────── */}
-        <Box
+        {/* <Box
           className={classes.sectionBtn}
           onClick={() => setActionsOpen((v) => !v)}
           role="button"
@@ -155,7 +183,7 @@ export const MainLayout: React.FC = () => {
               </Box>
             ))}
           </Box>
-        </Collapse>
+        </Collapse> */}
 
         {/* ── Navigation section ───────────────────────────────── */}
         <Box
@@ -249,7 +277,7 @@ export const MainLayout: React.FC = () => {
 
       <Box className={classes.body}>
         <Drawer
-          variant={isMobile ? 'temporary' : 'permanent'}
+          variant={isMobile ? "temporary" : "permanent"}
           open={isMobile ? mobileOpen : true}
           onClose={() => setMobileOpen(false)}
           className={classes.drawer}

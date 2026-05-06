@@ -3,6 +3,42 @@ import type { Theme } from '@mui/material/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
 
+  // ─── Breadcrumb bar ──────────────────────────────────────────────────────────
+  breadcrumbBar: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    padding: '10px 20px',
+    backgroundColor: '#ffffff',
+    borderBottom: `1px solid ${theme.palette.slate[100]}`,
+    flexShrink: 0,
+  },
+  breadcrumbBack: {
+    color: `${theme.palette.navy[800]} !important`,
+    padding: '4px !important',
+    '&:hover': { backgroundColor: `${theme.palette.slate[100]} !important` },
+  },
+  breadcrumbPath: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+  },
+  breadcrumbLink: {
+    fontSize: '13px !important',
+    color: `${theme.palette.slate[400]} !important`,
+    cursor: 'pointer',
+    '&:hover': { color: `${theme.palette.navy[800]} !important` },
+  },
+  breadcrumbSep: {
+    fontSize: '14px !important',
+    color: `${theme.palette.slate[300]} !important`,
+  },
+  breadcrumbCurrent: {
+    fontSize: '13px !important',
+    fontWeight: '600 !important',
+    color: `${theme.palette.navy[800]} !important`,
+  },
+
   // ─── Page layout ─────────────────────────────────────────────────────────────
   pageHeader: {
     backgroundColor: '#ffffff',

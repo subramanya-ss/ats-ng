@@ -27,10 +27,14 @@ import CandidatestoReviewIcon from "../../assets/CandidatestoReview.svg";
 import LiveApplicationsIcon from "../../assets/LiveApplications.svg";
 import InterviewsPendingIcon from "../../assets/InterviewsPending.svg";
 import AddIcon from "@mui/icons-material/Add";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnIcon from "../../assets/location.svg";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
+import FiltersSrc from "../../assets/Filters.svg";
+import ExportSrc from "../../assets/export.svg";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import CheckIcon from "@mui/icons-material/Check";
 import { useStyles } from "./Dashboard.style";
@@ -434,9 +438,16 @@ export const Dashboard: React.FC = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [successOpen, setSuccessOpen] = useState(false);
   const [quickViewOpen, setQuickViewOpen] = useState(false);
-  const [quickViewVacancy, setQuickViewVacancy] = useState<VacancyData | null>(
-    null,
-  );
+  const [quickViewVacancy, setQuickViewVacancy] = useState<VacancyData | null>(null);
+  const [vacancySearch, setVacancySearch] = useState('');
+
+  const filteredVacancies = vacancySearch.trim()
+    ? vacancies.filter((v) =>
+        v.title.toLowerCase().includes(vacancySearch.toLowerCase()) ||
+        v.location.toLowerCase().includes(vacancySearch.toLowerCase()) ||
+        v.status.toLowerCase().includes(vacancySearch.toLowerCase())
+      )
+    : vacancies;
 
   return (
     <Box
@@ -447,13 +458,27 @@ export const Dashboard: React.FC = () => {
       {/* ─── Page header ──────────────────────────────────────────── */}
       <Box className={classes.pageHeader}>
         <Box>
-          <Typography component="h1" className={classes.pageTitle}>
-            Home Dashboard
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Typography component="h1" className={classes.pageTitle}>
+              Home Dashboard
+            </Typography>
+            <IconButton
+              size="small"
+              aria-label="Edit dashboard title"
+              sx={{
+                color: '#3b82f6',
+                padding: '2px',
+                '&:hover': { backgroundColor: '#eff6ff' },
+              }}
+            >
+              <DriveFileRenameOutlineIcon sx={{ fontSize: '18px' }} />
+            </IconButton>
+          </Box>
           <Typography className={classes.pageSubtitle}>
             Overview of your recruitment pipeline
           </Typography>
         </Box>
+
         <Stack direction="row" spacing={1.5} className={classes.headerActions}>
           <Button
             variant="contained"
@@ -691,10 +716,33 @@ export const Dashboard: React.FC = () => {
           sx={{ mb: "20px", border: "1px solid #f3f4f6" }}
         >
           <Box className={classes.sectionHeader}>
-            <Typography className={classes.sectionTitle}>Vacancies</Typography>
-            <Typography className={classes.sectionSubtitle}>
-              7 total vacancies
-            </Typography>
+            {/* Left: title + count */}
+            <Box>
+              <Typography className={classes.sectionTitle}>Vacancies</Typography>
+              <Typography className={classes.sectionSubtitle}>
+                {filteredVacancies.length} of {vacancies.length} vacancies
+              </Typography>
+            </Box>
+            {/* Right: search + filters + export */}
+            <Box className={classes.vacancyHeaderRight}>
+              <Box className={classes.vacancySearchBox}>
+                <SearchIcon className={classes.vacancySearchIcon} />
+                <Box
+                  component="input"
+                  className={classes.vacancySearchInput}
+                  placeholder="Search vacancies by name, location or status..."
+                  value={vacancySearch}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setVacancySearch(e.target.value)}
+                  aria-label="Search vacancies"
+                />
+              </Box>
+              <Button variant="outlined" size="small" className={classes.filtersBtn} startIcon={<img src={FiltersSrc} alt="" style={{ width: '14px', height: 'auto' }} />}>
+                Filters
+              </Button>
+              <Button variant="outlined" size="small" className={classes.exportBtn} startIcon={<img src={ExportSrc} alt="" style={{ width: '14px', height: 'auto' }} />}>
+                Export
+              </Button>
+            </Box>
           </Box>
           <TableContainer sx={{ overflowX: 'auto' }}>
             <Table size="small" aria-label="Vacancies table">
@@ -716,7 +764,7 @@ export const Dashboard: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {vacancies.map((row) => (
+                {filteredVacancies.map((row) => (
                   <TableRow
                     key={row.id}
                     className={classes.tableRow}
@@ -752,33 +800,19 @@ export const Dashboard: React.FC = () => {
                     </TableCell>
                     <TableCell>{row.interview}</TableCell>
                     <TableCell onClick={(e) => e.stopPropagation()}>
-                      <Box className={classes.tableActions}>
-                        <Button
-                          size="small"
-                          className={classes.actionBtn}
-                          endIcon={
-                            <ArrowDropDownIcon sx={{ fontSize: "13px" }} />
-                          }
-                          aria-label={`Action menu for ${row.title}`}
-                        >
-                          Action
-                        </Button>
-                        <Button
-                          size="small"
-                          className={classes.quickViewBtn}
-                          startIcon={
-                            <img src={EyeIcon}  width={'17px'} height={'17px'}/>
-                          }
-                          aria-label={`Quick view ${row.title}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setQuickViewVacancy(row);
-                            setQuickViewOpen(true);
-                          }}
-                        >
-                          Quick View
-                        </Button>
-                      </Box>
+                      <Button
+                        size="small"
+                        className={classes.quickViewBtn}
+                        startIcon={<img src={EyeIcon} width="17px" height="17px" alt="" />}
+                        aria-label={`Quick view ${row.title}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setQuickViewVacancy(row);
+                          setQuickViewOpen(true);
+                        }}
+                      >
+                        Quick View
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

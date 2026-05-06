@@ -9,6 +9,9 @@ import {
   TextField,
   Select,
   MenuItem,
+  Switch,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import { Grid2 as Grid } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -23,7 +26,7 @@ import SettingAlertsSrc from "../../assets/settingalerts.svg";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import LinkIcon from "../../assets/doc_link.svg";
 import UploadIcon from "../../assets/upload.svg";
-import OwnershipIcon from "../../assets/ownership.svg"
+import OwnershipIcon from "../../assets/ownership.svg";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -148,7 +151,7 @@ const UploadZone: React.FC<{ label: string; subtitle: string }> = ({
           transition: "all 0.15s",
         }}
       >
-        <img src={UploadIcon} width={'20px'} height={'20px'}/>
+        <img src={UploadIcon} width={"20px"} height={"20px"} />
         <Box sx={{ minWidth: 0 }}>
           <Typography
             sx={{
@@ -424,7 +427,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
               backgroundColor: "#ffffff",
             }}
           >
-            {/* Vacancy Details */}
+            {/* ── Vacancy Details ───────────────────────────────────── */}
             <SectionHeader
               icon={
                 <img
@@ -437,7 +440,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                 />
               }
               title="Vacancy Details"
-              errorText="Required fields were not filled in"
+              // errorText="Required fields were not filled in"
             />
             <Grid container spacing={2} sx={{ mb: "28px" }}>
               <Grid size={12}>
@@ -469,30 +472,18 @@ export const NewVacancyDialog: React.FC<Props> = ({
               </Grid>
               <Grid size={6}>
                 <FieldLabel>
-                  Location <span style={{ color: "#F87171" }}>*</span>
+                  Location <span style={{ color: "#ef4444" }}>*</span>
                 </FieldLabel>
                 <TextField
                   fullWidth
                   size="small"
                   placeholder="e.g. Inverness"
-                  error
-                  helperText={
-                    <Box
-                      component="span"
-                      sx={{ display: "flex", alignItems: "center", gap: "3px" }}
-                    >
-                      <ErrorOutlineIcon sx={{ fontSize: "12px" }} />
-                      Location is required
-                    </Box>
-                  }
-                  sx={{
-                    "& .MuiOutlinedInput-root fieldset": {
-                      borderColor: "#ef4444",
-                    },
-                    "& .MuiOutlinedInput-root:hover fieldset": {
-                      borderColor: "#ef4444",
-                    },
-                  }}
+                  // error
+                  // helperText={
+                  //   <Box component="span" sx={{ display: "flex", alignItems: "center", gap: "3px", color: "#ef4444" }}>
+                  //     <ErrorOutlineIcon sx={{ fontSize: "12px" }} /> Location is required
+                  //   </Box>
+                  // }
                 />
               </Grid>
               <Grid size={6}>
@@ -545,7 +536,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
               </Grid>
             </Grid>
 
-            {/* Job Description */}
+            {/* ── Job Description ───────────────────────────────────── */}
             <SectionHeader
               icon={
                 <img
@@ -582,9 +573,9 @@ export const NewVacancyDialog: React.FC<Props> = ({
               </Box>
             </Stack>
 
-            {/* Employment Details */}
+            {/* ── Employment Details ────────────────────────────────── */}
             <SectionHeader
-               icon={
+              icon={
                 <img
                   src={EmploymentDetailsSrc}
                   style={{
@@ -593,44 +584,41 @@ export const NewVacancyDialog: React.FC<Props> = ({
                     filter: "brightness(5) invert(1)",
                   }}
                 />
-               }
+              }
               title="Employment Details"
             />
             <Grid container spacing={2} sx={{ mb: "28px" }}>
               <Grid size={6}>
+                <FieldLabel>Cost Centre</FieldLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="e.g. CC-PLAN-042"
+                />
+              </Grid>
+              <Grid size={6}>
+                <FieldLabel>Reporting To</FieldLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="e.g. Head of Planning"
+                />
+              </Grid>
+              <Grid size={6}>
+                <FieldLabel>Replacement For</FieldLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="e.g. New Headcount"
+                />
+              </Grid>
+              <Grid size={6}>
                 <FieldLabel>Start Date</FieldLabel>
                 <TextField fullWidth size="small" type="date" />
               </Grid>
-              <Grid size={6}>
-                <FieldLabel>End Date</FieldLabel>
-                <TextField fullWidth size="small" type="date" />
-              </Grid>
-              <Grid size={6}>
-                <FieldLabel>Hours Per Week</FieldLabel>
-                <TextField fullWidth size="small" placeholder="e.g. 37.5" />
-              </Grid>
-              <Grid size={6}>
-                <FieldLabel>Working Pattern</FieldLabel>
-                <Select
-                  fullWidth
-                  size="small"
-                  value=""
-                  displayEmpty
-                  onChange={() => {}}
-                >
-                  <MenuItem value="">
-                    <em style={{ color: "#9ca3af", fontStyle: "normal" }}>
-                      Select...
-                    </em>
-                  </MenuItem>
-                  <MenuItem value="full-time">Full Time</MenuItem>
-                  <MenuItem value="part-time">Part Time</MenuItem>
-                  <MenuItem value="flexible">Flexible</MenuItem>
-                </Select>
-              </Grid>
             </Grid>
 
-            {/* Compensation */}
+            {/* ── Compensation ──────────────────────────────────────── */}
             <SectionHeader
               icon={
                 <img
@@ -646,20 +634,24 @@ export const NewVacancyDialog: React.FC<Props> = ({
             />
             <Grid container spacing={2} sx={{ mb: "28px" }}>
               <Grid size={6}>
-                <FieldLabel>Salary Range (From)</FieldLabel>
-                <TextField fullWidth size="small" placeholder="e.g. £35,000" />
-              </Grid>
-              <Grid size={6}>
-                <FieldLabel>Salary Range (To)</FieldLabel>
-                <TextField fullWidth size="small" placeholder="e.g. £45,000" />
+                <FieldLabel>Salary</FieldLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="e.g. £30,000 – £38,000 per annum"
+                />
               </Grid>
               <Grid size={6}>
                 <FieldLabel>Agency Rate</FieldLabel>
-                <TextField fullWidth size="small" placeholder="e.g. 15%" />
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="e.g. £250 per day"
+                />
               </Grid>
             </Grid>
 
-            {/* Requirements */}
+            {/* ── Candidate Requirements ────────────────────────────── */}
             <SectionHeader
               icon={
                 <img
@@ -671,7 +663,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                   }}
                 />
               }
-              title="Requirements"
+              title="Candidate Requirements"
             />
             <Stack spacing={2} sx={{ mb: "28px" }}>
               <Box>
@@ -681,7 +673,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                   multiline
                   minRows={3}
                   size="small"
-                  placeholder="Key skills and competencies required..."
+                  placeholder="Key personal attributes and soft skills required..."
                 />
               </Box>
               <Box>
@@ -691,7 +683,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                   multiline
                   minRows={3}
                   size="small"
-                  placeholder="Required years of experience and background..."
+                  placeholder="Required and desirable experience..."
                 />
               </Box>
               <Box>
@@ -699,14 +691,61 @@ export const NewVacancyDialog: React.FC<Props> = ({
                 <TextField
                   fullWidth
                   multiline
+                  minRows={3}
+                  size="small"
+                  placeholder="Minimum education requirements and desirable qualifications..."
+                />
+              </Box>
+              <Box>
+                <FieldLabel>Additional Information</FieldLabel>
+                <TextField
+                  fullWidth
+                  multiline
                   minRows={2}
                   size="small"
-                  placeholder="Required qualifications and certifications..."
+                  placeholder="Any other relevant information..."
                 />
+              </Box>
+              <Box>
+                <FieldLabel>Close Date</FieldLabel>
+                <TextField size="small" type="date" sx={{ width: "200px" }} />
+              </Box>
+              <Box
+                sx={{
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "8px",
+                  p: "14px 16px",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "10px",
+                }}
+              >
+                <Checkbox
+                  size="small"
+                  sx={{
+                    p: 0,
+                    mt: "1px",
+                    color: "#d1d5db",
+                    "&.Mui-checked": { color: "#1a2332" },
+                  }}
+                />
+                <Box>
+                  <Typography
+                    sx={{ fontSize: "13px", fontWeight: 600, color: "#1a2332" }}
+                  >
+                    Is this vacancy permanently open?
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: "11px", color: "#9ca3af", mt: "2px" }}
+                  >
+                    If you tick yes the job will remain live until it is
+                    manually suspended, archived or removed.
+                  </Typography>
+                </Box>
               </Box>
             </Stack>
 
-            {/* Settings & Alerts */}
+            {/* ── Settings & Alerts ─────────────────────────────────── */}
             <SectionHeader
               icon={
                 <img
@@ -720,12 +759,101 @@ export const NewVacancyDialog: React.FC<Props> = ({
               }
               title="Settings & Alerts"
             />
-            <Grid container spacing={2} sx={{ mb: "28px" }}>
-              <Grid size={6}>
-                <FieldLabel>Close Date</FieldLabel>
-                <TextField fullWidth size="small" type="date" />
-              </Grid>
-              <Grid size={6}>
+            <Stack spacing={0} sx={{ mb: "28px" }}>
+              {/* Email Alerts */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  py: "12px",
+                  px: "12px",
+                  border: "1px solid #E5E7EB",
+                  borderRadius: "8px",
+                  mt: "8px",
+                  mb: "8px",
+                  backgroundColor: "#F9FAFB80",
+                }}
+              >
+                <Box>
+                  <Typography
+                    sx={{ fontSize: "13px", fontWeight: 600, color: "#1a2332" }}
+                  >
+                    Email Alerts Sent
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: "11px", color: "#9ca3af", mt: "2px" }}
+                  >
+                    Notify relevant contacts when applications are received
+                  </Typography>
+                </Box>
+                <Switch size="small" sx={{ flexShrink: 0 }} />
+              </Box>
+
+              {/* Disclosure Scotland — with error highlight */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  py: "12px",
+                  px: "12px",
+                  border: "1px solid #E5E7EB",
+                  borderRadius: "8px",
+                  mt: "8px",
+                  mb: "8px",
+                  backgroundColor: "#F9FAFB80",
+                }}
+              >
+                <Box>
+                  <Typography
+                    sx={{ fontSize: "13px", fontWeight: 600, color: "#1a2332" }}
+                  >
+                    Post requires a Disclosure Scotland check{" "}
+                    <span style={{ color: "#ef4444" }}>*</span>
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: "11px", color: "#9ca3af", mt: "2px" }}
+                  >
+                    To be done on successful candidate
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                      mt: "4px",
+                    }}
+                  >
+                    {/* <ErrorOutlineIcon
+                      sx={{ fontSize: "12px", color: "#ef4444" }}
+                    />
+                    <Typography sx={{ fontSize: "11px", color: "#ef4444" }}>
+                      Please confirm the Disclosure Scotland requirement
+                    </Typography> */}
+                  </Box>
+                </Box>
+                <Switch size="small" sx={{ flexShrink: 0 }} />
+              </Box>
+
+              {/* Interview Arrangements */}
+              <Box sx={{ py: "12px" }}>
+                <FieldLabel>Interview Arrangements</FieldLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="e.g. Interviews will be held on 31st October 2023"
+                />
+              </Box>
+
+              {/* Confirm Interview Date By */}
+              <Box sx={{ py: "12px" }}>
+                <FieldLabel>Confirm Interview Date By</FieldLabel>
+                <TextField size="small" type="date" sx={{ width: "200px" }} />
+              </Box>
+
+              {/* Allow Applications From */}
+              <Box sx={{ py: "12px" }}>
                 <FieldLabel>Allow Applications From</FieldLabel>
                 <Select
                   fullWidth
@@ -736,15 +864,15 @@ export const NewVacancyDialog: React.FC<Props> = ({
                 >
                   <MenuItem value="">
                     <em style={{ color: "#9ca3af", fontStyle: "normal" }}>
-                      Select...
+                      Select platform...
                     </em>
                   </MenuItem>
                   <MenuItem value="indeed">Indeed</MenuItem>
                   <MenuItem value="linkedin">LinkedIn</MenuItem>
                   <MenuItem value="direct">Direct</MenuItem>
                 </Select>
-              </Grid>
-            </Grid>
+              </Box>
+            </Stack>
           </Box>
         </Box>
       )}
@@ -776,7 +904,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
 
           {/* Ownership */}
           <SectionHeader
-            icon={<img src={OwnershipIcon} width={'17px'} height={'17px'}/>}
+            icon={<img src={OwnershipIcon} width={"17px"} height={"17px"} />}
             title="Ownership"
           />
           <Grid container spacing={2}>
