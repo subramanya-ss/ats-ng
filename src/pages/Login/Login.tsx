@@ -16,8 +16,9 @@ import {
 import LockIcon from '@mui/icons-material/Lock';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import LanguageIcon from '@mui/icons-material/Language';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
+import LogoSrc from '../../assets/logo.png';
 import { useStyles } from './Login.style';
 
 /** Login page — ATS-NG secure hiring platform */
@@ -35,7 +36,7 @@ export const Login: React.FC = () => {
       <Box className={classes.topBar} component="header">
         <Box className={classes.brand}>
           <Box className={classes.brandLogo} aria-hidden="true">
-            <Typography className={classes.brandLogoText}>A</Typography>
+            <img src={LogoSrc} alt="" className={classes.brandLogoImg} />
           </Box>
           <Stack spacing={0}>
             <Typography className={classes.brandTitle}>ATS-NG</Typography>
@@ -50,7 +51,8 @@ export const Login: React.FC = () => {
           aria-label="Language: English"
           onKeyDown={(e) => e.key === 'Enter' && undefined}
         >
-          <LanguageIcon sx={{ fontSize: '15px' }} aria-hidden="true" />
+          <Typography className={classes.langFlag} aria-hidden="true">🇬🇧</Typography>
+          <Typography className={classes.langText}>EN</Typography>
           <KeyboardArrowDownIcon sx={{ fontSize: '14px' }} aria-hidden="true" />
         </Box>
       </Box>
@@ -164,7 +166,7 @@ export const Login: React.FC = () => {
           <Box className={classes.securityNote} aria-label="Security information">
             <LockIcon sx={{ fontSize: '11px', color: '#94a3b8' }} aria-hidden="true" />
             <Typography className={classes.securityNoteText}>
-              Protected by end-to-end encryption · MFA enforced
+              GDPR-ready · Hosted in the EU
             </Typography>
           </Box>
         </Box>
@@ -173,9 +175,18 @@ export const Login: React.FC = () => {
       {/* ─── Footer ───────────────────────────────────────────────── */}
       <Box className={classes.footer} component="footer">
         <Typography className={classes.footerText}>
-          New to ATS-NG?{' '}
+          New to ATS-NG?{'  '}
           <Link href="#" className={classes.footerLink}>Contact Administrator</Link>
         </Typography>
+
+        {/* GDPR notice */}
+        <Box className={classes.gdprNotice}>
+          <VerifiedUserOutlinedIcon className={classes.gdprIcon} aria-hidden="true" />
+          <Typography className={classes.gdprText}>
+            Your data is protected under GDPR regulations. All connections are encrypted with TLS 1.3. We never share your information with third parties.
+          </Typography>
+        </Box>
+
         <Typography className={classes.footerSmall}>
           By signing in you agree to our{' '}
           <Link href="#" className={classes.footerSmallLink}>Privacy Policy</Link>
