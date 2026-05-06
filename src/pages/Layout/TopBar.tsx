@@ -23,9 +23,9 @@ import logoSrc from "../../assets/logo.png";
 import { useTopBarStyles } from "./TopBar.style";
 
 const LANGUAGES = [
-  { code: "en", label: "English", flag: "🇬🇧" },
-  { code: "ga", label: "Irish", flag: "🇮🇪" },
-  { code: "fr", label: "French", flag: "🇫🇷" },
+  { code: "EN", label: "English", flag: "🇬🇧" },
+  { code: "GA", label: "Irish", flag: "🇮🇪" },
+  { code: "FR", label: "French", flag: "🇫🇷" },
 ];
 
 interface Props {
