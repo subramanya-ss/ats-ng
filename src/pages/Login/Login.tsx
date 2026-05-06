@@ -12,14 +12,23 @@ import {
   InputAdornment,
   Link,
   Stack,
+  Menu,
+  MenuItem,
 } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
+import CheckIcon from '@mui/icons-material/Check';
 import LogoSrc from '../../assets/logo.png';
 import { useStyles } from './Login.style';
+
+const LANGUAGES = [
+  { code: 'en', label: 'English', flag: '🇬🇧' },
+  { code: 'ga', label: 'Irish', flag: '🇮🇪' },
+  { code: 'fr', label: 'French', flag: '🇫🇷' },
+];
 
 /** Login page — ATS-NG secure hiring platform */
 export const Login: React.FC = () => {
@@ -27,6 +36,9 @@ export const Login: React.FC = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [keepSigned, setKeepSigned] = useState(true);
+  const [langAnchor, setLangAnchor] = useState<HTMLElement | null>(null);
+  const [selectedLang, setSelectedLang] = useState('en');
+  const activeLang = LANGUAGES.find((l) => l.code === selectedLang) ?? LANGUAGES[0];
 
   const handleSignIn = () => navigate('/dashboard');
 
@@ -48,13 +60,59 @@ export const Login: React.FC = () => {
           className={classes.langSelector}
           role="button"
           tabIndex={0}
-          aria-label="Language: English"
-          onKeyDown={(e) => e.key === 'Enter' && undefined}
+          aria-label={`Language: ${activeLang.label}`}
+          aria-haspopup="true"
+          aria-expanded={Boolean(langAnchor)}
+          onClick={(e) => setLangAnchor(e.currentTarget)}
+          onKeyDown={(e) => e.key === 'Enter' && setLangAnchor(e.currentTarget as HTMLElement)}
         >
-          <Typography className={classes.langFlag} aria-hidden="true">🇬🇧</Typography>
-          <Typography className={classes.langText}>EN</Typography>
-          <KeyboardArrowDownIcon sx={{ fontSize: '14px' }} aria-hidden="true" />
+          <Typography className={classes.langFlag} aria-hidden="true">{activeLang.flag}</Typography>
+          <Typography className={classes.langText}>{activeLang.code.toUpperCase()}</Typography>
+          <KeyboardArrowDownIcon
+            sx={{ fontSize: '14px', transition: 'transform 0.15s', transform: langAnchor ? 'rotate(180deg)' : 'none' }}
+            aria-hidden="true"
+          />
         </Box>
+
+        <Menu
+          anchorEl={langAnchor}
+          open={Boolean(langAnchor)}
+          onClose={() => setLangAnchor(null)}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          slotProps={{
+            paper: {
+              sx: {
+                mt: '4px',
+                minWidth: '160px',
+                borderRadius: '10px',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.10)',
+                border: '1px solid #f1f5f9',
+                overflow: 'hidden',
+              },
+            },
+          }}
+        >
+          <Box sx={{ px: '12px', py: '8px', borderBottom: '1px solid #f1f5f9' }}>
+            <Typography sx={{ fontSize: '11px', fontWeight: 700, color: '#1a2332' }}>Language</Typography>
+          </Box>
+          {LANGUAGES.map((lang) => (
+            <MenuItem
+              key={lang.code}
+              onClick={() => { setSelectedLang(lang.code); setLangAnchor(null); }}
+              sx={{
+                px: '12px', py: '7px', minHeight: 0,
+                display: 'flex', alignItems: 'center', gap: '8px',
+                backgroundColor: lang.code === selectedLang ? '#f8fafc' : 'transparent',
+                '&:hover': { backgroundColor: '#f8fafc' },
+              }}
+            >
+              <Typography sx={{ fontSize: '15px', lineHeight: 1, flexShrink: 0 }}>{lang.flag}</Typography>
+              <Typography sx={{ flex: 1, fontSize: '12px', fontWeight: 500, color: '#1a2332' }}>{lang.label}</Typography>
+              {lang.code === selectedLang && <CheckIcon sx={{ fontSize: '13px', color: '#1a2332', flexShrink: 0 }} />}
+            </MenuItem>
+          ))}
+        </Menu>
       </Box>
 
       {/* ─── Card ─────────────────────────────────────────────────── */}
