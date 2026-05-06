@@ -29,7 +29,7 @@ import InterviewsPendingIcon from "../../assets/InterviewsPending.svg";
 import AddIcon from "@mui/icons-material/Add";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import PersonIcon from "@mui/icons-material/Person";
-import LocationOnIcon from "../../assets/location.svg";
+import LocationOnIcon from "../../assets/Location.svg";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
@@ -133,15 +133,20 @@ const vacancies: VacancyData[] = [
     startDate: "01 Apr 2024",
     salary: "£65,000 – £80,000 per annum",
     agencyRate: "£450 per day",
-    personalSkills: "Strong communication and leadership skills; ability to work collaboratively in agile teams and mentor junior engineers.",
-    experience: "Minimum 5 years of software engineering experience, with proven expertise in distributed systems and cloud platforms (AWS/GCP).",
-    education: "BSc in Computer Science or equivalent; relevant professional certifications desirable.",
-    additionalInfo: "Hybrid working available — minimum 2 days per week on-site in London. Security clearance may be required.",
+    personalSkills:
+      "Strong communication and leadership skills; ability to work collaboratively in agile teams and mentor junior engineers.",
+    experience:
+      "Minimum 5 years of software engineering experience, with proven expertise in distributed systems and cloud platforms (AWS/GCP).",
+    education:
+      "BSc in Computer Science or equivalent; relevant professional certifications desirable.",
+    additionalInfo:
+      "Hybrid working available — minimum 2 days per week on-site in London. Security clearance may be required.",
     closeDate: "30 Apr 2024",
     permanentlyOpen: false,
     emailAlertsSent: true,
     disclosureScotlandCheck: false,
-    interviewArrangements: "Two-stage interview: initial technical screen (remote) followed by an in-person panel interview at the London office.",
+    interviewArrangements:
+      "Two-stage interview: initial technical screen (remote) followed by an in-person panel interview at the London office.",
     confirmInterviewDateBy: "15 Apr 2024",
     allowApplicationsFrom: "Internal & External",
   },
@@ -166,14 +171,18 @@ const vacancies: VacancyData[] = [
     hours: "37 hours/week",
     startDate: "15 Apr 2024",
     salary: "£55,000 – £65,000 per annum",
-    personalSkills: "Excellent stakeholder management and communication skills; strong analytical mindset and problem-solving ability.",
-    experience: "3+ years in a product management role, preferably within a digital or public sector environment.",
-    education: "Degree-level qualification in a relevant discipline; product management certification (e.g. AIPMM) advantageous.",
+    personalSkills:
+      "Excellent stakeholder management and communication skills; strong analytical mindset and problem-solving ability.",
+    experience:
+      "3+ years in a product management role, preferably within a digital or public sector environment.",
+    education:
+      "Degree-level qualification in a relevant discipline; product management certification (e.g. AIPMM) advantageous.",
     closeDate: "20 Apr 2024",
     permanentlyOpen: false,
     emailAlertsSent: true,
     disclosureScotlandCheck: false,
-    interviewArrangements: "Single panel interview conducted remotely via Microsoft Teams.",
+    interviewArrangements:
+      "Single panel interview conducted remotely via Microsoft Teams.",
     confirmInterviewDateBy: "10 Apr 2024",
     allowApplicationsFrom: "External Only",
   },
@@ -199,14 +208,18 @@ const vacancies: VacancyData[] = [
     startDate: "01 May 2024",
     duration: "12 months (with possibility of extension)",
     salary: "£42,000 – £50,000 per annum (pro-rata)",
-    personalSkills: "Creative thinker with strong empathy for users; excellent communication and presentation skills.",
-    experience: "2+ years experience in UX/UI design; proficiency in Figma and usability testing methodologies.",
-    education: "Degree in Design, HCI or related field; portfolio of digital product work required.",
+    personalSkills:
+      "Creative thinker with strong empathy for users; excellent communication and presentation skills.",
+    experience:
+      "2+ years experience in UX/UI design; proficiency in Figma and usability testing methodologies.",
+    education:
+      "Degree in Design, HCI or related field; portfolio of digital product work required.",
     closeDate: "25 Apr 2024",
     permanentlyOpen: false,
     emailAlertsSent: false,
     disclosureScotlandCheck: false,
-    interviewArrangements: "Portfolio review followed by a one-hour remote interview with the design team.",
+    interviewArrangements:
+      "Portfolio review followed by a one-hour remote interview with the design team.",
     allowApplicationsFrom: "Internal & External",
   },
   {
@@ -230,15 +243,19 @@ const vacancies: VacancyData[] = [
     hours: "37 hours/week",
     startDate: "01 Jun 2024",
     salary: "£35,000 – £42,000 per annum",
-    personalSkills: "Highly numerate with attention to detail; ability to translate complex data into clear business insights.",
-    experience: "2+ years in a data analysis role; proficiency in SQL, Power BI and Excel required.",
-    education: "Degree in Mathematics, Statistics, Economics or a related discipline.",
+    personalSkills:
+      "Highly numerate with attention to detail; ability to translate complex data into clear business insights.",
+    experience:
+      "2+ years in a data analysis role; proficiency in SQL, Power BI and Excel required.",
+    education:
+      "Degree in Mathematics, Statistics, Economics or a related discipline.",
     additionalInfo: "Occasional travel to London office required (quarterly).",
     closeDate: "15 May 2024",
     permanentlyOpen: false,
     emailAlertsSent: true,
     disclosureScotlandCheck: false,
-    interviewArrangements: "Written assessment followed by a panel interview at the Birmingham office.",
+    interviewArrangements:
+      "Written assessment followed by a panel interview at the Birmingham office.",
     confirmInterviewDateBy: "25 May 2024",
     allowApplicationsFrom: "Internal & External",
   },
@@ -264,14 +281,19 @@ const vacancies: VacancyData[] = [
     startDate: "15 Mar 2024",
     salary: "£55,000 – £68,000 per annum",
     agencyRate: "£400 per day",
-    personalSkills: "Self-motivated with a strong sense of ownership; able to work in a fast-paced on-call environment.",
-    experience: "3+ years DevOps/SRE experience; hands-on with AWS, Terraform and Kubernetes in production environments.",
-    education: "Degree in Computer Science or equivalent practical experience; AWS/GCP certifications desirable.",
-    additionalInfo: "On-call rota participation required (approximately 1 week in 6).",
+    personalSkills:
+      "Self-motivated with a strong sense of ownership; able to work in a fast-paced on-call environment.",
+    experience:
+      "3+ years DevOps/SRE experience; hands-on with AWS, Terraform and Kubernetes in production environments.",
+    education:
+      "Degree in Computer Science or equivalent practical experience; AWS/GCP certifications desirable.",
+    additionalInfo:
+      "On-call rota participation required (approximately 1 week in 6).",
     permanentlyOpen: false,
     emailAlertsSent: true,
     disclosureScotlandCheck: true,
-    interviewArrangements: "Technical take-home task followed by a remote panel interview with the infrastructure team.",
+    interviewArrangements:
+      "Technical take-home task followed by a remote panel interview with the infrastructure team.",
     confirmInterviewDateBy: "28 Mar 2024",
     allowApplicationsFrom: "Internal & External",
   },
@@ -297,9 +319,12 @@ const vacancies: VacancyData[] = [
     startDate: "01 Jul 2024",
     duration: "6 months",
     salary: "£28,000 – £34,000 per annum (pro-rata)",
-    personalSkills: "Creative and proactive with strong written and verbal communication skills; comfortable working to tight deadlines.",
-    experience: "1+ years in a marketing or communications role; experience with social media management tools and email platforms.",
-    education: "Degree in Marketing, Communications or related field; CIM qualification advantageous.",
+    personalSkills:
+      "Creative and proactive with strong written and verbal communication skills; comfortable working to tight deadlines.",
+    experience:
+      "1+ years in a marketing or communications role; experience with social media management tools and email platforms.",
+    education:
+      "Degree in Marketing, Communications or related field; CIM qualification advantageous.",
     permanentlyOpen: false,
     emailAlertsSent: false,
     disclosureScotlandCheck: false,
@@ -326,15 +351,20 @@ const vacancies: VacancyData[] = [
     hours: "37 hours/week",
     startDate: "01 May 2024",
     salary: "£38,000 – £46,000 per annum",
-    personalSkills: "Excellent attention to detail; strong organisational skills and ability to manage competing priorities.",
-    experience: "2+ years in a finance or accounting role; experience with Oracle Financials or similar ERP systems preferred.",
-    education: "Degree in Finance, Accounting or Economics; part-qualified CIMA/ACCA or working towards qualification.",
-    additionalInfo: "Flexible working arrangements available — up to 3 days remote per week.",
+    personalSkills:
+      "Excellent attention to detail; strong organisational skills and ability to manage competing priorities.",
+    experience:
+      "2+ years in a finance or accounting role; experience with Oracle Financials or similar ERP systems preferred.",
+    education:
+      "Degree in Finance, Accounting or Economics; part-qualified CIMA/ACCA or working towards qualification.",
+    additionalInfo:
+      "Flexible working arrangements available — up to 3 days remote per week.",
     closeDate: "10 May 2024",
     permanentlyOpen: false,
     emailAlertsSent: true,
     disclosureScotlandCheck: false,
-    interviewArrangements: "One-stage panel interview at the Leeds office; presentation on a provided financial scenario required.",
+    interviewArrangements:
+      "One-stage panel interview at the Leeds office; presentation on a provided financial scenario required.",
     confirmInterviewDateBy: "20 May 2024",
     allowApplicationsFrom: "Internal & External",
   },
@@ -454,20 +484,25 @@ type BadgeVariant =
   | "Shortlisted"
   | "Rejected";
 
-const badgeStyles: Record<BadgeVariant, { bg: string; color: string; border: string }> = {
-  Live:                 { bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
-  "Awaiting Auth":      { bg: "#fffbeb", color: "#92400e", border: "#fde68a" },
-  "Awaiting Advert":    { bg: "#fff7ed", color: "#c2410c", border: "#fed7aa" },
-  Draft:                { bg: "#f8fafc", color: "#475569", border: "#cbd5e1" },
-  Fresh:                { bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
-  "Interview Confirmed":{ bg: "#eff6ff", color: "#1e40af", border: "#bfdbfe" },
-  Shortlisted:          { bg: "#f5f3ff", color: "#5b21b6", border: "#ddd6fe" },
-  Rejected:             { bg: "#fff1f2", color: "#991b1b", border: "#fecdd3" },
+const badgeStyles: Record<
+  BadgeVariant,
+  { bg: string; color: string; border: string }
+> = {
+  Live: { bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
+  "Awaiting Auth": { bg: "#fffbeb", color: "#92400e", border: "#fde68a" },
+  "Awaiting Advert": { bg: "#fff7ed", color: "#c2410c", border: "#fed7aa" },
+  Draft: { bg: "#f8fafc", color: "#475569", border: "#cbd5e1" },
+  Fresh: { bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
+  "Interview Confirmed": { bg: "#eff6ff", color: "#1e40af", border: "#bfdbfe" },
+  Shortlisted: { bg: "#f5f3ff", color: "#5b21b6", border: "#ddd6fe" },
+  Rejected: { bg: "#fff1f2", color: "#991b1b", border: "#fecdd3" },
 };
 
 const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
   const style = badgeStyles[status as BadgeVariant] ?? {
-    bg: "#f8fafc", color: "#475569", border: "#cbd5e1",
+    bg: "#f8fafc",
+    color: "#475569",
+    border: "#cbd5e1",
   };
   return (
     <Box
@@ -518,14 +553,17 @@ export const Dashboard: React.FC = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [successOpen, setSuccessOpen] = useState(false);
   const [quickViewOpen, setQuickViewOpen] = useState(false);
-  const [quickViewVacancy, setQuickViewVacancy] = useState<VacancyData | null>(null);
-  const [vacancySearch, setVacancySearch] = useState('');
+  const [quickViewVacancy, setQuickViewVacancy] = useState<VacancyData | null>(
+    null,
+  );
+  const [vacancySearch, setVacancySearch] = useState("");
 
   const filteredVacancies = vacancySearch.trim()
-    ? vacancies.filter((v) =>
-        v.title.toLowerCase().includes(vacancySearch.toLowerCase()) ||
-        v.location.toLowerCase().includes(vacancySearch.toLowerCase()) ||
-        v.status.toLowerCase().includes(vacancySearch.toLowerCase())
+    ? vacancies.filter(
+        (v) =>
+          v.title.toLowerCase().includes(vacancySearch.toLowerCase()) ||
+          v.location.toLowerCase().includes(vacancySearch.toLowerCase()) ||
+          v.status.toLowerCase().includes(vacancySearch.toLowerCase()),
       )
     : vacancies;
 
@@ -538,7 +576,7 @@ export const Dashboard: React.FC = () => {
       {/* ─── Page header ──────────────────────────────────────────── */}
       <Box className={classes.pageHeader}>
         <Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <Typography component="h1" className={classes.pageTitle}>
               Home Dashboard
             </Typography>
@@ -546,12 +584,12 @@ export const Dashboard: React.FC = () => {
               size="small"
               aria-label="Edit dashboard title"
               sx={{
-                color: '#3b82f6',
-                padding: '2px',
-                '&:hover': { backgroundColor: '#eff6ff' },
+                color: "#3b82f6",
+                padding: "2px",
+                "&:hover": { backgroundColor: "#eff6ff" },
               }}
             >
-              <DriveFileRenameOutlineIcon sx={{ fontSize: '18px' }} />
+              <DriveFileRenameOutlineIcon sx={{ fontSize: "18px" }} />
             </IconButton>
           </Box>
           <Typography className={classes.pageSubtitle}>
@@ -798,7 +836,9 @@ export const Dashboard: React.FC = () => {
           <Box className={classes.sectionHeader}>
             {/* Left: title + count */}
             <Box>
-              <Typography className={classes.sectionTitle}>Vacancies</Typography>
+              <Typography className={classes.sectionTitle}>
+                Vacancies
+              </Typography>
               <Typography className={classes.sectionSubtitle}>
                 {filteredVacancies.length} of {vacancies.length} vacancies
               </Typography>
@@ -812,19 +852,43 @@ export const Dashboard: React.FC = () => {
                   className={classes.vacancySearchInput}
                   placeholder="Search vacancies by name, location or status..."
                   value={vacancySearch}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setVacancySearch(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setVacancySearch(e.target.value)
+                  }
                   aria-label="Search vacancies"
                 />
               </Box>
-              <Button variant="outlined" size="small" className={classes.filtersBtn} startIcon={<img src={FiltersSrc} alt="" style={{ width: '14px', height: 'auto' }} />}>
+              <Button
+                variant="outlined"
+                size="small"
+                className={classes.filtersBtn}
+                startIcon={
+                  <img
+                    src={FiltersSrc}
+                    alt=""
+                    style={{ width: "14px", height: "auto" }}
+                  />
+                }
+              >
                 Filters
               </Button>
-              <Button variant="outlined" size="small" className={classes.exportBtn} startIcon={<img src={ExportSrc} alt="" style={{ width: '14px', height: 'auto' }} />}>
+              <Button
+                variant="outlined"
+                size="small"
+                className={classes.exportBtn}
+                startIcon={
+                  <img
+                    src={ExportSrc}
+                    alt=""
+                    style={{ width: "14px", height: "auto" }}
+                  />
+                }
+              >
                 Export
               </Button>
             </Box>
           </Box>
-          <TableContainer sx={{ overflowX: 'auto' }}>
+          <TableContainer sx={{ overflowX: "auto" }}>
             <Table size="small" aria-label="Vacancies table">
               <TableHead>
                 <TableRow>
@@ -867,7 +931,11 @@ export const Dashboard: React.FC = () => {
                     <TableCell sx={{ fontWeight: 600 }}>{row.title}</TableCell>
                     <TableCell>
                       <Box className={classes.cellLocation}>
-                        <img src={LocationOnIcon} alt="" style={{ width: '11px', height: 'auto' }} />
+                        <img
+                          src={LocationOnIcon}
+                          alt=""
+                          style={{ width: "11px", height: "auto" }}
+                        />
                         {row.location}
                       </Box>
                     </TableCell>
@@ -883,7 +951,14 @@ export const Dashboard: React.FC = () => {
                       <Button
                         size="small"
                         className={classes.quickViewBtn}
-                        startIcon={<img src={EyeIcon} width="17px" height="17px" alt="" />}
+                        startIcon={
+                          <img
+                            src={EyeIcon}
+                            width="17px"
+                            height="17px"
+                            alt=""
+                          />
+                        }
                         aria-label={`Quick view ${row.title}`}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -915,7 +990,7 @@ export const Dashboard: React.FC = () => {
               8 total applications
             </Typography>
           </Box>
-          <TableContainer sx={{ overflowX: 'auto' }}>
+          <TableContainer sx={{ overflowX: "auto" }}>
             <Table size="small" aria-label="Applications table">
               <TableHead>
                 <TableRow>
@@ -975,7 +1050,11 @@ export const Dashboard: React.FC = () => {
                     <TableCell>{row.vacancy}</TableCell>
                     <TableCell>
                       <Box className={classes.cellLocation}>
-                        <img src={LocationOnIcon} alt="" style={{ width: '11px', height: 'auto' }} />
+                        <img
+                          src={LocationOnIcon}
+                          alt=""
+                          style={{ width: "11px", height: "auto" }}
+                        />
                         {row.location}
                       </Box>
                     </TableCell>
@@ -999,7 +1078,7 @@ export const Dashboard: React.FC = () => {
                           size="small"
                           className={classes.quickViewBtn}
                           startIcon={
-                            <img src={EyeIcon}  width={'17px'} height={'17px'}/>
+                            <img src={EyeIcon} width={"17px"} height={"17px"} />
                           }
                           aria-label={`Quick view ${row.name}`}
                         >
@@ -1148,7 +1227,7 @@ export const Dashboard: React.FC = () => {
             display: "flex",
             alignItems: "flex-start",
             justifyContent: "space-between",
-            border:'1px solid #F3F4f6',
+            border: "1px solid #F3F4f6",
           }}
         >
           <Box>
@@ -1236,7 +1315,7 @@ export const Dashboard: React.FC = () => {
                     flexShrink: 0,
                   }}
                 >
-                 <img src={VacancyIcon} alt="" width={15} height={15} />
+                  <img src={VacancyIcon} alt="" width={15} height={15} />
                 </Box>
                 <Typography
                   sx={{
