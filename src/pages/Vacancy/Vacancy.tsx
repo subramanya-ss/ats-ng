@@ -13,6 +13,8 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -283,6 +285,8 @@ const FieldRow: React.FC<{
 export const Vacancy: React.FC = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [tab, setTab] = useState(0);
   const [permanentlyOpen, setPermanentlyOpen] = useState(true);
   const [actionsAnchor, setActionsAnchor] = useState<HTMLElement | null>(null);
@@ -335,31 +339,43 @@ export const Vacancy: React.FC = () => {
       sx={{ display: "flex", flexDirection: "column", height: "100%" }}
     >
       {/* ─── Breadcrumb bar ──────────────────────────────────────── */}
-      <Box className={classes.breadcrumbBar}>
+      <Box className={classes.breadcrumbBar} sx={{ overflow: "hidden" }}>
         <IconButton
           size="small"
           onClick={() => navigate("/dashboard")}
           className={classes.breadcrumbBack}
           aria-label="Go back"
+          sx={{ flexShrink: 0 }}
         >
           <ArrowBackIcon sx={{ fontSize: "16px" }} />
         </IconButton>
-        <Box className={classes.breadcrumbPath}>
+        <Box className={classes.breadcrumbPath} sx={{ minWidth: 0, flex: 1 }}>
+          {!isMobile && (
+            <>
+              <Typography
+                className={classes.breadcrumbLink}
+                onClick={() => navigate("/dashboard")}
+              >
+                Dashboard
+              </Typography>
+              <ChevronRightIcon className={classes.breadcrumbSep} />
+              <Typography
+                className={classes.breadcrumbLink}
+                onClick={() => navigate("/dashboard")}
+              >
+                Vacancies
+              </Typography>
+              <ChevronRightIcon className={classes.breadcrumbSep} />
+            </>
+          )}
           <Typography
-            className={classes.breadcrumbLink}
-            onClick={() => navigate("/dashboard")}
+            className={classes.breadcrumbCurrent}
+            sx={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
           >
-            Dashboard
-          </Typography>
-          <ChevronRightIcon className={classes.breadcrumbSep} />
-          <Typography
-            className={classes.breadcrumbLink}
-            onClick={() => navigate("/dashboard")}
-          >
-            Vacancies
-          </Typography>
-          <ChevronRightIcon className={classes.breadcrumbSep} />
-          <Typography className={classes.breadcrumbCurrent}>
             Senior Software Engineer
           </Typography>
         </Box>
@@ -401,21 +417,14 @@ export const Vacancy: React.FC = () => {
       <Box className={classes.pageContent}>
         {/* ─── Vacancy header card ─────────────────────────────────── */}
         <Paper elevation={0} className={classes.vacancyHeader}>
-          <Stack direction="row" alignItems="center" gap="14px">
-            <Box className={classes.vacancyIconBox} aria-hidden="true">
-              <img
-                src={WorkIconBig}
-                alt=""
-                style={{ width: "20px", height: "auto" }}
-              />
+          {/* Top row: icon + title/meta + actions (desktop) */}
+          <Stack direction="row" alignItems={isMobile ? "flex-start" : "center"} gap="14px">
+            <Box className={classes.vacancyIconBox} aria-hidden="true" sx={{ flexShrink: 0 }}>
+              <img src={WorkIconBig} alt="" style={{ width: "20px", height: "auto" }} />
             </Box>
-            <Box sx={{ flex: 1 }}>
-              <Stack
-                direction="row"
-                alignItems="center"
-                gap="10px"
-                sx={{ mb: "6px" }}
-              >
+
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Stack direction="row" alignItems="center" gap="8px" sx={{ mb: "6px", flexWrap: "wrap" }}>
                 <Typography component="h1" className={classes.vacancyTitle}>
                   Senior Software Engineer
                 </Typography>
@@ -424,151 +433,93 @@ export const Vacancy: React.FC = () => {
                   Live
                 </Box>
               </Stack>
-              <Stack direction="row" gap="16px" flexWrap="wrap">
+              <Stack direction="row" gap="12px" flexWrap="wrap">
                 {[
-                  {
-                    icon: (
-                      <img
-                        src={LocationOnIcon}
-                        alt=""
-                        style={{ width: "12px", height: "auto" }}
-                      />
-                    ),
-                    text: "London, UK",
-                  },
-                  {
-                    icon: (
-                      <img
-                        src={CategoryIcon}
-                        alt=""
-                        style={{ width: "12px", height: "auto" }}
-                      />
-                    ),
-                    text: "Technology & Digital",
-                  },
-                  {
-                    icon: (
-                      <img
-                        src={WorkIconIn}
-                        alt=""
-                        style={{ width: "12px", height: "auto" }}
-                      />
-                    ),
-                    text: "Permanent",
-                  },
-                  {
-                    icon: (
-                      <img
-                        src={CalendarTodayIcon}
-                        alt=""
-                        style={{ width: "12px", height: "auto" }}
-                      />
-                    ),
-                    text: "Closes 15 April 2024",
-                  },
+                  { icon: <img src={LocationOnIcon} alt="" style={{ width: "12px", height: "auto" }} />, text: "London, UK" },
+                  { icon: <img src={CategoryIcon} alt="" style={{ width: "12px", height: "auto" }} />, text: "Technology & Digital" },
+                  { icon: <img src={WorkIconIn} alt="" style={{ width: "12px", height: "auto" }} />, text: "Permanent" },
+                  { icon: <img src={CalendarTodayIcon} alt="" style={{ width: "12px", height: "auto" }} />, text: "Closes 15 April 2024" },
                 ].map((item) => (
-                  <Box key={item.text} className={classes.vacancyMeta}>
-                    {item.icon}
-                    {item.text}
-                  </Box>
+                  <Box key={item.text} className={classes.vacancyMeta}>{item.icon}{item.text}</Box>
                 ))}
               </Stack>
             </Box>
-            {/* ─── Header action buttons ───────────────────────── */}
-            <Box className={classes.vacancyActions}>
-              <Button
-                variant="outlined"
-                size="small"
-                startIcon={
-                  <ContentCopyOutlinedIcon sx={{ fontSize: "14px" }} />
-                }
-              >
+
+            {/* Action buttons — desktop: inline; mobile: hidden here, shown below */}
+            {!isMobile && (
+              <Box className={classes.vacancyActions}>
+                <Button variant="outlined" size="small" startIcon={<ContentCopyOutlinedIcon sx={{ fontSize: "14px" }} />}>
+                  Duplicate
+                </Button>
+                <Button variant="outlined" size="small" startIcon={<IosShareIcon sx={{ fontSize: "14px" }} />}>
+                  Share
+                </Button>
+                <Button
+                  variant="contained" size="small"
+                  startIcon={<ViewHeadlineIcon sx={{ fontSize: "14px" }} />}
+                  endIcon={<KeyboardArrowDownIcon sx={{ fontSize: "14px", transition: "transform 0.15s", transform: actionsAnchor ? "rotate(180deg)" : "none" }} />}
+                  onClick={(e) => setActionsAnchor(e.currentTarget)}
+                  aria-haspopup="true" aria-expanded={Boolean(actionsAnchor)}
+                >
+                  Actions
+                </Button>
+              </Box>
+            )}
+          </Stack>
+
+          {/* Action buttons — mobile only: full-width row below */}
+          {isMobile && (
+            <Box sx={{ display: "flex", gap: "8px", mt: "14px" }}>
+              <Button variant="outlined" size="small" sx={{ flex: 1 }} startIcon={<ContentCopyOutlinedIcon sx={{ fontSize: "14px" }} />}>
                 Duplicate
               </Button>
-              <Button
-                variant="outlined"
-                size="small"
-                startIcon={<IosShareIcon sx={{ fontSize: "14px" }} />}
-              >
+              <Button variant="outlined" size="small" sx={{ flex: 1 }} startIcon={<IosShareIcon sx={{ fontSize: "14px" }} />}>
                 Share
               </Button>
               <Button
-                variant="contained"
-                size="small"
+                variant="contained" size="small" sx={{ flex: 1 }}
                 startIcon={<ViewHeadlineIcon sx={{ fontSize: "14px" }} />}
-                endIcon={
-                  <KeyboardArrowDownIcon
-                    sx={{
-                      fontSize: "14px",
-                      transition: "transform 0.15s",
-                      transform: actionsAnchor ? "rotate(180deg)" : "none",
-                    }}
-                  />
-                }
+                endIcon={<KeyboardArrowDownIcon sx={{ fontSize: "14px", transition: "transform 0.15s", transform: actionsAnchor ? "rotate(180deg)" : "none" }} />}
                 onClick={(e) => setActionsAnchor(e.currentTarget)}
-                aria-haspopup="true"
-                aria-expanded={Boolean(actionsAnchor)}
+                aria-haspopup="true" aria-expanded={Boolean(actionsAnchor)}
               >
                 Actions
               </Button>
+            </Box>
+          )}
 
-              {/* Actions dropdown menu */}
-              <Menu
-                anchorEl={actionsAnchor}
-                open={Boolean(actionsAnchor)}
-                onClose={() => setActionsAnchor(null)}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                transformOrigin={{ vertical: "top", horizontal: "right" }}
-                slotProps={{
-                  paper: {
-                    sx: {
-                      mt: "6px",
-                      minWidth: "190px",
-                      borderRadius: "10px",
-                      boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
-                      border: "1px solid #f1f5f9",
-                      overflow: "hidden",
-                    },
-                  },
+          {/* Actions dropdown menu (shared) */}
+          <Menu
+            anchorEl={actionsAnchor}
+            open={Boolean(actionsAnchor)}
+            onClose={() => setActionsAnchor(null)}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            transformOrigin={{ vertical: "top", horizontal: "right" }}
+            slotProps={{
+              paper: {
+                sx: {
+                  mt: "6px", minWidth: "190px", borderRadius: "10px",
+                  boxShadow: "0 8px 32px rgba(0,0,0,0.12)", border: "1px solid #f1f5f9", overflow: "hidden",
+                },
+              },
+            }}
+          >
+            {actionMenuItems.map((item, i) => (
+              <MenuItem
+                key={item.label}
+                onClick={() => setActionsAnchor(null)}
+                sx={{
+                  px: "12px", py: "7px", display: "flex", alignItems: "center",
+                  gap: "8px", minHeight: 0,
+                  borderBottom: i < actionMenuItems.length - 1 ? "1px solid #f3f4f6" : "none",
+                  "&:hover": { backgroundColor: "#f8fafc" },
                 }}
               >
-                {actionMenuItems.map((item, i) => (
-                  <MenuItem
-                    key={item.label}
-                    onClick={() => setActionsAnchor(null)}
-                    sx={{
-                      px: "12px",
-                      py: "7px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      minHeight: 0,
-                      borderBottom:
-                        i < actionMenuItems.length - 1
-                          ? "1px solid #f3f4f6"
-                          : "none",
-                      "&:hover": { backgroundColor: "#f8fafc" },
-                    }}
-                  >
-                    <Box
-                      sx={{ color: "#9ca3af", display: "flex", flexShrink: 0 }}
-                    >
-                      {item.icon}
-                    </Box>
-                    <Typography
-                      sx={{
-                        fontSize: "12px",
-                        fontWeight: 500,
-                        color: "#374151",
-                      }}
-                    >
-                      {item.label}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </Stack>
+                <Box sx={{ color: "#9ca3af", display: "flex", flexShrink: 0 }}>{item.icon}</Box>
+                <Typography sx={{ fontSize: "12px", fontWeight: 500, color: "#374151" }}>{item.label}</Typography>
+              </MenuItem>
+            ))}
+          </Menu>
         </Paper>
 
         {/* ─── Tab panel: Vacancy ───────────────────────────────────── */}

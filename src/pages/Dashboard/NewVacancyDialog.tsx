@@ -12,6 +12,8 @@ import {
   Switch,
   Checkbox,
   FormControlLabel,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { Grid2 as Grid } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -180,6 +182,8 @@ export const NewVacancyDialog: React.FC<Props> = ({
   onSuccess,
   department,
 }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [step, setStep] = useState(1);
   const [activeNav, setActiveNav] = useState(0);
 
@@ -199,15 +203,15 @@ export const NewVacancyDialog: React.FC<Props> = ({
       slotProps={{
         paper: {
           sx: {
-            borderRadius: "16px",
-            width: step === 1 ? "760px" : "680px",
-            maxWidth: "95vw",
-            height: step === 1 ? "88vh" : "auto",
-            maxHeight: "820px",
+            borderRadius: { xs: "12px", sm: "16px" },
+            width: { xs: "100%", sm: step === 1 ? "760px" : "680px" },
+            maxWidth: { xs: "calc(100vw - 16px)", sm: "95vw" },
+            height: step === 1 ? { xs: "92vh", sm: "88vh" } : "auto",
+            maxHeight: { xs: "92vh", sm: "820px" },
             display: "flex",
             flexDirection: "column",
             overflow: "hidden",
-            m: "16px",
+            m: { xs: "8px", sm: "16px" },
           },
         },
       }}
@@ -217,15 +221,15 @@ export const NewVacancyDialog: React.FC<Props> = ({
         sx={{
           display: "flex",
           alignItems: "center",
-          gap: "10px",
-          px: "20px",
-          py: "14px",
+          gap: { xs: "6px", sm: "10px" },
+          px: { xs: "14px", sm: "20px" },
+          py: { xs: "12px", sm: "14px" },
           borderBottom: "1px solid #e5e7eb",
           flexShrink: 0,
         }}
       >
         {step === 1 && (
-          <IconButton size="small" sx={{ color: "#6b7280", flexShrink: 0 }}>
+          <IconButton size="small" sx={{ color: "#6b7280", flexShrink: 0, p: { xs: "4px", sm: "6px" } }}>
             <ArrowBackIcon sx={{ fontSize: "18px" }} />
           </IconButton>
         )}
@@ -235,13 +239,17 @@ export const NewVacancyDialog: React.FC<Props> = ({
             id="new-vacancy-title"
             sx={{
               fontWeight: 700,
-              fontSize: "16px",
+              fontSize: { xs: "14px", sm: "16px" },
               color: "#1a2332",
               lineHeight: 1.2,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
             }}
           >
             New Vacancy — Step {step} of 2
           </Typography>
+          {!isMobile && (
           <Box
             sx={{
               display: "flex",
@@ -254,7 +262,10 @@ export const NewVacancyDialog: React.FC<Props> = ({
               Department:
             </Typography>
             <Typography
-              sx={{ fontSize: "12px", fontWeight: 600, color: "#1a2332" }}
+              sx={{
+                fontSize: "12px", fontWeight: 600, color: "#1a2332",
+                maxWidth: "200px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+              }}
             >
               {department}
             </Typography>
@@ -277,6 +288,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
               </Box>
             )}
           </Box>
+          )}
         </Box>
 
         {/* Step indicator */}
@@ -284,15 +296,15 @@ export const NewVacancyDialog: React.FC<Props> = ({
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: "6px",
+            gap: { xs: "4px", sm: "6px" },
             flexShrink: 0,
           }}
         >
           {/* Step 1 circle */}
           <Box
             sx={{
-              width: 28,
-              height: 28,
+              width: { xs: 24, sm: 28 },
+              height: { xs: 24, sm: 28 },
               borderRadius: "50%",
               backgroundColor: step === 2 ? "#22c55e" : "#1a2332",
               display: "flex",
@@ -301,23 +313,23 @@ export const NewVacancyDialog: React.FC<Props> = ({
             }}
           >
             {step === 2 ? (
-              <CheckIcon sx={{ fontSize: "16px", color: "#ffffff" }} />
+              <CheckIcon sx={{ fontSize: { xs: "13px", sm: "16px" }, color: "#ffffff" }} />
             ) : (
               <Typography
-                sx={{ color: "#ffffff", fontSize: "12px", fontWeight: 700 }}
+                sx={{ color: "#ffffff", fontSize: { xs: "11px", sm: "12px" }, fontWeight: 700 }}
               >
                 1
               </Typography>
             )}
           </Box>
           <Box
-            sx={{ width: "28px", height: "1.5px", backgroundColor: "#d1d5db" }}
+            sx={{ width: { xs: "16px", sm: "28px" }, height: "1.5px", backgroundColor: "#d1d5db" }}
           />
           {/* Step 2 circle */}
           <Box
             sx={{
-              width: 28,
-              height: 28,
+              width: { xs: 24, sm: 28 },
+              height: { xs: 24, sm: 28 },
               borderRadius: "50%",
               backgroundColor: step === 2 ? "#1a2332" : "transparent",
               border: step === 2 ? "none" : "1.5px solid #d1d5db",
@@ -329,7 +341,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
             <Typography
               sx={{
                 color: step === 2 ? "#ffffff" : "#9ca3af",
-                fontSize: "12px",
+                fontSize: { xs: "11px", sm: "12px" },
                 fontWeight: step === 2 ? 700 : 400,
               }}
             >
@@ -341,7 +353,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
         <IconButton
           size="small"
           onClick={onClose}
-          sx={{ color: "#9ca3af", flexShrink: 0 }}
+          sx={{ color: "#9ca3af", flexShrink: 0, p: { xs: "4px", sm: "6px" } }}
         >
           <CloseIcon sx={{ fontSize: "18px" }} />
         </IconButton>
@@ -350,7 +362,8 @@ export const NewVacancyDialog: React.FC<Props> = ({
       {/* ── Body: Step 1 ──────────────────────────────────────────── */}
       {step === 1 && (
         <Box sx={{ display: "flex", flex: 1, overflow: "hidden" }}>
-          {/* Left nav */}
+          {/* Left nav — hidden on mobile */}
+          {!isMobile && (
           <Box
             sx={{
               width: "210px",
@@ -359,6 +372,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
               py: "12px",
               px: "10px",
               borderRight: "1px solid #f3f4f6",
+              overflowY: "auto",
             }}
           >
             {navItems.map(({ src, label }, i) => {
@@ -417,13 +431,14 @@ export const NewVacancyDialog: React.FC<Props> = ({
               );
             })}
           </Box>
+          )}
 
           {/* Right scrollable content */}
           <Box
             sx={{
               flex: 1,
               overflowY: "auto",
-              p: "24px",
+              p: { xs: "16px", sm: "24px" },
               backgroundColor: "#ffffff",
             }}
           >
@@ -451,7 +466,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                   placeholder="e.g. Senior Planning Officer"
                 />
               </Grid>
-              <Grid size={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <FieldLabel>Contract Type</FieldLabel>
                 <Select
                   fullWidth
@@ -470,7 +485,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                   <MenuItem value="temporary">Temporary</MenuItem>
                 </Select>
               </Grid>
-              <Grid size={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <FieldLabel>
                   Location <span style={{ color: "#ef4444" }}>*</span>
                 </FieldLabel>
@@ -486,7 +501,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                   // }
                 />
               </Grid>
-              <Grid size={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <FieldLabel>Grade</FieldLabel>
                 <Select
                   fullWidth
@@ -505,7 +520,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                   <MenuItem value="g5">G5 — Manager</MenuItem>
                 </Select>
               </Grid>
-              <Grid size={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <FieldLabel>Department</FieldLabel>
                 <Box sx={{ display: "flex", gap: "8px" }}>
                   <TextField
@@ -588,7 +603,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
               title="Employment Details"
             />
             <Grid container spacing={2} sx={{ mb: "28px" }}>
-              <Grid size={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <FieldLabel>Cost Centre</FieldLabel>
                 <TextField
                   fullWidth
@@ -596,7 +611,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                   placeholder="e.g. CC-PLAN-042"
                 />
               </Grid>
-              <Grid size={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <FieldLabel>Reporting To</FieldLabel>
                 <TextField
                   fullWidth
@@ -604,7 +619,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                   placeholder="e.g. Head of Planning"
                 />
               </Grid>
-              <Grid size={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <FieldLabel>Replacement For</FieldLabel>
                 <TextField
                   fullWidth
@@ -612,7 +627,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                   placeholder="e.g. New Headcount"
                 />
               </Grid>
-              <Grid size={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <FieldLabel>Start Date</FieldLabel>
                 <TextField fullWidth size="small" type="date" />
               </Grid>
@@ -633,7 +648,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
               title="Compensation"
             />
             <Grid container spacing={2} sx={{ mb: "28px" }}>
-              <Grid size={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <FieldLabel>Salary</FieldLabel>
                 <TextField
                   fullWidth
@@ -641,7 +656,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                   placeholder="e.g. £30,000 – £38,000 per annum"
                 />
               </Grid>
-              <Grid size={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <FieldLabel>Agency Rate</FieldLabel>
                 <TextField
                   fullWidth
@@ -879,7 +894,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
 
       {/* ── Body: Step 2 ──────────────────────────────────────────── */}
       {step === 2 && (
-        <Box sx={{ overflowY: "auto", p: "28px", backgroundColor: "#ffffff" }}>
+        <Box sx={{ overflowY: "auto", p: { xs: "16px", sm: "28px" }, backgroundColor: "#ffffff" }}>
           {/* Documents */}
           <SectionHeader
             icon={
@@ -908,7 +923,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
             title="Ownership"
           />
           <Grid container spacing={2}>
-            <Grid size={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <FieldLabel>Vacancy Owner</FieldLabel>
               <Select
                 fullWidth
@@ -926,7 +941,7 @@ export const NewVacancyDialog: React.FC<Props> = ({
                 <MenuItem value="manager">HR Manager</MenuItem>
               </Select>
             </Grid>
-            <Grid size={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <FieldLabel>
                 Recruitment Team Owner{" "}
                 <span style={{ color: "#F87171" }}>*</span>
@@ -955,11 +970,12 @@ export const NewVacancyDialog: React.FC<Props> = ({
       <Box
         sx={{
           display: "flex",
+          flexDirection: { xs: "column-reverse", sm: "row" },
           justifyContent: step === 2 ? "space-between" : "flex-end",
-          alignItems: "center",
-          gap: "12px",
-          px: "24px",
-          py: "16px",
+          alignItems: { xs: "stretch", sm: "center" },
+          gap: "10px",
+          px: { xs: "14px", sm: "24px" },
+          py: { xs: "12px", sm: "16px" },
           borderTop: "1px solid #e5e7eb",
           flexShrink: 0,
           backgroundColor: "#ffffff",
